@@ -1,0 +1,92 @@
+\documentclass[11pt,twoside]{report}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=30mm, bindingoffset=20mm]{geometry}
+\usepackage[titletoc, title,header]{appendix}
+\usepackage{pdfpages}
+\usepackage{natbib}
+\usepackage{dirtytalk}
+\usepackage{pdflscape}
+\usepackage{longtable}
+%\usepackage{showframe}
+\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{helvet}
+\usepackage{hyphenat}
+\usepackage[hidelinks]{hyperref}
+%\usepackage[autostyle]{csquotes}
+\usepackage{soul}
+\usepackage{tikz}
+\usepackage{rotating}
+\usepackage{caption}
+\usetikzlibrary{calc}
+\usepackage[export]{adjustbox}
+\usepackage{amsmath}
+\renewcommand{\familydefault}{\sfdefault}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE, RO]{\thepage}
+\fancyhead[LO, RE]{\leftmark}
+\fancyfoot[c]{Bournemouth University, Department of Computing and Informatics, Final Year Project}
+\setlength{\headheight}{13.6pt}
+% Recommended linespread is 1.5
+\linespread{1.35}
+\bibliographystyle{buHarvard}
+\bibpunct{(}{)}{,}{a}{}{ }
+\graphicspath{ {figures/}{appendices/} }
+\footskip = 15mm
+
+\usepackage{emptypage}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+	{\normalfont\Huge\bfseries}{\thechapter\quad}{0pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+
+\begin{document}
+
+\input{sections/titles/01_main}
+
+\pagenumbering{Roman}
+
+\input{sections/titles/02_subtitle}
+
+
+\input{sections/preamble/01_abstract}
+\input{sections/preamble/02_dissertation_declaration}
+\input{sections/preamble/03_work_declaration}
+\cleardoublepage
+\input{sections/preamble/04_aknowledgements}
+
+\tableofcontents
+
+\listoffigures
+\listoftables
+
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\input{sections/corpus/01_introduction}
+
+\input{sections/corpus/02_background_study}
+
+\input{sections/corpus/03_methodology}
+
+\input{sections/corpus/04_implementation}
+
+\input{sections/corpus/05_conclusion}
+
+\nocite{*} %Take this out if you don't want it to show all the references and only the ones you've referenced 
+\bibliography{references}
+
+\input{sections/appendices/appendices}
+
+\end{document}

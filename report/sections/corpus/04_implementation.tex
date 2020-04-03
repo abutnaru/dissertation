@@ -1,0 +1,43 @@
+%!TEX root = ../main.tex
+
+\chapter{Design and Implementation}
+This chapter follows the process of producing and optimising the artefact to fulfill the previously articulated objectives. The first section of the chapter follows the research on Google Safe Browsing's effective in detecting phishing websites. The accuracy target of the classifier implemented in this chapter is bounded by the results of the aforementioned case study. 
+
+The next section explores different machine learning algorithms and URL features, aiming to deliver satisfactory results in comparison with the threshold. After this, a number of features that could complement the machine learning solution are presented and assessed. Finally the classifier is brought together and assessed as a whole.
+
+\section{Threshold definition}
+Before attempting to improve the level of protection browsers offer, its effectiveness needs to be assessed. In doing so the behaviour of the user will be simulated using an browser automation framework in accessing confirmend phishing websites. The outcome of this serves as an accuracy threshold for the proposed artefact.
+
+The first step of the process is data aquisition. A list of online phishing URLs, confirmed by the PhishTank community is fetched from their archive. After the initial evaluation, the tool runs on this same set multiple times, with the additional purpose of studying how the browser deals with phishing websites in time.
+
+Running the initial tests show that 
+\section{List based module}
+
+\section{Machine learning module}
+A pattern in effective anti-phishing detection systems is the use of machine learning. A well developed module of this kind increases the performance and robustness of the proposed artefact. Besides this, it offers the capability of dealing with newly registered phishing domains and URLs.
+
+\subsection{Algorithm selection}
+The first step in building this module is the selection of machine learning algroithms. The set used is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}) and is composed of Naive Bayes, Decision Tree, Random Forest, Support Vector Machine and a new one called Multilayer Perceptron.
+== SHOULD THE ALGORITHMS BE EXPLAINED? ==
+
+\subsection{Features extraction}
+
+The exploration of different feature sets started from the work of \cite{SVM_SIMILARITY_INDEX} due to the results it reported and the usage of similarity indexes.
+
+The first set tested is composed of URL size, hyphen count, dot count, number of numerical characters, IP presence and the Hamming distance. 
+
+\subsection{Evaluation}
+
+\section{Performance assessment}
+
+%=========================================================================================================
+% Skipped compiling instructions
+\iffalse
+You should always start with an overview (Heading 2 style) to tell what this chapter is about and finish with a summary (Heading 2 style) to tell what has been covered in this chapter.
+
+The Design and Implementation chapter should explain the design technique chosen and justify why it is appropriate, depending on the development methodology.  Suitable diagram-techniques (e.g. UML, other drawings) should be used where appropriate. For the Implementation part, it should talk about the technical realisation of the concepts and ideas developed earlier. It is used to describe the system at a finer level of technical details, down to the code level. However, do not attempt to describe all the code in the system, and do not include large pieces of code in this section. 
+
+You should highlight the pieces of code which are critical to the system or worth to be noted. For example, the creation and/or implementation of core algorithms that make the system functional or some methods/ways you have used which are non-standard or innovative in the system implementation. You should also mention any unforeseen problems you encountered when implementing the system and how and to what extend you overcame them.
+
+Appropriate testing must also be included in this section
+\fi
