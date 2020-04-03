@@ -1,4 +1,4 @@
-#!/usr/bin/env conda run -n dissertation python
+#!/usr/bin/env -S conda run -n dissertation python
 """
 The model evaluator measures the performance of trained
 model based on precision, recall, f-measure and accuracy.
@@ -13,20 +13,35 @@ import features_extractor as features
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Machine learning model evaluator")
     parser.add_argument(
+        "-m",
         "--model",
         type=str,
         dest="target",
         default="all",
         help="Model to be evaluated (Default: All)",
     )
-    parser.add_argument("--dir", dest="modelsdir", type=str, help="Models directory")
-    parser.add_argument("--dataset", dest="dataset", type=str, help="Target dataset")
+    parser.add_argument(
+        "-n",
+        "--dirname",
+        dest="modelsdir",
+        type=str,
+        help="Models directory",
+        required=True,
+    )
+    parser.add_argument(
+        "-d",
+        "--dataset",
+        dest="dataset",
+        type=str,
+        help="Target dataset",
+        required=True,
+    )
     args = parser.parse_args()
     return (args.target, args.dataset, args.modelsdir)
 
 
 def parse_file(filename):
-    f = open("data/" + filename, "r")
+    f = open("data/" + filename + ".csv", "r")
     pairs = []
     for row in csv.reader(f):
         try:
@@ -86,28 +101,38 @@ def evaluate(model, pairs):
 
 
 def eval_nb(dataset, modelsdir):
-    naiveBayes = pickle.load(open("models/" + modelsdir + "/naiveBayes.sav", "rb"))
-    print_metrics("Naive Bayes", evaluate(naiveBayes, parse_file(dataset)))
+    naive_bayes = pickle.load(open("models/" + modelsdir + "/naive_bayes.sav", "rb"))
+    print_metrics("Naive Bayes", evaluate(naive_bayes, parse_file(dataset)))
 
 
 def eval_dt(dataset, modelsdir):
-    decisionTree = pickle.load(open("models/" + modelsdir + "/decisionTree.sav", "rb"))
-    print_metrics("Decision Tree", evaluate(decisionTree, parse_file(dataset)))
+    decision_tree = pickle.load(
+        open("models/" + modelsdir + "/decision_tree.sav", "rb")
+    )
+    print_metrics("Decision Tree", evaluate(decision_tree, parse_file(dataset)))
 
 
 def eval_rf(dataset, modelsdir):
-    randomForest = pickle.load(open("models/" + modelsdir + "/randomForest.sav", "rb"))
-    print_metrics("Random Forest", evaluate(randomForest, parse_file(dataset)))
+    random_forest = pickle.load(
+        open("models/" + modelsdir + "/random_forest.sav", "rb")
+    )
+    print_metrics("Random Forest", evaluate(random_forest, parse_file(dataset)))
 
 
 def eval_svm(dataset, modelsdir):
-    svm = pickle.load(open("models/" + modelsdir + "/supportVector.sav", "rb"))
-    print_metrics("Support Vector Machine", evaluate(svm, parse_file(dataset)))
+    support_vector = pickle.load(
+        open("models/" + modelsdir + "/support_vector.sav", "rb")
+    )
+    print_metrics(
+        "Support Vector Machine", evaluate(support_vector, parse_file(dataset))
+    )
 
 
 def eval_nn(dataset, modelsdir):
-    mlPerceptron = pickle.load(open("models/" + modelsdir + "/mlPerceptron.sav", "rb"))
-    print_metrics("Neural Networks", evaluate(mlPerceptron, parse_file(dataset)))
+    ml_perceptron = pickle.load(
+        open("models/" + modelsdir + "/ml_perceptron.sav", "rb")
+    )
+    print_metrics("Neural Networks", evaluate(ml_perceptron, parse_file(dataset)))
 
 
 def print_metrics(algo, m):
@@ -124,16 +149,26 @@ def print_metrics(algo, m):
 
 
 def eval_all(dataset, modelsdir):
-    naiveBayes = pickle.load(open("models/" + modelsdir + "/naiveBayes.sav", "rb"))
-    print_metrics("Naive Bayes", evaluate(naiveBayes, parse_file(dataset)))
-    decisionTree = pickle.load(open("models/" + modelsdir + "/decisionTree.sav", "rb"))
-    print_metrics("Decision Tree", evaluate(decisionTree, parse_file(dataset)))
-    randomForest = pickle.load(open("models/" + modelsdir + "/randomForest.sav", "rb"))
-    print_metrics("Random Forest", evaluate(randomForest, parse_file(dataset)))
-    svm = pickle.load(open("models/" + modelsdir + "/supportVector.sav", "rb"))
-    print_metrics("Support Vector Machine", evaluate(svm, parse_file(dataset)))
-    mlPerceptron = pickle.load(open("models/" + modelsdir + "/mlPerceptron.sav", "rb"))
-    print_metrics("Neural Networks", evaluate(mlPerceptron, parse_file(dataset)))
+    naive_bayes = pickle.load(open("models/" + modelsdir + "/naive_bayes.sav", "rb"))
+    print_metrics("Naive Bayes", evaluate(naive_bayes, parse_file(dataset)))
+    decision_tree = pickle.load(
+        open("models/" + modelsdir + "/decision_tree.sav", "rb")
+    )
+    print_metrics("Decision Tree", evaluate(decision_tree, parse_file(dataset)))
+    random_forest = pickle.load(
+        open("models/" + modelsdir + "/random_forest.sav", "rb")
+    )
+    print_metrics("Random Forest", evaluate(random_forest, parse_file(dataset)))
+    support_vector = pickle.load(
+        open("models/" + modelsdir + "/support_vector.sav", "rb")
+    )
+    print_metrics(
+        "Support Vector Machine", evaluate(support_vector, parse_file(dataset))
+    )
+    ml_perceptron = pickle.load(
+        open("models/" + modelsdir + "/ml_perceptron.sav", "rb")
+    )
+    print_metrics("Neural Networks", evaluate(ml_perceptron, parse_file(dataset)))
 
 
 def run():

@@ -1,4 +1,4 @@
-#!/usr/bin/env conda run -n dissertation python
+#!/usr/bin/env -S conda run -n dissertation python
 """
 The data preparer extracts a selected number of benign and malicious
 URLs from the minxed450k.csv file and extrats their features
@@ -11,9 +11,9 @@ import features_extractor as features
 
 def get_input():
     parser = argparse.ArgumentParser(description="Data preparator for model training")
-    parser.add_argument("--dataset", dest="dataset", help="Target dataset", type=str)
-    parser.add_argument("--records", dest="records", help="Number of records", type=str)
-    parser.add_argument("--out", dest="filename", help="Output destination", type=str)
+    parser.add_argument("-d","--dataset", dest="dataset", help="Target dataset", type=str, required=True)
+    parser.add_argument("-r","--records", dest="records", help="Number of records", type=str, required=True)
+    parser.add_argument("-o","--output", dest="filename", help="Output destination", type=str, required=True)
     args = parser.parse_args()
     return (args.dataset, args.records, args.filename)
 

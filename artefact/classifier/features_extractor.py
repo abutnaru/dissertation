@@ -1,4 +1,3 @@
-#!/usr/bin/env conda run -n dissertation python
 """
 The features extractor decomposes each URL in the set
 of selected features and saves the records in a CSV file
@@ -27,7 +26,7 @@ def min_levenshtein(url, N):
     subdomain = components.subdomain
     domain = components.domain
 
-    f = open("data/benign1M.csv")
+    f = open("data/benign_1M.csv")
     reader = csv.reader(f)
     min_distance = 9999
     min_sub_distance = 9999

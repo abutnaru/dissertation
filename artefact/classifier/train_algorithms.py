@@ -1,4 +1,4 @@
-#!/usr/bin/env conda run -n dissertation python
+#!/usr/bin/env -S conda run -n dissertation python
 """
 The algorithm trainer produces the machine learning models.
 """
@@ -20,8 +20,18 @@ import numpy as np
 import scipy as sc
 
 # Other Libraries
+import argparse
 import pandas as pd
 import csv, pickle
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Machine learning model trainer")
+    parser.add_argument(
+        "-d", "--dataset", dest="dataset", type=str, help="Target dataset", required=True
+    )
+    args = parser.parse_args()
+    return args.dataset
 
 
 def train_and_eval(model, params, name):
@@ -33,8 +43,9 @@ def train_and_eval(model, params, name):
 
 
 def run():
-    X = pd.read_csv("features.csv", usecols=[*range(1, 10)])
-    Y = pd.read_csv("features.csv", usecols=[0])
+    dataset = parse_arguments()
+    X = pd.read_csv("features/" + dataset + ".csv", usecols=[*range(1, 10)])
+    Y = pd.read_csv("features/" + dataset + ".csv", usecols=[0])
 
     # 10 fold cross-validation
     kf = KFold(n_splits=10, shuffle=True, random_state=5)
@@ -57,25 +68,21 @@ def run():
         scaler.transform(X_test)
 
         params = (X_train, y_train, X_test, y_test)
-        # Naive Bayes No Calibration
+
         naive_bayes = GaussianNB()
         train_and_eval(naive_bayes, params, "Naive Bayes")
 
-        # Decision Tree
         decision_tree = DecisionTreeClassifier()
         train_and_eval(decision_tree, params, "Decision Tree")
 
-        # Random Forest
         random_forest = RandomForestClassifier(n_estimators=20)
         train_and_eval(random_forest, params, "Random Forest")
 
-        # Support Vector Machine
         svm_parameters = [{"kernel": ["rbf"], "C": [1, 10, 100, 1000]}]
         support_vector = GridSearchCV(SVC(), svm_parameters, cv=3)
         # svmModel = SVC()
         train_and_eval(support_vector, params, "Support Vector Machine")
 
-        # Neural Network
         ml_perceptron = MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
         train_and_eval(ml_perceptron, params, "Neural Network")
 

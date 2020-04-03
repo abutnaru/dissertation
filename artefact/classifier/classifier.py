@@ -1,4 +1,4 @@
-#!/usr/bin/env conda run -n dissertation python
+#!/usr/bin/env -S conda run -n dissertation python
 """
 The classifier is the main and final interface with the
 artefact. It uses the model selected through evaluation
