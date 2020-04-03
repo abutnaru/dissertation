@@ -1,2 +1,5 @@
 # Editor settings
 .vscode/
+
+# Cache
+artefact/classifier/__pycache__
