@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S conda run -n dissertation python
 """
 This is for experimentation purposes
 """
