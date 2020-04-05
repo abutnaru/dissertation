@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S conda run -n dissertation python
 """
 The evaluator calculates Google Safe Browsing's rate
 of success in correctly classifying phishing websites
@@ -88,6 +88,31 @@ def update_summary(updateItem):
     update_summary_file(summary)
 
 
+def test_android(url):
+    try:
+        driver = webdriver.Remote(
+            desired_capabilities=webdriver.DesiredCapabilities.ANDROID
+        )
+        driver.set_page_load_timeout(25)
+        # Testing without this
+        # except Exception as e:
+        #    return e
+        # try:
+        driver.get(url)
+        title = driver.title
+        button = driver.find_element_by_tag_name("button")
+        src = driver.page_source
+        print(title, button, src)
+        driver.save_screenshot("chrome/" + url.replace("/", "__") + ".png")
+        driver.quit()
+        if title == "Security error":
+            return True
+        return False
+    except Exception as e:
+        print(e)
+        return e
+
+
 def test_chrome(url):
     opts = webdriver.ChromeOptions()
     opts.add_argument("--user-data-dir=/home/osboxes/.config/google-chrome")
@@ -159,6 +184,13 @@ def test(url, browsers):
             record_result("firefox", url, result, None)
         else:
             record_result("firefox", url, None, result)
+    
+    if "android" in browsers:
+        result = test_android(url)
+        if isinstance(result, bool):
+            record_result("firefox", url, result, None)
+        else:
+            record_result("firefox", url, None, result)
 
 
 # Not really working
@@ -178,7 +210,7 @@ def is_online(url):
 def main():
     for phish in phishes:
         if is_online(phish["url"]):
-            test(phish["url"], ("chrome"))
+            test(phish["url"], ("android"))
 
 
 if __name__ == "__main__":
