@@ -1,3 +1,4 @@
+#!/usr/bin/env -S conda run -n dissertation python
 import csv
 
 f=open("mixed450k_raw.csv", 'r')
