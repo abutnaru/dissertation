@@ -6,27 +6,47 @@ This chapter follows the process of producing and optimising the artefact to ful
 The next section explores different machine learning algorithms and URL features, aiming to deliver satisfactory results in comparison with the threshold. After this, a number of features that could complement the machine learning solution are presented and assessed. Finally the classifier is brought together and assessed as a whole.
 
 \section{Threshold definition}
-Before attempting to improve the level of protection browsers offer, its effectiveness needs to be assessed. In doing so the behaviour of the user will be simulated using an browser automation framework in accessing confirmend phishing websites. The outcome of this serves as an accuracy threshold for the proposed artefact.
+Before attempting to improve the level of protection the most popular browsers offer, the system's effectiveness needs to be assessed. In doing so the behaviour of the user will be simulated using an browser automation framework in accessing confirmend phishing websites. The outcome of this serves as an accuracy threshold for the proposed artefact.
 
-The first step of the process is data aquisition. A list of online phishing URLs, confirmed by the PhishTank community is fetched from their archive. After the initial evaluation, the tool runs on this same set multiple times, with the additional purpose of studying how the browser deals with phishing websites in time.
+The first step of the process is data aquisition. A list of URLs pointing to online phishing webpages, confirmed to be malicious by the PhishTank community is fetched from their archive. The first test is run on the data available on the 1st on April. Testing a total number of 9345 phishing URLs, Google Safe-Broswing managed to achieve a total accuracy of 50.76\%. 
+The next test is run with the data published on the 7th of April. This time Google Safe-Browsing performed slightly worse reporting an accuracy of 48.32\% on the 8164 phishing URLs. Running the same test on the data aquired on the 1st of April shows a significant drop in accuracy, reporting an accuracy of 40.28\% on a number of 9359 URLs.
 
-Running the initial tests show that 
+Upon a surface level inspection it is noticeable that given it's popularity in usage, Google Safe-Browsing influences the lifetime of a portion of phishing URLs. It is probable that attackers adapt to the situation and remove phishing webpages detected, or serve them through different URLs. Moving a webpage from one domain to another is not resource expensive and allows the attackers to dodge the browser's anti-phishing detection system.
+
+Finally, the threshold is set to be 50.76\% accuracy in classification.
+
 \section{List based module}
+
+It is safe to assume that most of web browsing activity takes place across a limited set of domains. This is reflected in different rankings of most popular domains. Because these are known to be benign, there is no use in wasting resources on classifying them. This is reasoning behind the inclusion of a list based module in the phishing detection system to be developed.
+The white-list included is comprised of the domains ranking published by \cite{MAJESTIC_MILLION}.
 
 \section{Machine learning module}
 A pattern in effective anti-phishing detection systems is the use of machine learning. A well developed module of this kind increases the performance and robustness of the proposed artefact. Besides this, it offers the capability of dealing with newly registered phishing domains and URLs.
 
 \subsection{Algorithm selection}
-The first step in building this module is the selection of machine learning algroithms. The set used is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}) and is composed of Naive Bayes, Decision Tree, Random Forest, Support Vector Machine. In addition to these, the multilayered perceptron neural network is added to test its performance.
-== SHOULD THE ALGORITHMS BE EXPLAINED? ==
+The first step in building this module is the selection of machine learning algroithms. The set used is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}) and is composed of Naive Bayes, Decision Tree, Random Forest, Support Vector Machine. In addition to these, the multilayered perceptron neural network is added with the purpose of experimentation.
 
-\subsection{Features extraction}
+\subsection{Experimentation and calibration}
+The starting set in feature selection is based on the work of \cite{SVM_SIMILARITY_INDEX}. It's reported accuracy far surpasses the threshold and it makes use of similarity indexes. These similarity indexes are highly relevant as most phishing URLs try to decieve the victims by including different variations of the target brand or domain.
 
-The exploration of different feature sets started from the work of \cite{SVM_SIMILARITY_INDEX} due to the results it reported and the usage of similarity indexes.
+The first feature selected is URL length. Most of the literature acknolowdges the difference in URL length between legitimate and phishing URLs. One example is illustrated in \cite{STACKED_ML_URL_HTML} (Figure \ref{fig:URL_LENGTH_DISTRIBUTION}), showing the distribution over a set of 50,000 URLs.
 
-The first set tested is composed of URL size, hyphen count, dot count, number of numerical characters, IP presence and the Hamming distance. 
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.9\textwidth]{url_length_50k.jpg}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:URL_LENGTH_DISTRIBUTION}
+\end{figure}
 
-\subsection{Evaluation}
+The second feature chosen is the number of hyphens. It is common for phishing URLs to use such characters to deceive the victim by chaining the target brand using hyphens (e.g. www.example-secure-bank.com).
+
+The third feature is the number of dots. This is used in a simmilar manner as hyphens are, only it allows for using subdomains to create the illusion of the legitimate page (e.g. www.example.secure.bank.com)
+
+The fourth feature is the number of numerical characters present in the domain. This is included because it is uncommon for legitimate domains to contain any numerical characters.
+
+The fifth is the presence of an IP address in the URL. Although substantially less prevalent in current phishing attacks, it still happens that some of the phishing URLs are not addressed by domain name, but by IP address. This is a solid indicator that the URL may point to a phishing webpage.
+
+The last feature is the Hamming distance between the URL to be classified and a top N benign domains. Similarity indexes like the Hamming distance calculate the distance of two pieces of data, in this case the distance between two strings of characters. It does so through a mathematical formula which outputs 0 or 100 on identical strings depending on implementation. For the first test the algorithm is trained with the maximum hamming distance between the input URL and top 1000 benign domains from the \cite{MAJESTIC_MILLION} dataset.
 
 \section{Performance assessment}
 
