@@ -16,6 +16,7 @@ def hamming_distance(chaine1, chaine2):
     """
     return len(list(filter(lambda x: ord(x[0]) ^ ord(x[1]), zip(chaine1, chaine2))))
 
+
 def min_hamming(url, N):
     """
     Calculates the minimum value for the hamming distance
@@ -93,36 +94,38 @@ def extract(url, label=-1):
     url_size = len(url)
 
     # Feature 2: Number of '@', '-' and '~' characters
-    symbols_count = url.count("-") #+ url.count("@") + url.count("~")
+    symbols_count = url.count("@") + url.count("-") + url.count("~")
 
     # Feature 3: Number of dots
     dot_count = url.count(".")
 
     # Feature 4: Number of numerical characters
-    digit_count = sum(c.isdigit() for c in tld.extract(url).subdomain+tld.extract(url).domain)
+    digit_count = sum(
+        c.isdigit() for c in tld.extract(url).subdomain + tld.extract(url).domain
+    )
 
     # Feature 5: Usage of HTTPS
-    #proto = url.split(":")[0]
-    #if proto == "https":
-    #    proto = 1
-    #else:
-    #    proto = 0
+    proto = url.split(":")[0]
+    if proto == "https":
+        proto = 1
+    else:
+        proto = 0
 
     # Feature 6: Sensitive vocabulary
-    #sensitive_vocabulary = [
-    #    "signin",
-    #    "login",
-    #    "webscr",
-    #    "ebayisapi",
-    #    "secure",
-    #    "banking",
-    #    "account",
-    #    "confirm",
-    #]
-    #sens_word_count = 0
-    #for word in sensitive_vocabulary:
-    #    if word in url:
-    #        sens_word_count += 1
+    sensitive_vocabulary = [
+        "signin",
+        "login",
+        "webscr",
+        "ebayisapi",
+        "secure",
+        "banking",
+        "account",
+        "confirm",
+    ]
+    sens_word_count = 0
+    for word in sensitive_vocabulary:
+        if word in url:
+            sens_word_count += 1
 
     # Feature 7: Presence of IP address in URL
     ip_presence = 0
@@ -131,7 +134,7 @@ def extract(url, label=-1):
 
     # Feature 8 and 9: Minimum distance between URL's domain and
     # subdomain and the top N benign domains
-    dom_distance = min_hamming(url, 1000) # , subdom_distance
+    dom_distance, subdom_distance = min_levenshtein(url, 1000)
 
     if label < 0:
         return np.array(
@@ -140,10 +143,10 @@ def extract(url, label=-1):
                 symbols_count,
                 dot_count,
                 digit_count,
-                #proto,
-                #sens_word_count,
+                proto,
+                sens_word_count,
                 ip_presence,
-                #subdom_distance,
+                subdom_distance,
                 dom_distance,
             ]
         )
@@ -155,10 +158,10 @@ def extract(url, label=-1):
                 symbols_count,
                 dot_count,
                 digit_count,
-                #proto,
-                #sens_word_count,
+                proto,
+                sens_word_count,
                 ip_presence,
-                #subdom_distance,
+                subdom_distance,
                 dom_distance,
             ]
         )
