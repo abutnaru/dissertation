@@ -31,7 +31,7 @@ The starting set in feature selection is based on the work of \cite{SVM_SIMILARI
 
 The first feature selected is URL length. Most of the literature acknolowdges the difference in URL length between legitimate and phishing URLs. One example is illustrated in \cite{STACKED_ML_URL_HTML} (Figure \ref{fig:URL_LENGTH_DISTRIBUTION}), showing the distribution over a set of 50,000 URLs.
 
-\begin{figure}[b]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{url_length_50k.jpg}
 	\caption{URL length distribution over a dataset of 50,000 records}
@@ -47,6 +47,14 @@ The fourth feature is the number of numerical characters present in the domain. 
 The fifth is the presence of an IP address in the URL. Although substantially less prevalent in current phishing attacks, it still happens that some of the phishing URLs are not addressed by domain name, but by IP address. This is a solid indicator that the URL may point to a phishing webpage.
 
 The last feature is the Hamming distance between the URL to be classified and a top N benign domains. Similarity indexes like the Hamming distance calculate the distance of two pieces of data, in this case the distance between two strings of characters. It does so through a mathematical formula which outputs 0 or 100 on identical strings depending on implementation. For the first test the algorithm is trained with the maximum hamming distance between the input URL and top 1000 benign domains from the \cite{MAJESTIC_MILLION} dataset.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.49\textwidth]{hamming5k_on_phishtank_0401.png}
+	\includegraphics[width=0.49\textwidth]{hamming5k_on_phishtank_0405.png}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:HAMMING_ON_PHISHTANK_0401}
+\end{figure}
 
 \section{Performance assessment}
 
