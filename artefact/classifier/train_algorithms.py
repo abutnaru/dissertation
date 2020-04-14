@@ -90,7 +90,7 @@ def run():
     pickle.dump(naive_bayes, open("models/naive_bayes.sav", "wb"))
     pickle.dump(decision_tree, open("models/decision_tree.sav", "wb"))
     pickle.dump(random_forest, open("models/random_forest.sav", "wb"))
-    pickle.dump(support_vector, open("support_vector.sav", "wb"))
+    pickle.dump(support_vector, open("models/support_vector.sav", "wb"))
     pickle.dump(ml_perceptron, open("models/ml_perceptron.sav", "wb"))
 
 
