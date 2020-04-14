@@ -1,0 +1,41 @@
+>> Naive Bayes Model <<
+        Precision:    1.0
+        Sensitivity:  0.7030785306647376
+        F-Measure:    0.8256560317160657
+        Accuracy:     0.7030785306647376
+        
+-----------------------------------------------
+
+>> Decision Tree Model <<
+        Precision:    1.0
+        Sensitivity:  0.875170806205289
+        F-Measure:    0.9334304942346436
+        Accuracy:     0.875170806205289
+        
+-----------------------------------------------
+
+>> Random Forest Model <<
+        Precision:    1.0
+        Sensitivity:  0.882163813198296
+        F-Measure:    0.937393235394602
+        Accuracy:     0.882163813198296
+        
+-----------------------------------------------
+
+>> Support Vector Machine Model <<
+        Precision:    1.0
+        Sensitivity:  0.8102242585001206
+        F-Measure:    0.8951645131210869
+        Accuracy:     0.8102242585001206
+        
+-----------------------------------------------
+
+>> Neural Networks Model <<
+        Precision:    1.0
+        Sensitivity:  0.814082469254883
+        F-Measure:    0.8975142895121627
+        Accuracy:     0.814082469254883
+        
+-----------------------------------------------
+
+
