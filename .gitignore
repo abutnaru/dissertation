@@ -4,8 +4,6 @@
 # Cache
 artefact/classifier/__pycache__
 
-# Script results
-artefact/scraper/online-valid.json
-artefact/scraper/results.json
-artefact/scraper/success.csv
-artefact/scraper/summary.json
+# Archived files
+artefact/classifier/models/archive
+artefact/classifier/results/archive

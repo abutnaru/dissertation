@@ -104,14 +104,7 @@ def extract(url, label=-1):
         c.isdigit() for c in tld.extract(url).subdomain + tld.extract(url).domain
     )
 
-    # Feature 5: Usage of HTTPS
-    proto = url.split(":")[0]
-    if proto == "https":
-        proto = 1
-    else:
-        proto = 0
-
-    # Feature 6: Sensitive vocabulary
+    # Feature 5: Sensitive vocabulary
     sensitive_vocabulary = [
         "signin",
         "login",
@@ -127,14 +120,14 @@ def extract(url, label=-1):
         if word in url:
             sens_word_count += 1
 
-    # Feature 7: Presence of IP address in URL
+    # Feature 6: Presence of IP address in URL
     ip_presence = 0
     if len(re.findall(r"[0-9]+(?:\.[0-9]+){3}", url)) != 0:
         ip_presence = 1
 
-    # Feature 8 and 9: Minimum distance between URL's domain and
+    # Feature 7 and 8: Minimum distance between URL's domain and
     # subdomain and the top N benign domains
-    dom_distance, subdom_distance = min_levenshtein(url, 1000)
+    dom_distance, subdom_distance = min_levenshtein(url, 2500)
 
     if label < 0:
         return np.array(
@@ -143,7 +136,6 @@ def extract(url, label=-1):
                 symbols_count,
                 dot_count,
                 digit_count,
-                proto,
                 sens_word_count,
                 ip_presence,
                 subdom_distance,
@@ -158,7 +150,6 @@ def extract(url, label=-1):
                 symbols_count,
                 dot_count,
                 digit_count,
-                proto,
                 sens_word_count,
                 ip_presence,
                 subdom_distance,

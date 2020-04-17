@@ -44,7 +44,7 @@ def train_and_eval(model, params, name):
 
 def run():
     dataset = parse_arguments()
-    X = pd.read_csv("features/" + dataset + ".csv", usecols=[*range(1, 10)])
+    X = pd.read_csv("features/" + dataset + ".csv", usecols=[*range(1, 9)])
     Y = pd.read_csv("features/" + dataset + ".csv", usecols=[0])
 
     # 10 fold cross-validation

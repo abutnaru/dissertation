@@ -99,6 +99,33 @@ def evaluate(model, pairs):
                 FP += 1
     return evaluation_metrics(TP, TN, FP, FN)
 
+def is_benign(url):
+    reader = csv.reader(open("data/benign_1M.csv", 'r'))
+    for row in reader:
+        if tld.extract(url).domain == tld.extract(row[0]).domain:
+            return True
+    return False
+
+def eval_with_whitelist(model, pairs):
+    TP, TN, FP, FN = 0, 0, 0, 0
+    for url, url_type in pairs:
+        f = features.extract(url)
+        if is_benign(url):
+            TN+=1
+        else:
+            prediction = model.predict(f.reshape(1, -1))
+            if url_type == 1:
+                if prediction == url_type:
+                    TP += 1
+                else:
+                    FN += 1
+            else:
+                if prediction == url_type:
+                    TN += 1
+                else:
+                    FP += 1
+    return evaluation_metrics(TP, TN, FP, FN)
+
 
 def eval_nb(dataset, modelsdir):
     naive_bayes = pickle.load(open("models/" + modelsdir + "/naive_bayes.sav", "rb"))
