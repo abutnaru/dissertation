@@ -13,7 +13,7 @@ The next test is run with the data published on the 7th of April. This time Goog
 
 Upon a surface level inspection it is noticeable that given it's popularity in usage, Google Safe-Browsing influences the lifetime of a portion of phishing URLs. It is probable that attackers adapt to the situation and remove phishing webpages detected, or serve them through different URLs. Moving a webpage from one domain to another is not resource expensive and allows the attackers to dodge the browser's anti-phishing detection system.
 
-Finally, the threshold is set to be 50.76\% accuracy in classification.
+Finally, the threshold is set to be the highest accuracy recorded across the two tests of 50.76\%.
 
 \section{List based module}
 
@@ -53,10 +53,47 @@ The last feature is the Hamming distance between the URL to be classified and a 
 	\includegraphics[width=0.49\textwidth]{hamming5k_on_phishtank_0401.png}
 	\includegraphics[width=0.49\textwidth]{hamming5k_on_phishtank_0405.png}
 	\caption{URL length distribution over a dataset of 50,000 records}
-	\label{fig:HAMMING_ON_PHISHTANK_0401}
+	\label{fig:HAMMING_ON_PHISHTANK}
 \end{figure}
 
+The results of this feature compilation are far exceeding Google Safe-Browsing's accuracy. However when the models are evaluated on a dataset that includes benign URLs the metrics show a significant drop in every aspect exept sensitivity. Figure \ref{fig:HAMMING_ON_MIXED} illustrates the bias of the model towards classifying URLs as malicious on a 5,000 records dataset (left side) and a 25,000 dataset (right side). Both the datasets are composed of half benign urls, half malicious.
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.49\textwidth]{hamming5k_on_mixed.png}	\includegraphics[width=0.49\textwidth]{hamming25k_on_mixed.png}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:HAMMING_ON_MIXED}
+\end{figure}
+
+These results differ from what is reported by \cite{SVM_SIMILARITY_INDEX} because the models are trained on different datasets. Given the circumstances, the next step is improving the accuracy and lower the sensitivity by tweaking the features. The aim of this process is to increase the information known through features, helping the model in achieving better classifications.
+
+Firstly, the number of hypens will be expanded to the number of '@', '-' and '~' symbols. The '@' sign is a particularly suspicious, as browsers ignore the characters placed on it's right side when parsing the URL. The number of numerical characters is set not only with the domain as input, but with both domain and subdomain. The reasoning being that it is equally uncommon to have subdomains containing digits.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.49\textwidth]{levenshtein5k_on_phishtank_0401.png}	\includegraphics[width=0.49\textwidth]{levenshtein5k_on_phishtank_0405.png}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:HAMMING_ON_MIXED}
+\end{figure}
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=0.49\textwidth]{levenshtein5k_on_mixed.png}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:HAMMING_ON_MIXED}
+\end{figure}
+
+The Hamming distance is designed to calculate the distance between two strings of equal length. Because of this, when computing the Hamming distance between two domains one of them needs to be padded. Because of this the Hamming distance is swapped for the Levenshtein distance. There is no performance loss expected as \cite{SVM_SIMILARITY_INDEX} reports similar results in both similarity indexes. Furthermore, the levenshtein distance will not only be calculated between the malicious domain and benign list of domains, but between the list of benign domains and both malicious subdomain strings separated by periods and the domain. The aim of this addition is to increase model's awareness regarding domains such as "www.bank.secure.brand.com".
+
+One feature that is introduced is the use of sensitive vocabulary.SPEAK ABOUT REF OF SENSITIVE VOCABULARY
+
+SPEAK ABOUT CHOSING HTTP/HTTPS AS FEATURE
+
+The size of the URL and IP presence features are be kept unchanged
+
+
 \section{Performance assessment}
+
 
 %=========================================================================================================
 % Skipped compiling instructions
