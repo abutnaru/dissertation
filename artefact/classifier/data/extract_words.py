@@ -46,20 +46,20 @@ def run():
     with open(url_file) as url_list:
         lines = [l for l in url_list]
         # delimiters = "0123456789-._~:/?#[]@!$&'()*+,;="
-        netloc_words, path_words, query_words = [], [], []
+        subdomain_words, domain_words, path_words, query_words = [], [], [], []
         for row in tqdm(csv.reader(lines), total=len(lines)):
             netloc, path, params, query = url.urlparse(
                 row[0].lower(), allow_fragments=False
             )[1:-1]
-            netloc_words += extract_words(
-                tld.extract(netloc).subdomain + "." + tld.extract(netloc).domain
-            )
+            subdomain_words += extract_words(tld.extract(netloc).subdomain)
+            domain_words += extract_words(tld.extract(netloc).domain)
             path_words += extract_words(path)
             query_words += extract_words(params)
             query_words += extract_words(query)
-        save_top(netloc_words, "sensitive_words/{url_file}_netloc.csv")
-        save_top(path_words, "sensitive_words/{url_file}_path.csv")
-        save_top(query_words, "sensitive_words/{url_file}_query.csv")
+        save_top(subdomain_words, f"sensitive_words/{url_file[:-4]}_subdomain.csv")
+        save_top(domain_words, f"sensitive_words/{url_file[:-4]}_domain.csv")
+        save_top(path_words, f"sensitive_words/{url_file[:-4]}_path.csv")
+        save_top(query_words, f"sensitive_words/{url_file[:-4]}_query.csv")
 
 
 if __name__ == "__main__":
