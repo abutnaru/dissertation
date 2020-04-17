@@ -99,6 +99,10 @@ def extract(url, label=-1):
         "~"
     )  # Should not be used https://www.ietf.org/rfc/rfc2396.txt
 
+    # Feature 2: Number of '@', '-' and '~' characters
+    redirect_cues = ["url?", "redirect", "forward", "#btnI&q"]
+
+    at_count = url.count("@")
     # Feature 4: Number of numerical characters
     digit_count = sum(c.isdigit() for c in parsed_url.netloc)
 
