@@ -76,13 +76,6 @@ Firstly, the number of hypens will be expanded to the number of '@', '-' and '~'
 	\label{fig:HAMMING_ON_MIXED}
 \end{figure}
 
-\begin{figure}[b]
-	\centering
-	\includegraphics[width=0.49\textwidth]{levenshtein5k_on_mixed.png}
-	\caption{URL length distribution over a dataset of 50,000 records}
-	\label{fig:HAMMING_ON_MIXED}
-\end{figure}
-
 The Hamming distance is designed to calculate the distance between two strings of equal length. Because of this, when computing the Hamming distance between two domains one of them needs to be padded. Because of this the Hamming distance is swapped for the Levenshtein distance. There is no performance loss expected as \cite{SVM_SIMILARITY_INDEX} reports similar results in both similarity indexes. Furthermore, the levenshtein distance will not only be calculated between the malicious domain and benign list of domains, but between the list of benign domains and both malicious subdomain strings separated by periods and the domain. The aim of this addition is to increase model's awareness regarding domains such as "www.bank.secure.brand.com".
 
 One feature that is introduced is the use of sensitive vocabulary.SPEAK ABOUT REF OF SENSITIVE VOCABULARY
@@ -94,7 +87,7 @@ The size of the URL and IP presence features are be kept unchanged
 
 1. Dont forget to discuss dataset exploration
 2. Speak about not using HTTPS
-3. Speak about sensitive words and the selection built
+3. Speak about sensitive words and the selection built including URL redirection
 4. Mention that the aim is for this artefact tot be lightweight and show how much plain static URL analysis can achieve
 5. Revisit the number of phishing attacks
 
