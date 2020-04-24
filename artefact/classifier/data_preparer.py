@@ -1,8 +1,9 @@
 #!/usr/bin/env -S conda run -n dissertation python
 """
-The data preparer takes as input a CSV file with rows specification of <url>,
-<label> where label is 1 for phishing and 0 for benign. It processes each url 
-concurrently and outputs a CSV file with the features extracted.
+The data preparer takes as input a CSV file with rows specification of
+<url>,<label> where label is 1 for phishing and 0 for benign. It
+processes each url concurrently and outputs a CSV file with the features
+extracted.
 """
 
 import argparse
@@ -20,7 +21,7 @@ import features_extractor as features
 
 def get_input():
     parser = argparse.ArgumentParser(
-        description="Decomposes input URLs into features for model training"
+        description="Decomposes input URLs into features for model training",
     )
     parser.add_argument(
         "-d",
@@ -39,14 +40,6 @@ def get_input():
         required=True,
     )
     parser.add_argument(
-        "-m",
-        "--mixedurls",
-        dest="urltype",
-        help="Toggle mixed urls in target dataset",
-        type=bool,
-        default=True,
-    )
-    parser.add_argument(
         "-o",
         "--output",
         dest="filename",
@@ -54,30 +47,36 @@ def get_input():
         type=str,
         required=True,
     )
+    parser.add_argument(
+        "-m",
+        dest="mixed_flag",
+        help="Toggle mixed urls in target dataset",
+        action="store_true",
+    )
     args = parser.parse_args()
-    return (args.dataset, int(args.records), args.urltype, args.filename)
+    return (args.dataset, int(args.records), args.mixed_flag, args.filename)
 
 
 def main():
-    target_dataset, target_records, url_type, out_filename = get_input()
-    barlen = int(target_records if url_type == "mixed" else target_records / 2)
+    target_dataset, target_records, mixed_flag, out_filename = get_input()
+    record_limit = int(target_records / 2 if mixed_flag else target_records)
 
-    infile = open("data/processed_sets" + target_dataset + ".csv", "r")
+    infile = open("data/processed_sets/" + target_dataset + ".csv", "r")
     outfile = open(f"features/{out_filename}.csv", "w")
     writer = csv.writer(outfile)
 
     malicious = 0
     benign = 0
     results = []
-    with tqdm(total=barlen, file=sys.stdout) as progressbar:
+    with tqdm(total=int(target_records), file=sys.stdout) as progressbar:
         with concurrent.futures.ProcessPoolExecutor() as e:
             for row in csv.reader(infile):
                 # Writing rows and keeping track of total
                 # records written based on the label
-                if row[1] == "0" and benign < (target_records / 2):
+                if row[1] == "0" and benign < record_limit:
                     benign += 1
                     results.append(e.submit(features.extract, row[0], 0))
-                if row[1] == "1" and malicious < (target_records / 2):
+                if row[1] == "1" and malicious < record_limit:
                     malicious += 1
                     results.append(e.submit(features.extract, row[0], 1))
             for f in concurrent.futures.as_completed(results):
