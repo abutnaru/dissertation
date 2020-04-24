@@ -28,7 +28,12 @@ import csv, pickle
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Machine learning model trainer")
     parser.add_argument(
-        "-d", "--dataset", dest="dataset", type=str, help="Target dataset", required=True
+        "-d",
+        "--dataset",
+        dest="dataset",
+        type=str,
+        help="Target dataset",
+        required=True,
     )
     args = parser.parse_args()
     return args.dataset
@@ -48,9 +53,9 @@ def run():
     Y = pd.read_csv("features/" + dataset + ".csv", usecols=[0])
 
     # 10 fold cross-validation
-    kf = KFold(n_splits=10, shuffle=True, random_state=5)
+    kf = KFold(n_splits=10, shuffle=True, random_state=25)
     X_train, X_test, y_train, y_test = train_test_split(
-        X, Y, test_size=0.20, random_state=42
+        X, Y, test_size=0.20, random_state=35
     )
     X = X.values
     Y = Y.values
@@ -75,7 +80,7 @@ def run():
         decision_tree = DecisionTreeClassifier()
         train_and_eval(decision_tree, params, "Decision Tree")
 
-        random_forest = RandomForestClassifier(n_estimators=20)
+        random_forest = RandomForestClassifier(n_estimators=175)
         train_and_eval(random_forest, params, "Random Forest")
 
         svm_parameters = [{"kernel": ["rbf"], "C": [1, 10, 100, 1000]}]
@@ -83,15 +88,15 @@ def run():
         # svmModel = SVC()
         train_and_eval(support_vector, params, "Support Vector Machine")
 
-        ml_perceptron = MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
-        train_and_eval(ml_perceptron, params, "Neural Network")
+        ml_perceptr = MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
+        train_and_eval(ml_perceptr, params, "Neural Network")
 
     # Save trained models
     pickle.dump(naive_bayes, open("models/naive_bayes.sav", "wb"))
     pickle.dump(decision_tree, open("models/decision_tree.sav", "wb"))
     pickle.dump(random_forest, open("models/random_forest.sav", "wb"))
     pickle.dump(support_vector, open("models/support_vector.sav", "wb"))
-    pickle.dump(ml_perceptron, open("models/ml_perceptron.sav", "wb"))
+    pickle.dump(ml_perceptr, open("models/ml_perceptron.sav", "wb"))
 
 
 if __name__ == "__main__":

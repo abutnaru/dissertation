@@ -1,17 +1,27 @@
 #!/usr/bin/env -S conda run -n dissertation python
 """
-The data preparer extracts a selected number of benign and malicious
-URLs from the minxed450k.csv file and extrats their features
+The data preparer takes as input a CSV file with rows specification of <url>,
+<label> where label is 1 for phishing and 0 for benign. It processes each url 
+concurrently and outputs a CSV file with the features extracted.
 """
-import tldextract as tld
-import csv, re
+
 import argparse
-import features_extractor as features
 import concurrent.futures
+import csv
+import re
+import sys
+import time
+
+import tldextract as tld
+from tqdm import tqdm
+
+import features_extractor as features
 
 
 def get_input():
-    parser = argparse.ArgumentParser(description="Data preparator for model training")
+    parser = argparse.ArgumentParser(
+        description="Decomposes input URLs into features for model training"
+    )
     parser.add_argument(
         "-d",
         "--dataset",
@@ -24,9 +34,17 @@ def get_input():
         "-r",
         "--records",
         dest="records",
-        help="Number of records",
+        help="Number of records (benign + malicious)",
         type=str,
         required=True,
+    )
+    parser.add_argument(
+        "-m",
+        "--mixedurls",
+        dest="urltype",
+        help="Toggle mixed urls in target dataset",
+        type=bool,
+        default=True,
     )
     parser.add_argument(
         "-o",
@@ -37,31 +55,41 @@ def get_input():
         required=True,
     )
     args = parser.parse_args()
-    return (args.dataset, int(args.records), args.filename)
+    return (args.dataset, int(args.records), args.urltype, args.filename)
 
 
-def run():
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        target_dataset, target_records, outfile = get_input()
-        reader = csv.reader(open("data/" + target_dataset + ".csv", "r"))
-        writer = csv.writer(open(outfile + ".csv", "w"))
-        malicious = 0
-        benign = 0
-        results = []
-        for row in reader:
-            url, label = row[0], row[1]
-            # Writing rows and keeping track of total
-            # records written based on the label
-            if label == "0" and benign < (target_records / 2):
-                benign += 1
-                results.append(executor.submit(features.extract, url, 0))
-                # writer.writerow(f)
-            if label == "1" and malicious < (target_records / 2):
-                malicious += 1
-                results.append(executor.submit(features.extract, url, 1))
-        for f in concurrent.futures.as_completed(results):
-            writer.writerow(f.result())
+def main():
+    target_dataset, target_records, url_type, out_filename = get_input()
+    barlen = int(target_records if url_type == "mixed" else target_records / 2)
+
+    infile = open("data/processed_sets" + target_dataset + ".csv", "r")
+    outfile = open(f"features/{out_filename}.csv", "w")
+    writer = csv.writer(outfile)
+
+    malicious = 0
+    benign = 0
+    results = []
+    with tqdm(total=barlen, file=sys.stdout) as progressbar:
+        with concurrent.futures.ProcessPoolExecutor() as e:
+            for row in csv.reader(infile):
+                # Writing rows and keeping track of total
+                # records written based on the label
+                if row[1] == "0" and benign < (target_records / 2):
+                    benign += 1
+                    results.append(e.submit(features.extract, row[0], 0))
+                if row[1] == "1" and malicious < (target_records / 2):
+                    malicious += 1
+                    results.append(e.submit(features.extract, row[0], 1))
+            for f in concurrent.futures.as_completed(results):
+                writer.writerow(f.result())
+                progressbar.update()
+    infile.close()
+    outfile.close()
 
 
 if __name__ == "__main__":
-    run()
+    print("Data preparation started...\n")
+    start = time.perf_counter()
+    main()
+    finish = time.perf_counter()
+    print(f"\nFinished in {round(finish-start,2)} seconds")

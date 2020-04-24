@@ -1,28 +1,28 @@
 #!/usr/bin/env -S conda run -n dissertation python
 """
-The model evaluator measures the performance of trained
-model based on precision, recall, f-measure and accuracy.
+The model evaluator measures the performance of the target trained 
+models based on precision, recall, f-measure and accuracy.
 """
 import argparse
-import csv, pickle, re
+import concurrent.futures
+import csv
+import pickle
+import re
+import sys
+import time
+
 import numpy as np
 import tldextract as tld
+from tqdm import tqdm
+
 import features_extractor as features
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Machine learning model evaluator")
-    parser.add_argument(
-        "-m",
-        "--model",
-        type=str,
-        dest="target",
-        default="all",
-        help="Model to be evaluated (Default: All)",
-    )
+    parser = argparse.ArgumentParser(description="Trained model evaluator")
     parser.add_argument(
         "-n",
-        "--dirname",
+        "--modelsdir",
         dest="modelsdir",
         type=str,
         help="Models directory",
@@ -37,19 +37,7 @@ def parse_arguments():
         required=True,
     )
     args = parser.parse_args()
-    return (args.target, args.dataset, args.modelsdir)
-
-
-def parse_file(filename):
-    f = open("data/" + filename + ".csv", "r")
-    pairs = []
-    for row in csv.reader(f):
-        try:
-            pair = (row[0], float(row[1]))
-            pairs.append(pair)
-        except Exception as e:
-            print(e)
-    return pairs
+    return (args.dataset, args.modelsdir)
 
 
 def calc_precision(TP, FP):
@@ -80,139 +68,81 @@ def evaluation_metrics(TP, TN, FP, FN):
     }
 
 
-def evaluate(model, pairs):
+def evaluate(model, processed_dataset):  # whitelist="off"
     TP, TN, FP, FN = 0, 0, 0, 0
-    for url, url_type in pairs:
-        f = features.extract(url)
-        prediction = model.predict(f.reshape(1, -1))
-        # print("Prediction: {} ({})\nURL Type: {} ({})".format(prediction,type(prediction),url_type,type(url_type)))
-
-        if url_type == 1:
-            if prediction == url_type:
+    for line in processed_dataset:
+        label = line[0]
+        featureset = line[1:]
+        prediction = model.predict(featureset.reshape(1, -1))
+        if label == 1:
+            if prediction == label:
                 TP += 1
             else:
                 FN += 1
         else:
-            if prediction == url_type:
+            if prediction == label:
                 TN += 1
             else:
                 FP += 1
     return evaluation_metrics(TP, TN, FP, FN)
 
-def is_benign(url):
-    reader = csv.reader(open("data/benign_1M.csv", 'r'))
-    for row in reader:
-        if tld.extract(url).domain == tld.extract(row[0]).domain:
-            return True
-    return False
 
-def eval_with_whitelist(model, pairs):
-    TP, TN, FP, FN = 0, 0, 0, 0
-    for url, url_type in pairs:
-        f = features.extract(url)
-        if is_benign(url):
-            TN+=1
-        else:
-            prediction = model.predict(f.reshape(1, -1))
-            if url_type == 1:
-                if prediction == url_type:
-                    TP += 1
-                else:
-                    FN += 1
-            else:
-                if prediction == url_type:
-                    TN += 1
-                else:
-                    FP += 1
-    return evaluation_metrics(TP, TN, FP, FN)
-
-
-def eval_nb(dataset, modelsdir):
-    naive_bayes = pickle.load(open("models/" + modelsdir + "/naive_bayes.sav", "rb"))
-    print_metrics("Naive Bayes", evaluate(naive_bayes, parse_file(dataset)))
-
-
-def eval_dt(dataset, modelsdir):
-    decision_tree = pickle.load(
-        open("models/" + modelsdir + "/decision_tree.sav", "rb")
-    )
-    print_metrics("Decision Tree", evaluate(decision_tree, parse_file(dataset)))
-
-
-def eval_rf(dataset, modelsdir):
-    random_forest = pickle.load(
-        open("models/" + modelsdir + "/random_forest.sav", "rb")
-    )
-    print_metrics("Random Forest", evaluate(random_forest, parse_file(dataset)))
-
-
-def eval_svm(dataset, modelsdir):
-    support_vector = pickle.load(
-        open("models/" + modelsdir + "/support_vector.sav", "rb")
-    )
-    print_metrics(
-        "Support Vector Machine", evaluate(support_vector, parse_file(dataset))
+def write_metrics(alg, m, fout):
+    fout.write(
+        f""">> {alg} Model <<
+        Precision:    {m["precision"]}
+        Sensitivity:  {m["sensitivity"]}
+        F-Measure:    {m["fmeasure"]}
+        Accuracy:     {m["accuracy"]}
+        \n-----------------------------------------------\n\n"""
     )
 
 
-def eval_nn(dataset, modelsdir):
-    ml_perceptron = pickle.load(
-        open("models/" + modelsdir + "/ml_perceptron.sav", "rb")
-    )
-    print_metrics("Neural Networks", evaluate(ml_perceptron, parse_file(dataset)))
+def parse(filename):
+    f = open(f"data/processed_sets/{filename}.csv", "r")
+    return [(row[0], float(row[1])) for row in csv.reader(f)]
 
 
-def print_metrics(algo, m):
-    print(
-        """>> {} Model <<
-        Precision:    {}
-        Sensitivity:  {}
-        F-Measure:    {}
-        Accuracy:     {}
-        \n-----------------------------------------------\n""".format(
-            algo, m["precision"], m["sensitivity"], m["fmeasure"], m["accuracy"]
-        )
-    )
+def main():
+    data, modname = parse_arguments()
+    fin = open(f"data/processed_sets/{data}.csv", "r")
+    dataset = [l for l in csv.reader(fin)]
+    fin.close()
+    res, processed_dataset = [], []
+    print("Starting feature extraction from the target dataset")
+    title = "Processing recods"
+    with tqdm(total=len(dataset), desc=title, file=sys.stdout) as progressbar:
+        with concurrent.futures.ProcessPoolExecutor() as e:
+            for line in dataset:
+                res.append(e.submit(features.extract, line[0], float(line[1])))
+            for f in concurrent.futures.as_completed(res):
+                processed_dataset.append(f.result())
+                progressbar.update()
 
+    models = [
+        {"name": "Naive Bayes", "filename": "naive_bayes"},
+        {"name": "Decision Tree", "filename": "decision_tree"},
+        {"name": "Random Forest", "filename": "random_forest"},
+        {"name": "Support Vector Machine", "filename": "support_vector"},
+        {"name": "Neural Network", "filename": "ml_perceptron"},
+    ]
 
-def eval_all(dataset, modelsdir):
-    naive_bayes = pickle.load(open("models/" + modelsdir + "/naive_bayes.sav", "rb"))
-    print_metrics("Naive Bayes", evaluate(naive_bayes, parse_file(dataset)))
-    decision_tree = pickle.load(
-        open("models/" + modelsdir + "/decision_tree.sav", "rb")
-    )
-    print_metrics("Decision Tree", evaluate(decision_tree, parse_file(dataset)))
-    random_forest = pickle.load(
-        open("models/" + modelsdir + "/random_forest.sav", "rb")
-    )
-    print_metrics("Random Forest", evaluate(random_forest, parse_file(dataset)))
-    support_vector = pickle.load(
-        open("models/" + modelsdir + "/support_vector.sav", "rb")
-    )
-    print_metrics(
-        "Support Vector Machine", evaluate(support_vector, parse_file(dataset))
-    )
-    ml_perceptron = pickle.load(
-        open("models/" + modelsdir + "/ml_perceptron.sav", "rb")
-    )
-    print_metrics("Neural Networks", evaluate(ml_perceptron, parse_file(dataset)))
-
-
-def run():
-    target, dataset, modelsdir = parse_arguments()
-    if "all" in target:
-        eval_all(dataset, modelsdir)
-    elif "nb" in target:
-        eval_nb(dataset, modelsdir)
-    elif "dt" in target:
-        eval_dt(dataset, modelsdir)
-    elif "rf" in target:
-        eval_rf(dataset, modelsdir)
-    if "svm" in target:
-        eval_svm(dataset, modelsdir)
-    if "nn" in target:
-        eval_nn(dataset, modelsdir)
+    print("Starting model evaluation")
+    title = "Evaluating models"
+    with tqdm(total=len(models), desc=title, file=sys.stdout) as progressbar:
+        fout = open(f"results/model_evaluation/eval_{modname}_{data}.txt", "w")
+        for model in models:
+            fin = open(f"models/{modname}/{model['filename']}.sav", "rb")
+            m = pickle.load(fin)
+            write_metrics(model["name"], evaluate(m, processed_dataset), fout)
+            fin.close()
+            progressbar.update()
+        fout.close()
 
 
 if __name__ == "__main__":
-    run()
+    print("Initiating model evaluation...\n")
+    start = time.perf_counter()
+    main()
+    finish = time.perf_counter()
+    print(f"\nEvaluation finished in {round(finish-start,2)} seconds")

@@ -1,14 +1,17 @@
 #!/usr/bin/env -S conda run -n dissertation python
 """
-The classifier is the main and final interface with the
-artefact. It uses the model selected through evaluation
-and experimentation in the report.
+The classifier is the main and final interface with the artefact. It 
+uses the model selected through evaluation and experimentation in the 
+report.
 """
 import argparse
-import tldextract as tld
-import features_extractor as features
-import pickle, csv
+import csv
+import pickle
+
 import numpy as np
+import tldextract as tld
+
+import features_extractor as features
 
 
 def get_input():
