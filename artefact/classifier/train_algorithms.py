@@ -2,31 +2,56 @@
 """
 The algorithm trainer produces the machine learning models.
 """
-# Machine Learning Algorithms
-from sklearn.naive_bayes import GaussianNB
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
-
-# Model Helpers
-from sklearn import preprocessing
-from sklearn.model_selection import KFold, GridSearchCV, train_test_split
-from sklearn.calibration import CalibratedClassifierCV
-from sklearn.metrics import f1_score, roc_curve, roc_auc_score
-
-# Scientific Libraries
-import numpy as np
-import scipy as sc
-
-# Other Libraries
 import argparse
+import csv
+import os
+import pickle
+import sys
+import time
+
+import numpy as np
 import pandas as pd
-import csv, pickle
+import scipy as sc
+from sklearn import preprocessing
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score, roc_auc_score, roc_curve
+from sklearn.model_selection import GridSearchCV, KFold, train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from tqdm import tqdm
+
+ml_algorithms = [
+    {"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
+    {
+        "name": "Decision Tree",
+        "filename": "decision_tree",
+        "model": DecisionTreeClassifier(),
+    },
+    {
+        "name": "Random Forest",
+        "filename": "random_forest",
+        "model": RandomForestClassifier(n_estimators=175),
+    },
+    {
+        "name": "Support Vector Machine",
+        "filename": "support_vector",
+        "model": GridSearchCV(
+            SVC(), [{"kernel": ["rbf"], "C": [1, 10, 100, 1000]}], cv=3
+        ),
+    },
+    {
+        "name": "Neural Network",
+        "filename": "ml_perceptron",
+        "model": MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800),
+    },
+]
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Machine learning model trainer")
+    parser = argparse.ArgumentParser(description="Model trainer")
     parser.add_argument(
         "-d",
         "--dataset",
@@ -35,22 +60,30 @@ def parse_arguments():
         help="Target dataset",
         required=True,
     )
+    parser.add_argument(
+        "-id",
+        "--id",
+        dest="set_identifier",
+        type=str,
+        help="Model set identifier",
+        required=True,
+    )
     args = parser.parse_args()
-    return args.dataset
+    return (args.dataset, args.set_identifier)
 
 
-def train_and_eval(model, params, name):
-    X_train, y_train, X_test, y_test = params
-    model.fit(X_train, y_train.ravel())
-    y_pred = model.predict(X_test)
-    f1 = f1_score(y_test, y_pred, average="macro")
-    print("F1 score for {}: {}".format(name, f1))
+def main():
+    global ml_algorithms
+    dataset, setid = parse_arguments()
 
+    f_out = open(f"results/training_output/train_{dataset}.txt", "w")
+    if not os.path.exists(f"models/{setid}"):
+        os.makedirs(f"models/{setid}")
+    else:
+        sys.exit(f'A model set with the identifier "{setid}" already exists')
 
-def run():
-    dataset = parse_arguments()
-    X = pd.read_csv("features/" + dataset + ".csv", usecols=[*range(1, 14)])
-    Y = pd.read_csv("features/" + dataset + ".csv", usecols=[0])
+    X = pd.read_csv(f"features/{dataset}.csv", usecols=[*range(1, 14)])
+    Y = pd.read_csv(f"features/{dataset}.csv", usecols=[0])
 
     # 10 fold cross-validation
     kf = KFold(n_splits=10, shuffle=True, random_state=25)
@@ -59,12 +92,11 @@ def run():
     )
     X = X.values
     Y = Y.values
+    title = "K-fold iteration"
     i = 1
-
-    for train, test in kf.split(X):
-        print("Iteration no. ", i)
-        i = i + 1
-
+    for train, test in tqdm(kf.split(X), total=kf.get_n_splits(), desc=title):
+        f_out.write(f"Iteration number {i}\n")
+        i+=1
         X_train, X_test = X[train], X[test]
         y_train, y_test = Y[train], Y[test]
         # Normalizing the Sets
@@ -72,32 +104,23 @@ def run():
         scaler.transform(X_train)
         scaler.transform(X_test)
 
-        params = (X_train, y_train, X_test, y_test)
+        for algo in ml_algorithms:
+            algo["model"].fit(X_train, y_train.ravel())
+            y_pred = algo["model"].predict(X_test)
+            f1 = f1_score(y_test, y_pred, average="macro")
+            f_out.write(f"F1 score for {algo['name']}: {f1}\n")
 
-        naive_bayes = GaussianNB()
-        train_and_eval(naive_bayes, params, "Naive Bayes")
+    for algo in ml_algorithms:
+        f_model = open(f"models/{setid}/{algo['filename']}.sav", "wb")
+        pickle.dump(algo["model"], f_model)
+        f_model.close()
 
-        decision_tree = DecisionTreeClassifier()
-        train_and_eval(decision_tree, params, "Decision Tree")
-
-        random_forest = RandomForestClassifier(n_estimators=175)
-        train_and_eval(random_forest, params, "Random Forest")
-
-        svm_parameters = [{"kernel": ["rbf"], "C": [1, 10, 100, 1000]}]
-        support_vector = GridSearchCV(SVC(), svm_parameters, cv=3)
-        # svmModel = SVC()
-        train_and_eval(support_vector, params, "Support Vector Machine")
-
-        ml_perceptr = MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
-        train_and_eval(ml_perceptr, params, "Neural Network")
-
-    # Save trained models
-    pickle.dump(naive_bayes, open("models/naive_bayes.sav", "wb"))
-    pickle.dump(decision_tree, open("models/decision_tree.sav", "wb"))
-    pickle.dump(random_forest, open("models/random_forest.sav", "wb"))
-    pickle.dump(support_vector, open("models/support_vector.sav", "wb"))
-    pickle.dump(ml_perceptr, open("models/ml_perceptron.sav", "wb"))
+    f_out.close()
 
 
 if __name__ == "__main__":
-    run()
+    print("Model training initiated...\n")
+    start = time.perf_counter()
+    main()
+    finish = time.perf_counter()
+    print(f"\nTraining finished in {round(finish-start,2)} seconds")
