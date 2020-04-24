@@ -21,7 +21,7 @@ import features_extractor as features
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Trained model evaluator")
     parser.add_argument(
-        "-n",
+        "-m",
         "--modelsdir",
         dest="modelsdir",
         type=str,
@@ -87,27 +87,27 @@ def evaluate(model, processed_dataset):  # whitelist="off"
     return evaluation_metrics(TP, TN, FP, FN)
 
 
-def write_metrics(alg, m, fout):
-    fout.write(
-        f""">> {alg} Model <<
-        Precision:    {m["precision"]}
-        Sensitivity:  {m["sensitivity"]}
-        F-Measure:    {m["fmeasure"]}
-        Accuracy:     {m["accuracy"]}
+def write_metrics(algorithm, eval_metrics, f_out):
+    f_out.write(
+        f""">> {algorithm} Model <<
+        Precision:    {eval_metrics["precision"]}
+        Sensitivity:  {eval_metrics["sensitivity"]}
+        F-Measure:    {eval_metrics["fmeasure"]}
+        Accuracy:     {eval_metrics["accuracy"]}
         \n-----------------------------------------------\n\n"""
     )
 
 
-def parse(filename):
-    f = open(f"data/processed_sets/{filename}.csv", "r")
-    return [(row[0], float(row[1])) for row in csv.reader(f)]
+def parse(file_name):
+    f_in = open(f"data/processed_sets/{file_name}.csv", "r")
+    return [(row[0], float(row[1])) for row in csv.reader(f_in)]
 
 
 def main():
-    data, modname = parse_arguments()
-    fin = open(f"data/processed_sets/{data}.csv", "r")
-    dataset = [l for l in csv.reader(fin)]
-    fin.close()
+    data, modset = parse_arguments()
+    f_in = open(f"data/processed_sets/{data}.csv", "r")
+    dataset = [l for l in csv.reader(f_in)]
+    f_in.close()
     res, processed_dataset = [], []
     print("Starting feature extraction from the target dataset")
     title = "Processing recods"
@@ -130,14 +130,14 @@ def main():
     print("Starting model evaluation")
     title = "Evaluating models"
     with tqdm(total=len(models), desc=title, file=sys.stdout) as progressbar:
-        fout = open(f"results/model_evaluation/eval_{modname}_{data}.txt", "w")
+        f_out = open(f"results/model_evaluation/eval_{modset}_{data}.txt", "w")
         for model in models:
-            fin = open(f"models/{modname}/{model['filename']}.sav", "rb")
-            m = pickle.load(fin)
-            write_metrics(model["name"], evaluate(m, processed_dataset), fout)
-            fin.close()
+            f_in = open(f"models/{modset}/{model['filename']}.sav", "rb")
+            m = pickle.load(f_in)
+            write_metrics(model["name"], evaluate(m, processed_dataset), f_out)
+            f_in.close()
             progressbar.update()
-        fout.close()
+        f_out.close()
 
 
 if __name__ == "__main__":
@@ -145,4 +145,4 @@ if __name__ == "__main__":
     start = time.perf_counter()
     main()
     finish = time.perf_counter()
-    print(f"\nEvaluation finished in {round(finish-start,2)} seconds")
+    print(f"\nEvaluation f_inished in {round(finish-start,2)} seconds")

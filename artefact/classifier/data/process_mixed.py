@@ -14,10 +14,10 @@ print("Initiating the parsing of mixed450k_raw.csv\n")
 start = time.perf_counter()
 
 fin = open("unprocessed/mixed450k_raw.csv", "r")
-fout = open("mixed450k_processed.csv", "w")
 lines = [l for l in csv.reader(fin)]
+fin.close()
+fout = open("processed/mixed450k_processed.csv", "w")
 writer = csv.writer(fout)
-
 
 with tqdm(total=len(lines), file=sys.stdout) as progressbar:
     for row in lines:
@@ -30,7 +30,6 @@ with tqdm(total=len(lines), file=sys.stdout) as progressbar:
         writer.writerow([row[1], label])
         progressbar.update()
 
-fin.close()
 fout.close()
 
 finish = time.perf_counter()

@@ -2,7 +2,7 @@
 """
 Calculates the frequencies of words used in the target URL set. The
 search is performed on all the areas of the URL using the URL format of
-<subdomain>.<domain>/<path>?<query>
+<subdomain>.<domain>/<path>?<query>.
 """
 import argparse
 import csv
@@ -16,7 +16,7 @@ import wordninja
 from tqdm import tqdm
 
 
-def get_filein_name():
+def get_argument():
     parser = argparse.ArgumentParser(
         description="Outputs word usage frequencies in all areas of the URL"
     )
@@ -24,28 +24,35 @@ def get_filein_name():
         "-f",
         "--file",
         type=str,
-        dest="list",
+        dest="filename",
         help="URL list to be processed",
         required=True,
     )
-    return parser.parse_args().list
+    return parser.parse_args()
 
 
 def extract_words(string):
+    """
+    Takes as input a string and returns all the words found in it by
+    probabilistically splitting concatenated words using NLP based on
+    English Wikipedia unigram frequencies. 
+    """
     x = re.compile(r"[A-Za-z]\w+")
     finds = x.findall(string)
-    unwanted_chars = "_0123456789"
-    unwanted_words = ["www"]
+    chars_filter = "_0123456789"
+    words_filter = ["www"]
     for word in finds:
-        # Cleaning the numerical characters and underscores that the
-        # regex slips
-        cleaned_words = wordninja.split(
-            "".join(c for c in word if c not in unwanted_chars)
-        )
-    return [w for w in cleaned_words if len(w) > 3 and w not in unwanted_words]
+        # Filtering out the numerical characters and underscores
+        fw = wordninja.split("".join(c for c in word if c not in chars_filter))
+
+    # Returning only words longer than three characters to avoid noise
+    return [w for w in fw if len(w) > 3 and w not in words_filter]
 
 
 def save_frequencies(word_list, filename):
+    """
+    Counts and saves word frequencies
+    """
     c = Counter(word_list)
     with open(f"sensitive_words/{filename}", "w") as outfile:
         for k, v in c.most_common():
@@ -53,7 +60,7 @@ def save_frequencies(word_list, filename):
 
 
 def main():
-    fin = open(get_filein_name())
+    fin = open(get_argument().filename)
     lines = [l for l in fin]
     fin.close()
 
@@ -67,6 +74,7 @@ def main():
         path_words += extract_words(path)
         query_words += extract_words(params)
         query_words += extract_words(query)
+
     save_frequencies(subdomain_words, f"{fin[:-4]}_subdomain.csv")
     save_frequencies(domain_words, f"{fin[:-4]}_domain.csv")
     save_frequencies(path_words, f"{fin[:-4]}_path.csv")

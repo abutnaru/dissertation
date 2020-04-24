@@ -1,7 +1,12 @@
+#!/usr/bin/env -S conda run -n dissertation python
+"""
+Produces figures based on the data gathered from APWG reports.
+"""
 import csv
-import seaborn as sns
+
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from numpy import median
 
 
@@ -23,15 +28,3 @@ plot = sns.barplot(x="Quarter", y="Percentage", data=https_data,label="Emails", 
 locs, labels = plt.xticks()
 plot.set_xticklabels(labels=labels,rotation=-30)
 plot.figure.savefig("images/https_usage.png")
-
-# Features based figures
-plot.get_figure().clf()
-benign_data = pd.read_csv('benign.csv', names=['Size','Hyphens', 'Dots', 'Digits', 'IP', 'Hamming'])
-plot = sns.distplot(benign_data["Hyphens"], hist=True, kde=False)
-plot.figure.savefig("images/size_benign.png")
-
-# Features based figures
-plot.get_figure().clf()
-malicious_data = pd.read_csv('features.csv', names=['Label','Size','Hyphens', 'Dots', 'Digits', 'IP', 'Hamming'])
-plot = sns.scatterplot(y="Size", x="Hamming", hue="Label",data=malicious_data)
-plot.figure.savefig("images/size_phishing.png")

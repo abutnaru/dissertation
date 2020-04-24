@@ -1,7 +1,12 @@
+#!/usr/bin/env -S conda run -n dissertation python
+"""
+Pruces figures from model evaluation resulted metrics.
+"""
 import csv
-import seaborn as sns
+
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from numpy import median
 
 
@@ -147,7 +152,7 @@ def plot_levenshtein5k_on_mixed():
             ["Precision", 0.307, 0.264, 0.263, 0.270, 0.264],
             ["Sensitivity", 0.980, 0.990, 0.996, 0.990, 0.991],
             ["F-Measure", 0.468, 0.417, 0.416, 0.425, 0.417],
-            ["Accuracy", 0.483,  0.358, 0.352, 0.378, 0.357],
+            ["Accuracy", 0.483, 0.358, 0.352, 0.378, 0.357],
         ],
         columns=["Metric", "NB", "DT", "RF", "SVM", "MLP"],
     )
