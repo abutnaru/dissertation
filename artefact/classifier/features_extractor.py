@@ -58,7 +58,7 @@ def min_distances(url, N):
     dd = 1 if min_dd <= 5 and min_dd != 0 else 0
     if (len(subdomain.split(".")) == 1 and subdomain == "www") or min_sd > 5:
         sd = 0
-    return dd, sd
+    return sd, dd
 
 
 def has_domain(url, N):
@@ -141,7 +141,7 @@ def extract(raw_url, label=-1):
     # the length of the subdomain is based on its components rather than
     # character count as past experiments proved it more effective
     components = netloc.subdomain.count(".") + netloc.subdomain.count("-") + 1
-    f7 = 1 if components >= 3 else 0
+    f7 = 1 if components >= 2 else 0
 
     # Features 8,9 and 10: Presence of sensitive vocabulary and of
     # benign domains in URL's subdomain
