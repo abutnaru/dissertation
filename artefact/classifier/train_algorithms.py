@@ -33,19 +33,48 @@ ml_algorithms = [
     {
         "name": "Random Forest",
         "filename": "random_forest",
-        "model": RandomForestClassifier(n_estimators=175),
+        "model": GridSearchCV(
+            RandomForestClassifier(),
+            [{"n_estimators": [10, 100, 500, 1000], "max_features": ["auto","log2", "sqrt"]}],
+            cv=5,
+        ),
     },
     {
         "name": "Support Vector Machine",
         "filename": "support_vector",
         "model": GridSearchCV(
-            SVC(), [{"kernel": ["rbf"], "C": [1, 10, 100, 1000]}], cv=3
+            SVC(),
+            [
+                {
+                    "kernel": ["poly", "rbf", "sigmoid", "linear"],
+                    "C": [0.01, 0.1, 1, 10, 100, 1000],
+                    "gamma": [1, 0.1, 0.01, 0.001, 0.0001],
+                }
+            ],
+            cv=5,
         ),
     },
     {
         "name": "Neural Network",
         "filename": "ml_perceptron",
-        "model": MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800),
+        "model": GridSearchCV(
+            MLPClassifier(max_iter=2500),
+            [
+                {
+                    "hidden_layer_sizes": [
+                        (25, 50, 25),
+                        (50, 50, 50),
+                        (50, 100, 50),
+                        (100,),
+                    ],
+                    "activation": ["tahn", "relu"],
+                    "solver": ["sgd", "adam"],
+                    "alpha": [0.0001, 0.05],
+                    "learning_rate": ["constant", "adaptive"],
+                }
+            ],
+            cv=5,
+        ),
     },
 ]
 
@@ -96,7 +125,7 @@ def main():
     i = 1
     for train, test in tqdm(kf.split(X), total=kf.get_n_splits(), desc=title):
         f_out.write(f"Iteration number {i}\n")
-        i+=1
+        i += 1
         X_train, X_test = X[train], X[test]
         y_train, y_test = Y[train], Y[test]
         # Normalizing the Sets
