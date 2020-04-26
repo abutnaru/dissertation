@@ -1,14 +1,14 @@
 %!TEX root = ../main.tex
 
 \chapter{Implementation}
-This chapter follows the process of producing and optimising the artefact to fulfill the previously articulated objectives. The first section of the chapter follows the research on Google Safe Browsing's effective in detecting phishing websites. The accuracy target of the classifier implemented in this chapter is bounded by the results of the aforementioned case study. 
+This chapter follows the process of producing and optimising the artefact to fulfill the previously articulated objectives. The first section of the chapter follows the research on Google Safe Browsing's effective in detecting phishing websites. The accuracy target of the classifier implemented in this chapter is bounded by the results of the aforementioned case study.
 
 The next section explores different machine learning algorithms and URL features, aiming to deliver satisfactory results in comparison with the threshold. After this, a number of features that could complement the machine learning solution are presented and assessed. Finally the classifier is brought together and assessed as a whole.
 
 \section{Threshold definition}
 Before attempting to improve the level of protection the most popular browsers offer, the system's effectiveness needs to be assessed. In doing so the behaviour of the user will be simulated using an browser automation framework in accessing confirmend phishing websites. The outcome of this serves as an accuracy threshold for the proposed artefact.
 
-The first step of the process is data aquisition. A list of URLs pointing to online phishing webpages, confirmed to be malicious by the PhishTank community is fetched from their archive. The first test is run on the data available on the 1st on April. Testing a total number of 9345 phishing URLs, Google Safe-Broswing managed to achieve a total accuracy of 50.76\%. 
+The first step of the process is data aquisition. A list of URLs pointing to online phishing webpages, confirmed to be malicious by the PhishTank community is fetched from their archive. The first test is run on the data available on the 1st on April. Testing a total number of 9345 phishing URLs, Google Safe-Broswing managed to achieve a total accuracy of 50.76\%.
 The next test is run with the data published on the 7th of April. This time Google Safe-Browsing performed slightly worse reporting an accuracy of 48.32\% on the 8164 phishing URLs. Running the same test on the data aquired on the 1st of April shows a significant drop in accuracy, reporting an accuracy of 40.28\% on a number of 9359 URLs.
 
 Upon a surface level inspection it is noticeable that given it's popularity in usage, Google Safe-Browsing influences the lifetime of a portion of phishing URLs. It is probable that attackers adapt to the situation and remove phishing webpages detected, or serve them through different URLs. Moving a webpage from one domain to another is not resource expensive and allows the attackers to dodge the browser's anti-phishing detection system.
@@ -16,20 +16,125 @@ Upon a surface level inspection it is noticeable that given it's popularity in u
 Finally, the threshold is set to be the highest accuracy recorded across the two tests of 50.76\%.
 
 \section{List based module}
-
 It is safe to assume that most of web browsing activity takes place across a limited set of domains. This is reflected in different rankings of most popular domains. Because these are known to be benign, there is no use in wasting resources on classifying them. This is reasoning behind the inclusion of a list based module in the phishing detection system to be developed.
 The white-list included is comprised of the domains ranking published by \cite{MAJESTIC_MILLION}.
 
 \section{Machine learning module}
-A pattern in effective anti-phishing detection systems is the use of machine learning. A well developed module of this kind increases the performance and robustness of the proposed artefact. Besides this, it offers the capability of dealing with newly registered phishing domains and URLs.
+As the current literature shows, there is a breadth of approaches in detection an prevention of phishing attacks. However, an emergent pattern in effective anti-phishing detection systems is the use of machine learning. A well trained and calibrated module of this kind increases the performance and robustness of the proposed artefact. Besides this, it offers the capability of dealing with newly registered phishing domains and URLs without further training.
 
-\subsection{Algorithm selection}
+\subsection{Algorithm and dataset details}
 The first step in building this module is the selection of machine learning algroithms. The set used is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}) and is composed of Naive Bayes, Decision Tree, Random Forest, Support Vector Machine. In addition to these, the multilayered perceptron neural network is added with the purpose of experimentation.
 
-\subsection{Experimentation and calibration}
-The starting set in feature selection is based on the work of \cite{SVM_SIMILARITY_INDEX}. It's reported accuracy far surpasses the threshold and it makes use of similarity indexes. These similarity indexes are highly relevant as most phishing URLs try to decieve the victims by including different variations of the target brand or domain.
+The dataset used for feature extraction and training is composed of 120,000 records. These are split in 40,000 benign URLs and 80,000 phishing.
 
-The first feature selected is URL length. Most of the literature acknolowdges the difference in URL length between legitimate and phishing URLs. One example is illustrated in \cite{STACKED_ML_URL_HTML} (Figure \ref{fig:URL_LENGTH_DISTRIBUTION}), showing the distribution over a set of 50,000 URLs.
+\subsection{Features exploration}
+The features extracted from given URLs are the basis for machine learning and classification. These should put emphasis on areas where the two classes of URLs differ. The aim of this subsection is to find correlations that best separate benign URLs from phishing ones. The process of feature selection is highly influenced by the dataset on which the exploration is done. Because this artefact competes with the most popular phishing detection system the chosen dataset is comprehensive in most aspects.
+
+The feature selection process starts with URL length. The literature is clear on the discrepancy in average URL length between legitimate and phishing URLs. One example is illustrated in \cite{STACKED_ML_URL_HTML} (Figure \ref{fig:URL_LENGTH_DISTRIBUTION}), showing the distribution over a set of 50,000 URLs. Doing a URL length analisys (Table \ref{tab:URL_SIZE_ANALISYS}) on the dataset used in training the artefact, there is an obvious correlation between maliciousness and URL length.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\textwidth]{url_length_50k.jpg}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:URL_LENGTH_DISTRIBUTION}
+\end{figure}
+
+\begin{singlespace}
+	\small
+	\begin{center}
+		\label{tab:URL_SIZE_ANALISYS}
+		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
+			\hline
+			                         & \textbf{benign} & \textbf{Phishing} \\
+			\hline
+			\textbf{Average}         & 57.81           & 77.54             \\
+			\hline
+			\textbf{Median}          & 52              & 52                \\
+			\hline
+			\textbf{90th percentile} & 90              & 147                \\
+			\hline
+			\textbf{95th percentile} & 107              & 220                \\
+			\hline
+			\textbf{99th percentile} & 141              & 321                \\
+			\hline
+		\end{tabular}
+		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+	\end{center}
+\end{singlespace}
+
+
+The second feature selected is the protocol used. There is a case to be made agains using protocol as a feature due to its rise is usage shown in (). However, although TLS adoption is growing, serving a website through HTTPS requires technical knowledge and a certain amount of effort. Besides this, the low average lifespan of a phishing webpage could help the average attacker decide against using it. Based on these factors it is safe to assume that the number of phishing websites using TLS will not exceed 85\%.
+
+Doing protocol analisys on the dataset shows that the lack of TLS usage and maliciousness are highly correlated.
+
+The third feature selected is the number of numerical character in the domain and subdomain. The choice comes from the fact that it is highly uncommon for benign domains and subdomains to contain any numerical characters. This is confirmed by the analysis of the distribution of numerical characters throughout the dataset.
+
+The fourth feature is the number of '@' and '~' characters. The reasoning behind this is that, like numerical characters, it is uncommon for an URL to contain any '~' characters. It is an outdated practice of accessing a user's folder appending their name after the '~' character.
+The '@' is especially dangerous as it produces unexpected behaviour in the browser. It could either redirect to an email address using the default mail client or get the browser to ignore every character on it's rigth side.
+
+The analysis of the dataset shows that although they do not occur as often, these characters are still indicative of malicious activity and can improve decision-making in the reduced number of cases it is present.
+
+
+The fifth feature is the presence of a network location in the URL. Given the popularity of storage and hosting services today and the existence of many open redirect vulnerabilities, some phishing URLs hide their real domain behind the trusted domain of another company. This feature flags up the presence of such practice by checking if the number of dots in the path of the URL exceeds one.
+
+The sixth feature chosen is the number of hyphens. Although it could be, this metric is not included as an indicator of maliciousness on it's own, but rather as a support metric to aid in decision making when considering the other features as well. If there is no domain present in the path portion of the URL, the hyphen count is determined based on the network location only, otherwise for the whole URL. This is done to cover cases such as "target-brand.example.com" and "storage.service.com/website/target-brand.example.com/"
+In the case of the used dataset, there is no obvious correlation between number of hyphens and maliciousness
+
+The seventh feature selected is the number of subdomains components. Most of benign URLs either use "www" as subodmain, or another arbitrary string of characters. But the thing they have in common is that they use only one subdomain component. Phishing URLs however, may use a multi-component subdomain to create the illusion of the target brand. Based on this reasoning, this feature will flag any URL whose subdomain components count exceeds two. With this configuration, the feature shows a slight correlation with the benign URLs 
+
+The eighth, nineth and tenth features flag the presence of sensitive vocabulary in the URL. \cite{10.1145/1314389.1314391} in the study of phishing url obfuscation techniques uncovered the correlation of a set of words with malicious intent. The study has been done in 2007, so in order to maximize the efficiency of the set of sensitive words, they need to be extracted from an updated set.
+
+The word frequency count is performed on a coroboration of multiple phishtank(REF?) lists of valid phishes. These are split in the format of <subdomain>.<domain>/<path>?<query> and further probabilistically split concatenated words using natural language processing (NLP) based on English Wikipedia unigram frequencies.
+
+Experimentation with the most frequent words extracted shows that the query section of the URL has the same key words as in benign URL, thus being prone to causing numerous false positives. Because of this, the final lists of sensitive words used are for the subdomain, domain and path section.
+
+To further enhance the potential of this feature, the path and query sections of the URLs are searched for popular domains. Because it is a common practice in phishing URLs to use the target domain or brand in the path under the form of "www.example.com/brand/signin.html", if there is no sensitive word found in path, the first 2500 domains are searched throughout the path and query portions.
+
+The last two features are based on the similarity between URL's domain and subdomain, and the top N benign domains. This feature directly targets the practice of brand obfuscation and the illusion of accessing a trusted domain.
+Phishing URLs use an array of techniques to create this illusion. A comprehensive list of these techniques and mutations is presented in Table . All these permutations are done with the aim of tricking the viewer if they're not exercising a closer inspection. 
+
+
+Original example.com
+Addition examplea.com
+Bitsquatting azample.com
+Homoglyph ēxãmple.com
+Hyphenation exampl-e.com
+Insertion examplme.com
+Omission exaple.com
+Repetition exxample.com
+Replacement esample.com
+Subdomain ex.ample.com
+Transposition exapmle.com
+Vowel-swap exomple.com
+TLD inclusion examplecom.com
+
+To flag such pattern feature 10 measures the Levenshtein distance between the target URL and the top 25,000 benign domains. The Levenshtein distance calculates the number of operations (additions, subtractions, insertions etc.) needed to be performed on one of the strings so that tey are identical. If the Levenshtein distance is lower or equal to five and different than zero, then the URL is flagged as suspicious.
+
+The next feature does the same between all the components of the subdomain and the top 25,000 benign domains. In this case a distance lower than three will flag up the URL as suspicious
+
+\section{Performance assessment}
+
+
+%=========================================================================================================
+% Skipped compiling instructions
+\iffalse
+	You should always start with an overview (Heading 2 style) to tell what this chapter is about and finish with a summary (Heading 2 style) to tell what has been covered in this chapter.
+
+	The Design and Implementation chapter should explain the design technique chosen and justify why it is appropriate, depending on the development methodology.  Suitable diagram-techniques (e.g. UML, other drawings) should be used where appropriate. For the Implementation part, it should talk about the technical realisation of the concepts and ideas developed earlier. It is used to describe the system at a finer level of technical details, down to the code level. However, do not attempt to describe all the code in the system, and do not include large pieces of code in this section.
+
+	You should highlight the pieces of code which are critical to the system or worth to be noted. For example, the creation and/or implementation of core algorithms that make the system functional or some methods/ways you have used which are non-standard or innovative in the system implementation. You should also mention any unforeseen problems you encountered when implementing the system and how and to what extend you overcame them.
+
+	Appropriate testing must also be included in this section
+
+
+
+
+
+
+
+The starting set in feature selection is based on the work of \cite{SVM_SIMILARITY_INDEX}. The choice is based on the solution's use of similarity indexes in model training. These similarity indexes are highly relevant as most phishing URLs try to decieve the victims by including different variations of the target brand or domain. Besides this, the model reports an accuracy of 95\% far exceeding the set threshold.
+
+The first feature selected is URL length. The literature is clear on the discrepancy in average URL length between legitimate and phishing URLs. One example is illustrated in \cite{STACKED_ML_URL_HTML} (Figure \ref{fig:URL_LENGTH_DISTRIBUTION}), showing the distribution over a set of 50,000 URLs.
 
 \begin{figure}[t]
 	\centering
@@ -91,17 +196,4 @@ The size of the URL and IP presence features are be kept unchanged
 4. Mention that the aim is for this artefact tot be lightweight and show how much plain static URL analysis can achieve
 5. Revisit the number of phishing attacks
 
-\section{Performance assessment}
-
-
-%=========================================================================================================
-% Skipped compiling instructions
-\iffalse
-You should always start with an overview (Heading 2 style) to tell what this chapter is about and finish with a summary (Heading 2 style) to tell what has been covered in this chapter.
-
-The Design and Implementation chapter should explain the design technique chosen and justify why it is appropriate, depending on the development methodology.  Suitable diagram-techniques (e.g. UML, other drawings) should be used where appropriate. For the Implementation part, it should talk about the technical realisation of the concepts and ideas developed earlier. It is used to describe the system at a finer level of technical details, down to the code level. However, do not attempt to describe all the code in the system, and do not include large pieces of code in this section. 
-
-You should highlight the pieces of code which are critical to the system or worth to be noted. For example, the creation and/or implementation of core algorithms that make the system functional or some methods/ways you have used which are non-standard or innovative in the system implementation. You should also mention any unforeseen problems you encountered when implementing the system and how and to what extend you overcame them.
-
-Appropriate testing must also be included in this section
 \fi
