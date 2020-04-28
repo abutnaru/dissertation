@@ -41,11 +41,11 @@ def min_distances(url, N):
         for component in subdomain.split("."):
             if "-" in component:
                 for subcomp in component.split("-"):
-                    hamsd = hamming_distance(subcomp, b_domain)
-                    min_sd = hamsd if hamsd < min_sd else min_sd
+                    levsd = levenshtein.eval(subcomp, b_domain)
+                    min_sd = levsd if levsd < min_sd else min_sd
             else:
-                hamsd = hamming_distance(component, b_domain)
-                min_sd = hamsd if hamsd > min_sd else min_sd
+                levsd = levenshtein.eval(component, b_domain)
+                min_sd = levsd if levsd > min_sd else min_sd
         index += 1
         if index == N:
             break
@@ -54,11 +54,10 @@ def min_distances(url, N):
     # distance greater than 10 can be regarded as different. Otherwise
     # the target URL's domain and subdomain are considered similar to
     # one of the top N domains
-    sd = 1
-    dd = 1 if min_dd <= 5 and min_dd != 0 else 0
-    if (len(subdomain.split(".")) == 1 and subdomain == "www") or min_sd > 5:
-        sd = 0
-    return sd, dd
+    min_subdomain_distance = 1 if subdomain != "www" and min_sd <= 5 else 0
+    min_domain_distance = 1 if min_dd <= 5 and min_dd != 0 else 0
+
+    return min_subdomain_distance, min_domain_distance
 
 
 def has_domain(url, N):
@@ -102,38 +101,38 @@ def extract(raw_url, label=-1):
     ### Feature 1: URL size
     # Reasoning: The literature shows a clear discrepancy between the
     # average benign URL size and average phishing URL size.
-    f1 = len(raw_url)
+    url_size = len(raw_url)
 
     ### Feature 2: Protocol used (HTTP/HTTPS)
     # Reasoning: Although the number of phishing websites has risen
     # significantly in recent years, serving a website through HTTP is
     # still an indicator of maliciousness in most cases.
-    f2 = 0 if raw_url.split(":")[0] == "https" else 1
+    tls_usage = 1 if raw_url.split(":")[0] == "http" else 0
 
     ### Feature 3: Number of numerical characters
     # Reasoning: It is highly uncommon for benign domains and subdomains
     # to contain any numerical characters.
-    f3 = sum(c.isdigit() for c in parsed_url.netloc)
+    digit_count = sum(c.isdigit() for c in parsed_url.netloc)
 
     ### Feature 4: Number of '@' and '~' characters
     # Reasoning: Like numerical characters, it is uncommon for an URL to
     # contain any '~' characters. The '@' character produces unexpected
     # behaviour in the browser. It could either redirect to an email
     # address or get the browser to ignore everything after it.
-    f4 = raw_url.count("@") + raw_url.count("~")
+    symbols_count = raw_url.count("@") + raw_url.count("~")
 
     # Feature 5: Domain presence in the url path segment
     # Reasoning: This feature determines whether the path contains a
     # domain. This practice is often found in redirects and domains
     # hosted on places like firebase or storage.googleapis.com.
-    f5 = 0 if path_dot_count < 2 else 1
+    domain_in_path = 1 if path_dot_count >= 2 else 0
 
     ### Feature 6: Number of hyphens
     # Reasoning: It is uncommon for benign domains and subdomains to use
     # hyphens to separate words while it is common for phishing URLs to
     # use them. If a domain is detected in path, the number of hyphens
     # is counted over the entire URL
-    f6 = parsed_url.netloc.count("-") if f5 else raw_url.count("-")
+    dash_count = parsed_url.netloc.count("-") if domain_in_path else raw_url.count("-")
 
     # Feature 7: Size of the subdomain
     # Reasoning: The literature shows that there is a strong correlation
@@ -141,7 +140,7 @@ def extract(raw_url, label=-1):
     # the length of the subdomain is based on its components rather than
     # character count as past experiments proved it more effective
     components = netloc.subdomain.count(".") + netloc.subdomain.count("-") + 1
-    f7 = 1 if components >= 2 else 0
+    long_subdomain = 1 if components >= 3 else 0
 
     # Features 8,9 and 10: Presence of sensitive vocabulary and of
     # benign domains in URL's subdomain
@@ -185,22 +184,55 @@ def extract(raw_url, label=-1):
         "bank",
         "verify",
     ]
-    f8 = contains(sensitive_subdomains, netloc.subdomain)
-    f9 = contains(sensitive_domains, netloc.domain)
-    f10 = contains(sensitive_paths, parsed_url, check_domains=True)
+    subdomain_sw = contains(sensitive_subdomains, netloc.subdomain)
+    domain_sw = contains(sensitive_domains, netloc.domain)
+    path_sw = contains(sensitive_paths, parsed_url, check_domains=True)
 
     # Feature 11: Presence of IP address in URL
     # Reasoning: Usage of IP address instead of a domain name is tighyly
     # related to phishing/malicious intent.
-    f11 = 1 if len(re.findall(r"[0-9]+(?:\.[0-9]+){3}", raw_url)) != 0 else 0
+    ip_presence = 1 if len(re.findall(r"[0-9]+(?:\.[0-9]+){3}", raw_url)) != 0 else 0
 
     # Feature 12 and 13: Minimum distance between URL's domain and
     # subdomain and the top N benign domains
     # Reasoning: It is a common practice for phishing URLs to use a
     # variation of the targeted domain either in their domain or
     # subdomain to create the illusion of the legit website.
-    f12, f13 = min_distances(raw_url, 25_000)
+    suspicious_domain, suspicious_subdomain = min_distances(raw_url, 25_000)
 
     if label >= 0:
-        return np.array([label, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13])
-    return np.array([f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13])
+        return np.array(
+            [
+                label,
+                url_size,
+                tls_usage,
+                digit_count,
+                symbols_count,
+                domain_in_path,
+                dash_count,
+                long_subdomain,
+                subdomain_sw,
+                domain_sw,
+                path_sw,
+                ip_presence,
+                suspicious_domain,
+                suspicious_subdomain,
+            ]
+        )
+    return np.array(
+        [
+            url_size,
+            tls_usage,
+            digit_count,
+            symbols_count,
+            domain_in_path,
+            dash_count,
+            long_subdomain,
+            subdomain_sw,
+            domain_sw,
+            path_sw,
+            ip_presence,
+            suspicious_domain,
+            suspicious_subdomain,
+        ]
+    )
