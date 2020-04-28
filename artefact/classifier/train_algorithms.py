@@ -15,13 +15,14 @@ import scipy as sc
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score, roc_auc_score, roc_curve
+from sklearn.metrics import f1_score, roc_auc_score, roc_curve, plot_roc_curve
 from sklearn.model_selection import GridSearchCV, KFold, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 
 ml_algorithms = [
     {"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
@@ -33,11 +34,7 @@ ml_algorithms = [
     {
         "name": "Random Forest",
         "filename": "random_forest",
-        "model": GridSearchCV(
-            RandomForestClassifier(),
-            [{"n_estimators": [10, 100, 500, 1000], "max_features": ["auto","log2", "sqrt"]}],
-            cv=5,
-        ),
+        "model": RandomForestClassifier(n_estimators=125),
     },
     {
         "name": "Support Vector Machine",
@@ -46,38 +43,18 @@ ml_algorithms = [
             SVC(),
             [
                 {
-                    "kernel": ["poly", "rbf", "sigmoid", "linear"],
-                    "C": [0.01, 0.1, 1, 10, 100, 1000],
-                    "gamma": [1, 0.1, 0.01, 0.001, 0.0001],
+                    "kernel": ["rbf"],
+                    "C": [1, 10, 100,1000],
                 }
-            ],
-            cv=5,
+            ], cv=3
         ),
     },
     {
         "name": "Neural Network",
         "filename": "ml_perceptron",
-        "model": GridSearchCV(
-            MLPClassifier(max_iter=2500),
-            [
-                {
-                    "hidden_layer_sizes": [
-                        (25, 50, 25),
-                        (50, 50, 50),
-                        (50, 100, 50),
-                        (100,),
-                    ],
-                    "activation": ["tahn", "relu"],
-                    "solver": ["sgd", "adam"],
-                    "alpha": [0.0001, 0.05],
-                    "learning_rate": ["constant", "adaptive"],
-                }
-            ],
-            cv=5,
-        ),
+        "model": MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
     },
 ]
-
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Model trainer")
@@ -132,12 +109,21 @@ def main():
         scaler = preprocessing.StandardScaler().fit(X_train)
         scaler.transform(X_train)
         scaler.transform(X_test)
-
+        
         for algo in ml_algorithms:
+            print(f"Training the {algo['name']} model")
             algo["model"].fit(X_train, y_train.ravel())
             y_pred = algo["model"].predict(X_test)
             f1 = f1_score(y_test, y_pred, average="macro")
             f_out.write(f"F1 score for {algo['name']}: {f1}\n")
+            plot_roc_curve(algo['model'], X_test, y_test)
+            plt.savefig(f"figurator/plots/{algo['name']}_iter{i-1}_roc.png")  # doctest: +SKIP
+
+            # average_precision = average_precision_score(y_test, y_pred)
+            # disp = plot_precision_recall_curve(algo["model"], X_test, y_test)
+            # disp.ax_.set_title('2-class Precision-Recall curve: '
+            #       'AP={0:0.2f}'.format(average_precision))
+            # plt.savefig(f"test_{algo['name']}.png")
 
     for algo in ml_algorithms:
         f_model = open(f"models/{setid}/{algo['filename']}.sav", "wb")
