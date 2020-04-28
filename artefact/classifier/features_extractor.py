@@ -34,18 +34,21 @@ def min_distances(url, N):
     for row in csv.reader(f_benign_1M):
         b_domain = tld.extract(row[0]).domain
         levdd = levenshtein.eval(domain, b_domain)
-        min_dd = levdd if levdd < min_dd else min_dd
+        if levdd < min_dd:
+            min_dd = levdd
 
         # Splitting the subdomain to cover cases similar to
         # https://target-brand.customer-service.signin.example.com/
         for component in subdomain.split("."):
             if "-" in component:
                 for subcomp in component.split("-"):
-                    levsd = levenshtein.eval(subcomp, b_domain)
-                    min_sd = levsd if levsd < min_sd else min_sd
+                    hamsd = hamming_distance(subcomp, b_domain)
+                    if hamsd < min_sd:
+                        min_sd = hamsd
             else:
-                levsd = levenshtein.eval(component, b_domain)
-                min_sd = levsd if levsd > min_sd else min_sd
+                hamsd = hamming_distance(component, b_domain)
+                if hamsd < min_sd:
+                    min_sd = hamsd
         index += 1
         if index == N:
             break
@@ -54,7 +57,14 @@ def min_distances(url, N):
     # distance greater than 10 can be regarded as different. Otherwise
     # the target URL's domain and subdomain are considered similar to
     # one of the top N domains
-    min_subdomain_distance = 1 if subdomain != "www" and min_sd <= 5 else 0
+    min_subdomain_distance = (
+        1
+        if min_sd <= 5
+        and "www" not in subdomain
+        and len(subdomain.split(".")) == 1
+        else 0
+    )
+
     min_domain_distance = 1 if min_dd <= 5 and min_dd != 0 else 0
 
     return min_subdomain_distance, min_domain_distance
@@ -82,7 +92,7 @@ def contains(words, target, check_domains=False):
         for word in words:
             if word in target:
                 return 1
-        return 1 if has_domain(target, 2500) or has_domain(target, 2500) else 0
+        return 1 if has_domain(target, 2500) else 0
     else:
         for word in words:
             if word in target:
@@ -132,7 +142,9 @@ def extract(raw_url, label=-1):
     # hyphens to separate words while it is common for phishing URLs to
     # use them. If a domain is detected in path, the number of hyphens
     # is counted over the entire URL
-    dash_count = parsed_url.netloc.count("-") if domain_in_path else raw_url.count("-")
+    dash_count = (
+        parsed_url.netloc.count("-") if path_dot_count < 2 else raw_url.count("-")
+    )
 
     # Feature 7: Size of the subdomain
     # Reasoning: The literature shows that there is a strong correlation
