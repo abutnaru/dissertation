@@ -12,7 +12,7 @@ from tqdm import tqdm
 print("Initiating the splitting of mixed450k.csv\n")
 start = time.perf_counter()
 
-fin = open("source/features_breakdown.csv", "r")
+fin = open("source/final_train_dataset.csv", "r")
 rows = [l for l in csv.reader(fin)]
 fin.close()
 

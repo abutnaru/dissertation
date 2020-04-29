@@ -22,7 +22,12 @@ def plot_hamming5k_on_phishtank_0401():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming5k_on_phishtank_0401.png")
 
@@ -39,7 +44,12 @@ def plot_hamming5k_on_phishtank_0405():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming5k_on_phishtank_0405.png")
 
@@ -56,7 +66,12 @@ def plot_hamming5k_on_mixed():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming5k_on_mixed.png")
 
@@ -73,7 +88,12 @@ def plot_hamming25k_on_phishtank_0401():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming25k_on_phishtank_0401.png")
 
@@ -90,7 +110,12 @@ def plot_hamming25k_on_phishtank_0405():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming25k_on_phishtank_0405.png")
 
@@ -107,7 +132,12 @@ def plot_hamming25k_on_mixed():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("hamming25k_on_mixed.png")
 
@@ -124,7 +154,12 @@ def plot_levenshtein5k_on_phishtank_0401():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("levenshtein5k_on_phishtank_0401.png")
 
@@ -141,7 +176,12 @@ def plot_levenshtein5k_on_phishtank_0405():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("levenshtein5k_on_phishtank_0405.png")
 
@@ -158,7 +198,12 @@ def plot_levenshtein5k_on_mixed():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("levenshtein5k_on_mixed.png")
 
@@ -175,7 +220,12 @@ def plot_levenshtein112k_on_phishtank_0401():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("levenshtein112k_on_phishtank_0401.png")
 
@@ -192,7 +242,12 @@ def plot_levenshtein112k_on_mixed():
     )
     data = ham5k.melt("Metric")
     plot = sns.catplot(
-        y="value", x="variable", hue="Metric", data=data, palette="pastel", kind="bar"
+        y="value",
+        x="variable",
+        hue="Metric",
+        data=data,
+        palette="pastel",
+        kind="bar",
     )
     plot.savefig("levenshtein112k_on_mixed.png")
 
