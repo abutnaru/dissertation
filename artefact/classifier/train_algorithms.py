@@ -15,7 +15,13 @@ import scipy as sc
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score, roc_auc_score, roc_curve, plot_roc_curve
+from sklearn.metrics import (
+    f1_score,
+    roc_auc_score,
+    roc_curve,
+    plot_roc_curve,
+    confusion_matrix,
+)
 from sklearn.model_selection import GridSearchCV, KFold, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
@@ -23,38 +29,36 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 ml_algorithms = [
-    {"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
-    {
-        "name": "Decision Tree",
-        "filename": "decision_tree",
-        "model": DecisionTreeClassifier(),
-    },
-    {
-        "name": "Random Forest",
-        "filename": "random_forest",
-        "model": RandomForestClassifier(n_estimators=125),
-    },
+    #{"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
+    #{
+    #    "name": "Decision Tree",
+    #    "filename": "decision_tree",
+    #    "model": DecisionTreeClassifier(),
+    #},
+    #{
+    #    "name": "Random Forest",
+    #    "filename": "random_forest",
+    #    "model": RandomForestClassifier(n_estimators=125),
+    #},
     {
         "name": "Support Vector Machine",
         "filename": "support_vector",
         "model": GridSearchCV(
-            SVC(),
-            [
-                {
-                    "kernel": ["rbf"],
-                    "C": [1, 10, 100,1000],
-                }
-            ], cv=3
+            SVC(), [{"kernel": ["rbf"], "C": [2500, 3500],}], cv=5
         ),
     },
-    {
-        "name": "Neural Network",
-        "filename": "ml_perceptron",
-        "model": MLPClassifier(hidden_layer_sizes=(2, 10), max_iter=2800)
-    },
+    #{
+    #    "name": "Neural Network",
+    #    "filename": "ml_perceptron",
+    #    "model": GridSearchCV(
+    #        MLPClassifier(max_iter=250), [{"hidden_layer_sizes": [(13, 130)],}]
+    #    ),
+    #},
 ]
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Model trainer")
@@ -76,6 +80,28 @@ def parse_arguments():
     )
     args = parser.parse_args()
     return (args.dataset, args.set_identifier)
+
+
+def plot_metrics(algo, i, X_test, y_test, y_pred):
+    plot_roc_curve(algo["model"], X_test, y_test)
+    plt.savefig(
+        f"figurator/plots/{algo['name']}_iter{i-1}_roc.png"
+    )  # doctest: +SKIP
+    cm = confusion_matrix(y_test, y_pred)
+    ax = plt.subplot()
+
+    sns.heatmap(
+        cm, annot=True, ax=ax, cmap="Greens"
+    )  # annot=True to annotate cells
+
+    # labels, title and ticks
+    ax.set_xlabel("Predicted labels")
+    ax.set_ylabel("True labels")
+    ax.set_title("Confusion Matrix")
+    ax.xaxis.set_ticklabels(["Phishing", "Benign"])
+    ax.yaxis.set_ticklabels(["Phishing", "Benign"])
+    ax.figure.savefig(f"figurator/plots/{algo['name']}_iter{i-1}_cm.png")
+    plt.close("all")
 
 
 def main():
@@ -109,21 +135,14 @@ def main():
         scaler = preprocessing.StandardScaler().fit(X_train)
         scaler.transform(X_train)
         scaler.transform(X_test)
-        
+
         for algo in ml_algorithms:
             print(f"Training the {algo['name']} model")
             algo["model"].fit(X_train, y_train.ravel())
             y_pred = algo["model"].predict(X_test)
             f1 = f1_score(y_test, y_pred, average="macro")
             f_out.write(f"F1 score for {algo['name']}: {f1}\n")
-            plot_roc_curve(algo['model'], X_test, y_test)
-            plt.savefig(f"figurator/plots/{algo['name']}_iter{i-1}_roc.png")  # doctest: +SKIP
-
-            # average_precision = average_precision_score(y_test, y_pred)
-            # disp = plot_precision_recall_curve(algo["model"], X_test, y_test)
-            # disp.ax_.set_title('2-class Precision-Recall curve: '
-            #       'AP={0:0.2f}'.format(average_precision))
-            # plt.savefig(f"test_{algo['name']}.png")
+            plot_metrics(algo, i, X_test, y_test, y_pred)
 
     for algo in ml_algorithms:
         f_model = open(f"models/{setid}/{algo['filename']}.sav", "wb")
