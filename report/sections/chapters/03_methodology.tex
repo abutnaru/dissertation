@@ -58,6 +58,8 @@ The URLs used in the evaluation process are the latest provided by Phishtank at 
 The classifier is the main artefact, set to accomplish the dissertation's aim of delivering better protection against phishing than the most popular browsers do. The selected approach in designing a competitive anti-phishing detection system is through the identification of key performance indicators that are efficient in phishing URL classification. Naturally, the first step in designing the artifact is corroborating information from a wide range of studies on the indices that achieve high classifications accuracy. Following this, the algorithms are compared and the best performing one is selected
 Given the multi-layered structure of the artifact, each layer has it's own implementation specification and is discussed separately.
 
+%SPEAK ABOUT PARAMETERS AND DATASET
+
 The machine learning models compared in this dissertation are trained using Python and SciKitLearn library. Python is chosen over other programming languages as it is considered the de-facto in the field of data science. The SciKit library is used as an abstraction of the actual machine learning algorithms. By alleviating the complexity of the implementation of machine learning algorithms used, the saved time is allocated towards experimentation and calibration.
 
 The wrapper and the set of additions are implemented in using the same programming languange. Although better performance can be achieved using a different languange, this is done to preserve continuity throughout the artefact.
@@ -97,26 +99,26 @@ The final evaluation of the produced classifier is done in comparison to the eva
 % =========================================================================================================
 % Skipped compiling instructions
 \iffalse
-1st module Whitelist/Blacklist
-		Hash urls and do lookups as cheap as possible
-2nd module Heuristics
-		Compile a set of heuristics from the papers based on performance
-3rd module Visual similarity/Content evaluation
-		Think about studying the visual similarity or some content evaluation if feasible
-4th module Machine learning
-		use Cohen's kappa static to measure agreement between stacked machine learning algos
-		URL classifier (supervised learning)
-		Domain classifier (trained with https://github.com/elceef/dnstwist)
-		DGA classifier (optional)
+	1st module Whitelist/Blacklist
+	Hash urls and do lookups as cheap as possible
+	2nd module Heuristics
+	Compile a set of heuristics from the papers based on performance
+	3rd module Visual similarity/Content evaluation
+	Think about studying the visual similarity or some content evaluation if feasible
+	4th module Machine learning
+	use Cohen's kappa static to measure agreement between stacked machine learning algos
+	URL classifier (supervised learning)
+	Domain classifier (trained with https://github.com/elceef/dnstwist)
+	DGA classifier (optional)
 
-Figures must be correctly numbered with captions and paragraph text should not be wrapped around figures - same rules apply to tables. An example of figures can be found below.
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.45\textwidth]{unilogo.jpg}
-	\caption{Bournemouth University}
-	\label{fig:BULogo3}
-\end{figure}
-You should always start with an overview (Heading 2 style) to tell what this chapter is about and finkish with a summary (Heading 2 style) to tell what has been covered in this chapter.
+	Figures must be correctly numbered with captions and paragraph text should not be wrapped around figures - same rules apply to tables. An example of figures can be found below.
+	\begin{figure}[t]
+		\centering
+		\includegraphics[width=0.45\textwidth]{unilogo.jpg}
+		\caption{Bournemouth University}
+		\label{fig:BULogo3}
+	\end{figure}
+	You should always start with an overview (Heading 2 style) to tell what this chapter is about and finkish with a summary (Heading 2 style) to tell what has been covered in this chapter.
 
-This chapter is about discussing your project planning and methodology. Note that your chosen methodology should be based on the constraints and complexity of your project instead of some common senses with no link to your own project.]
+	This chapter is about discussing your project planning and methodology. Note that your chosen methodology should be based on the constraints and complexity of your project instead of some common senses with no link to your own project.]
 \fi
