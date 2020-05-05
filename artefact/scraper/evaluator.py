@@ -6,10 +6,10 @@ of success in correctly classifying phishing websites
 from selenium import webdriver
 import json, csv
 import os, time
-import httplib2
+import httplib2, urllib
+import json
+import argparse
 
-with open("online-valid.json", "r") as domains_list:
-    phishes = json.load(domains_list)
 
 CURRENT_DIR = os.getcwd()
 results = []
@@ -20,6 +20,30 @@ summary = {
     "exceptions": 0,
     "rateOfSuccess": 0,
 }
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Google Safe Browsing classification evaluator"
+    )
+    parser.add_argument(
+        "-i",
+        "--infile",
+        dest="phishes_file",
+        type=str,
+        help="URLs to be checked",
+        required=True,
+    )
+    parser.add_argument(
+        "-a",
+        "--api",
+        dest="api_testing",
+        help="Toggle mixed urls in target dataset",
+        action="store_true",
+    )
+
+    args = parser.parse_args()
+    return args.phishes_file, "api" if args.api_testing else "browser"
 
 
 def update_summary_file(summary):
@@ -140,37 +164,7 @@ def test_chrome(url):
         return e
 
 
-def test_firefox(url):
-    profile = webdriver.FirefoxProfile(
-        "/home/osboxes/.mozilla/firefox/5prbp52d.default-release-1581000949023"
-    )
-    profile.set_preference("browser.safebrowsing.blockedURIs.enabled", True)
-    profile.set_preference("browser.safebrowsing.downloads.enabled", True)
-    profile.set_preference("browser.safebrowsing.enabled", True)
-    profile.set_preference("browser.safebrowsing.forbiddenURIs.enabled", True)
-    profile.set_preference("browser.safebrowsing.malware.enabled", True)
-    profile.set_preference("browser.safebrowsing.phishing.enabled", True)
-    profile.set_preference("browser.safebrowsing.downloads.remote.enabled", True)
-    profile.set_preference("browser.safebrowsing.provider.google.nextupdatetime", 1)
-    profile.set_preference("browser.safebrowsing.provider.mozilla.nextupdatetime", 1)
-
-    opts = webdriver.FirefoxOptions()
-    driver = webdriver.Firefox(options=opts, firefox_profile=profile)
-    driver.set_page_load_timeout(35)
-    try:
-        time.sleep(5)
-        driver.get(url)
-        source = driver.page_source
-        driver.close()
-        if "Deceptive" in source or "is blocked" in source:
-            return True
-        return False
-    except Exception as e:
-        print(e)
-        return e
-
-
-def test(url, browsers):
+def browser_check(url, browsers):
     if "chrome" in browsers:
         result = test_chrome(url)
         if isinstance(result, bool):
@@ -178,13 +172,6 @@ def test(url, browsers):
         else:
             record_result("chrome", url, None, result)
 
-    if "firefox" in browsers:
-        result = test_firefox(url)
-        if isinstance(result, bool):
-            record_result("firefox", url, result, None)
-        else:
-            record_result("firefox", url, None, result)
-    
     if "android" in browsers:
         result = test_android(url)
         if isinstance(result, bool):
@@ -207,11 +194,66 @@ def is_online(url):
         return False
 
 
+def read_in_chunks(f_in, chunk_size=500):
+    """Lazy function (generator) to read a file piece by piece."""
+    phishes = json.load(f_in)
+    index = 0
+    while True:
+        records = phishes[index:index+500]
+        index += 500
+        if not records:
+            break
+        yield records
+
+
+def api_check(phishes_file):
+    APIKEY = "AIzaSyDeefzwH7Fspz2D4AazFEZVYPQ07U1zt5w"
+    true_positives = 0
+    total_urls = 0
+    parsed_phishes = list()
+    for phishes in read_in_chunks(phishes_file):
+        #if total_urls == 1500:
+        #   break
+        total_urls+=len(phishes)
+        parsed_phishes = [{"url": phish["url"]} for phish in phishes]
+
+        body = {
+            "client": {"clientId": "dissertation", "clientVersion": "1.5.2"},
+            "threatInfo": {
+                "threatTypes": ["MALWARE", "SOCIAL_ENGINEERING"],
+                "platformTypes": ["WINDOWS"],
+                "threatEntryTypes": ["URL"],
+                "threatEntries": parsed_phishes,
+            },
+        }
+        response = httplib2.Http().request(
+            f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={APIKEY}",
+            method="POST",
+            headers={"Content-type": "application/json"},
+            body=json.dumps(body),
+        )[1]
+        matches = [obj for obj in json.loads(response.decode())['matches']]
+        c = 0
+        for m in matches:
+            c = sum([1 if m['threat']['url'] == phish['url'] else 0 for phish in phishes])
+            true_positives += c
+    print(f"True positives: {true_positives}\nTotal URLs: {total_urls}\nSuccess rate: {(true_positives/total_urls)*100}%")
+
+
 def main():
-    for phish in phishes:
-        if is_online(phish["url"]):
-            test(phish["url"], ("android"))
+    target_filename, api_flag = parse_arguments()
+    f_in=  open(f"{target_filename}.json", "r")
+    if api_flag:
+        api_check(f_in)
+    else:
+        for phish in json.load(f_in):
+            if is_online(phish["url"]):
+                browser_check(phish["url"], ("chrome"))
 
 
 if __name__ == "__main__":
+    print("Initiating Google safe-browsing evaluation...\n")
+    start = time.perf_counter()
     main()
+    finish = time.perf_counter()
+    print(f"\nEvaluation f_inished in {round(finish-start,2)} seconds")
