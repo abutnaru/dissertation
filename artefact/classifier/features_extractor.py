@@ -143,7 +143,9 @@ def extract(raw_url, label=-1):
     # use them. If a domain is detected in path, the number of hyphens
     # is counted over the entire URL
     dash_count = (
-        parsed_url.netloc.count("-") if path_dot_count < 2 else raw_url.count("-")
+        parsed_url.netloc.count("-")
+        if path_dot_count < 2
+        else raw_url.count("-")
     )
 
     # Feature 7: Size of the subdomain
@@ -203,7 +205,9 @@ def extract(raw_url, label=-1):
     # Feature 11: Presence of IP address in URL
     # Reasoning: Usage of IP address instead of a domain name is tighyly
     # related to phishing/malicious intent.
-    ip_presence = 1 if len(re.findall(r"[0-9]+(?:\.[0-9]+){3}", raw_url)) != 0 else 0
+    ip_presence = (
+        1 if len(re.findall(r"[0-9]+(?:\.[0-9]+){3}", raw_url)) != 0 else 0
+    )
 
     # Feature 12 and 13: Minimum distance between URL's domain and
     # subdomain and the top N benign domains
@@ -222,7 +226,7 @@ def extract(raw_url, label=-1):
                 symbols_count,
                 domain_in_path,
                 dash_count,
-                long_subdomain,
+               # long_subdomain,
                 subdomain_sw,
                 domain_sw,
                 path_sw,
@@ -239,7 +243,7 @@ def extract(raw_url, label=-1):
             symbols_count,
             domain_in_path,
             dash_count,
-            long_subdomain,
+           # long_subdomain,
             subdomain_sw,
             domain_sw,
             path_sw,
