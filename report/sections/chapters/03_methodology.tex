@@ -40,7 +40,7 @@ Following this method ensures that by the end of the research phase, there will 
 % It's design is built and refined through a loop of research and experimentation
 
 \section{Artefact design and development}
-The functional outcome of this dissertation is composed of two artifacts. The first is the Google Safe Browsing evaluation tool used to uncover Safe Browsing's classification accuracy. The second artifact is the classifier used to predict whether an URL points to a phishing page or not.
+The functional outcome of this dissertation is composed of two artifacts. The first is the Google Safe Browsing evaluation tool used to uncover Safe Browsing's classification accuracy. This tool will perform evaluation using both the browser in a realistic scenarion and the Google Safe Browsing API. The second artifact is the classifier used to predict whether an URL points to a phishing page or not.
 
 \subsection{Evaluation tool}
 The evaluation tool is written in Python and uses the Selenium framework for browser automation. Python is used due to it's extensive support and ease of use. The selenium framework is chosen because of it's reputation in browser automation testing and expansive documentation. The target of the evaluation tool is to mimic a user clicking on a phishing link. This is done in order to capture effectiveness in a real-world scenario. The alternative to this is using Google's Safe Browsing API for checking.
@@ -94,7 +94,7 @@ The evaluation of the machine learning models is based on a set of metrics that 
 The metrics presented in \ref{eq:PRECISION},\ref{eq:SENSITIVITY},\ref{eq:FMEASURE} and \ref{eq:ACCURACY} represent key statistical concepts. A system is said to be precise (\ref{eq:PRECISION}) when it delivers a high level of correct prediction values. . Sensitivity \ref{eq:SENSITIVITY}, also known as recall, outlines system's predisposition in classifying an legitimate URL as being malicious. As the system grows in sensitivity, it reduces the number of false-negatives it produces. To put things in perspective, precision is the ratio between all adequate classification errors and all classification errors, whereas recall is the ratio of all classification errors and all existing errors.
 The F-Measure (\ref{eq:FMEASURE}) is the harmonic mean of precision (the number of correct predictions) and robustness (works well with URLs difficult to classify). It is a composed metric which penalizes the extreme values and is meant to provide a single measurement for a system which illustrates the level of optimization. Finally, the accuracy (\ref{eq:ACCURACY}) measures the ratio of true-positives and true-negatives.
 
-The final evaluation of the produced classifier is done in comparison to the evaluation tool's results. It is based on the same data set and same metrics to eliminate any variables that may appear between evaluation methods.
+The final evaluation of the produced classifier is done in comparison to the evaluation tool's results. It is based on the same data set and metrics to eliminate any variables that may appear between evaluation methods.
 
 % =========================================================================================================
 % Skipped compiling instructions
