@@ -16,7 +16,7 @@ Upon a surface level inspection it is noticeable that given it's popularity in u
 Finally, the threshold is set to be the highest accuracy recorded across the two tests of 50.76\%.
 
 \section{List based module}
-It is safe to assume that most of web browsing activity takes place across a limited set of domains. This is reflected in different rankings of most popular domains. Because these are known to be benign, there is no use in wasting resources on classifying them. This is reasoning behind the inclusion of a list based module in the phishing detection system to be developed.
+It is safe to assume that most of web browsing activity takes place across a limited set of domains. This is reflected in different rankings of most popular domains. Because these are known to be benign, there is no reasong for wasting resources on the classification process. Because of this, a list based module is included in the phishing detection system.
 The white-list included is comprised of the domains ranking published by \cite{MAJESTIC_MILLION}.
 
 \section{Machine learning module}
@@ -25,7 +25,7 @@ As the current literature shows, there is a breadth of approaches in detection a
 \subsection{Experimentation details}
 The first step in building this module is the selection of machine learning algroithms. The set used is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}) and is composed of Naive Bayes, Decision Tree, Random Forest, Support Vector Machine. In addition to these, the multilayered perceptron neural network is added with the purpose of experimentation.
 
-The dataset used for feature extraction and training is composed of 120,000 records. These are split in 40,000 benign URLs and 80,000 phishing.
+The dataset used for feature extraction and training is composed of 100,000 records. These are split in 40,000 benign URLs and 60,000 phishing.
 
 \subsection{Features exploration}
 The features extracted from given URLs are the basis for machine learning and classification. These should put emphasis on areas where the two classes of URLs differ. The aim of this subsection is to find correlations that best separate benign URLs from phishing ones. The process of feature selection is highly influenced by the dataset on which the exploration is done. Because this artefact competes with the most popular phishing detection system the chosen dataset is comprehensive in most aspects.
@@ -121,15 +121,8 @@ Illustrating the correlations between the URL labels (benign or malicious) and t
 	\label{fig:FEATURE_CORRELATION}
 \end{figure}
 
-\section{Performance assessment}
-This chapter follows the process of machine learning models training and performance evaluation.
-
-
-
-The definition of done vis-a-vis the effectiveness of the model is set by the thershold set in the Threshold Definition (REF)
-
-
-Training the first set of modes shows the amount of effort put into feature extraction reflected in the results. Table \ref{tab:FIRST_TRAINED_MODELS} presents the F1 scores of the alorightms. 
+\section{Initial performance assessment}
+This section follows the process of model training and initial performance assessment. Starting with training the first set of models shows the amount of effort put into feature extraction reflected in the results. Table \ref{tab:FIRST_TRAINED_MODELS} presents the F1 scores of the alorightms. F1-score is the metric used to generalize performance because its a composed measurement including precision and recall.
 
 \begin{singlespace}
 	\small
@@ -143,11 +136,11 @@ Training the first set of modes shows the amount of effort put into feature extr
 			\hline
 			\textbf{Decision Tree}          & 98.74             \\
 			\hline
-			\textbf{Random Forest}          & 98.87             \\
+			\textbf{Random Forest}          & 98.86             \\
 			\hline
-			\textbf{Support Vector Machine} & 98.87             \\
+			\textbf{Support Vector Machine} & 98.76             \\
 			\hline
-			\textbf{Multi-layer Perceptron} & 37.51             \\
+			\textbf{Multi-layer Perceptron} & 97.21             \\
 			\hline
 		\end{tabular}
 		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
@@ -165,11 +158,12 @@ An example of these measurements is presented in Figure \ref{fig:ROC_CM_EXAMPLE}
 	\label{fig:ROC_CM_EXAMPLE}
 \end{figure}
 
-
 An important factor in model selection and calibration is the amount of false positives produces. The literature states that the higher the delivery of false positives, the less the alerts are taken into consideration by the user. Because of this the final model needs to prioritise precision over recall and false negatives over false positives.
 
 To test its performance in a realistic scenario, the models are set to deliver predictions on the remainder benign and phishing URLs of the 450,000 dataset. The results collected from the predictions over 305,737 benign URLs and 74,436 phishing urls are presented in Table (REF)
 
+
+% NEEDS TO BE RERUN
 \begin{singlespace}
 	\small
 	\begin{center}
@@ -194,8 +188,7 @@ To test its performance in a realistic scenario, the models are set to deliver p
 \end{singlespace}
 
 
-
- The next dataset used to evauate model performance is composed of online and valid phishes from 1st of April. This way the models are tested on the same parameters Google safe browsing was.
+The next dataset used to evauate model performance is composed of online and valid phishes from 1st of April. This way the models are tested on the same parameters Google safe browsing was.
 
 \begin{singlespace}
 	\small
@@ -203,22 +196,42 @@ To test its performance in a realistic scenario, the models are set to deliver p
 		\label{tab:FIRST_TRAINED_MODELS}
 		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
 			\hline
-			                                & \textbf{F1-score} \\
+			                                & \textbf{Precision} &\textbf{Sensitivity} &\textbf{F1-score}& \textbf{Accuracy}  \\
 			\hline
-			\textbf{Naive Bayes}            & 98.37             \\
+			\textbf{Naive Bayes}            & 1.00  & 83.33 & 90.91 &83.33        \\
 			\hline
-			\textbf{Decision Tree}          & 98.74             \\
+			\textbf{Decision Tree}          & 1.00 & 81.15 & 89.59 & 81.15        \\
 			\hline
-			\textbf{Random Forest}          & 98.87             \\
+			\textbf{Random Forest}          & 1.00 & 82.11 & 90.17 & 82.11      \\
 			\hline
-			\textbf{Support Vector Machine} & 98.87             \\
+			\textbf{Support Vector Machine} & 1.00 &78.91&88.21&78.91 \\
 			\hline
-			\textbf{Multi-layer Perceptron} & 37.51             \\
+			\textbf{Multi-layer Perceptron} & 1.00 & 82.69 & 90.52 & 82.69   \\
 			\hline
 		\end{tabular}
 		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
 	\end{center}
 \end{singlespace}
+
+
+\section{Performance improvement}
+Given the results of the models presented in the previous section, the performance improvement shown in this section is not expected to be substantial.
+The first step in improving the performance is removing features with a correlation to the label close to zero. The correlation matrix presented in Figure (REF) shows feature number seven as having the lowest correlation to the label. Removing the long subodmain feature reduces confusion in model training and offers a slight improvement in delivering accurate predictions. Figure \ref{fig:IMPROVED_FEATURE_CORRELATION} illustrates the correlation heatmap after removal.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=1\textwidth]{improved_feature_correlation.png}
+	\caption{URL length distribution over a dataset of 50,000 records}
+	\label{fig:IMPROVED_FEATURE_CORRELATION}
+\end{figure}
+
+The second step is hyperparameter tuning. The process of hyperparameter tuning or optimisation consists of training the subject model with different values for it's parameters. By trying different permutations of values for these parameters the trained model delivers better or worse predictions and can be selected for further optimisation based on this.
+
+Hyperparameter tuning is resource expensive. Because of this, the algorithms selected for optimisations are the ones that already deliver good and consistent results. These are the random forest and the support vector machine classifiers.
+
+
+
+
 
 
 

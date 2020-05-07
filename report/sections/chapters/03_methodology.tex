@@ -94,6 +94,9 @@ The evaluation of the machine learning models is based on a set of metrics that 
 The metrics presented in \ref{eq:PRECISION},\ref{eq:SENSITIVITY},\ref{eq:FMEASURE} and \ref{eq:ACCURACY} represent key statistical concepts. A system is said to be precise (\ref{eq:PRECISION}) when it delivers a high level of correct prediction values. . Sensitivity \ref{eq:SENSITIVITY}, also known as recall, outlines system's predisposition in classifying an legitimate URL as being malicious. As the system grows in sensitivity, it reduces the number of false-negatives it produces. To put things in perspective, precision is the ratio between all adequate classification errors and all classification errors, whereas recall is the ratio of all classification errors and all existing errors.
 The F-Measure (\ref{eq:FMEASURE}) is the harmonic mean of precision (the number of correct predictions) and robustness (works well with URLs difficult to classify). It is a composed metric which penalizes the extreme values and is meant to provide a single measurement for a system which illustrates the level of optimization. Finally, the accuracy (\ref{eq:ACCURACY}) measures the ratio of true-positives and true-negatives.
 
+% TODO: Fill in with explanation
+In addition to the aforementioned metrics, the Receiver Operating Characteristic (ROC) curve
+
 The final evaluation of the produced classifier is done in comparison to the evaluation tool's results. It is based on the same data set and metrics to eliminate any variables that may appear between evaluation methods.
 
 % =========================================================================================================

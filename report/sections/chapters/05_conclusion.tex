@@ -3,13 +3,39 @@
 This chapter summarises the work presented throughout this dissertation, progressing through the steps followed to achieve the result. The following subsection lays out the evaluation of the artefact and discusses it's achievents vis-a-vis the set of objectives. The final subsection proposes possible paths of furthering the work presented, expands on the artefact's limitations and possible improvements.
 
 \section{Summary}
+The work and presented throguhout this dissertation aimed to challenge and improve the status-quo of browser anti-phishing detection systems. In doing so the objectives have been set around studying the current situation of the most popular browser anti-phishing detection system, surpass it's effectiveness and offer an easy to operate interface with the artefact produced.
+
+The evaluation of Google Safe Browsing has been performed both through a realistic scenario using browser automation and the public Google Safe Browsing API. This analysis has uncovered that feeding the same phishing URLs after a period of time in the detection system results in a lower detection rate in the latter case, thus showing that it's classification influences the lifespan of a phishing webpage. Besides this, the false-negatives rate is consistently low and the process of including new online and valid phishes is slow.
+
+After the evaluation the solution is built and experimented with. The first aim of the solution design is to be lightweight and deliver predictions only when necessary, thus it includes a white list of top one million domains known to be benign. The second aim is the delivery of accurate predictions based only on the URL of the webpage. Besides accuracy, the solution has to be on par with Google Safe Browsing with regards to false positives and false negatives.
+Because of the only source of data is the URL, a great amount of research and attention went into building the feature set. Extracting these features and training the first set of models reflects this by delivering substantially better results than the set threshold in both train and test data.
+
+The performance improvement phase outlines the design decision of prioritising a balanced, robust solution instead of a phishing-detection optimised one. This is reflected in the 80\% phishing detection rate on a new test set, while the overall accuracy is 98.91\%. Although it is slightly less than what the literature presents, it is worth considering that the only source of information is the URL, while other solutions use features such as HTML tag analysis, external links analysis and so on.
+
+Finally, the artefact and it's effectiveness despite the reduced data input proves that there is room for improvement in the anti-phishing detection systems available for the public. Furthermore, it's source code is publicly available and perdictions can be delivered by just feeding in the URL.
 
 
 \section{Evaluation}
+The evaluation section starts by measuring the achievement of the set objectives. After which, to better place the artefact in the landscape of existent solutions, it's evaluation is presented in direct comparison with both Google Safe Browsing and the solutions presented by the literature.
+
+\subsection{Objectives}
+The first objective set is to research and develop a mechanism for evaluating the accuracy of the phishing detection system embedded in popular browsers. To address this, a testing tool has been developed that evaluates the accuracy both in a realistic scenario through browser automation and by checking the URLs against Google Safe Browsing's API.
+
+The second objective is to research and corroborate different anti-phishing methods described in the literature into a multi-layered phishing detection design. In doing so, the artefact doesn't only use features described by the literature, but slightly alters some and introduces some new ones. 
+
+The third and last objective is to implement and calibrate a phishing detection system that improves the status quo and can be operated with minimal technical literacy. The artefact produced achives a performance far surpasing what Google safe browsing offers. Furthermore, the artefact surpasses most of the solutions presented by the literature.
+
+\subsection{Google Safe Browsing}
+
 % ARTEFACT VS GOOGLE SAFE BROWSING + OBJECTIVES
+
+\subsection{Literature}
+% ARTEFACT VS LITERATURE
+
 \section{Future work}
 
-% FEATURE TWEAKING + HYPERPARAMETER TUNING?
+% FEATURE TWEAKING + HYPERPARAMETER TUNING? Cannot detect when the legit website is highjacked
+% 
 
 
 \iffalse
