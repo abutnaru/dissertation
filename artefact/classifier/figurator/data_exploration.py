@@ -15,40 +15,38 @@ import math
 # APWG reports based figures
 def plot_feature_correlation():
     df = pd.read_csv(
-        "source/MIXED80k.csv",
+        "source/1_final_train_nolongsub_noip.csv",
         names=[
-            "label",
-            "f1",
-            "f2",
-            "f3",
-            "f4",
-            "f5",
-            "f6",
-            "f7",
-            "f8",
-            "f9",
-            "f10",
-            "f11",
-            "f12",
-            "f13",
+            "Label",
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "F7",
+            "F8",
+            "F9",
+            "F10",
+            "F11",
         ],
     )
-
+    grid_kws = {"height_ratios": (.9, .05), "hspace": .2}
+    f, (ax, cbar_ax) = plt.subplots(2, gridspec_kw=grid_kws)
     g = sns.heatmap(
         df.corr(),
-        vmax=0.45,
+        ax=ax,
+        vmax=0.40,
         center=0,
-        square=True,
-        linewidths=0.5,
-        cbar_kws={"shrink": 0.5},
+        cbar_ax=cbar_ax,
+        cbar_kws={"shrink": 0.5, "orientation": "horizontal"},
         annot=True,
         fmt=".2f",
         cmap="coolwarm",
-        linecolor="white",
     )
     sns.despine()
     g.figure.set_size_inches(12, 9)
-    g.figure.savefig("Totrain.png")
+    g.figure.savefig("correl.png")
 
 
 def percentile(N, P):
@@ -88,4 +86,4 @@ def calc_stats_f(n):
     )
 
 
-calc_stats_f(10)
+plot_feature_correlation()
