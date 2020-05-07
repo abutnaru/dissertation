@@ -36,8 +36,14 @@ def parse_arguments():
         help="Target dataset",
         required=True,
     )
+    parser.add_argument(
+        "-e",
+        dest="extracted_flag",
+        help="Toggle if input has features already extracted",
+        action="store_true",
+    )
     args = parser.parse_args()
-    return (args.dataset, args.modelsdir)
+    return (args.dataset, args.modelsdir, args.extracted_flag)
 
 
 def calc_precision(TP, FP):
@@ -71,8 +77,8 @@ def evaluation_metrics(TP, TN, FP, FN):
 def evaluate(model, processed_dataset):  # whitelist="off"
     TP, TN, FP, FN = 0, 0, 0, 0
     for line in processed_dataset:
-        label = line[0]
-        featureset = line[1:]
+        label = int(line[0])
+        featureset = np.array([int(val) for val in line[1:]])
         prediction = model.predict(featureset.reshape(1, -1))
         if label == 1:
             if prediction == label:
@@ -104,20 +110,21 @@ def parse(file_name):
 
 
 def main():
-    data, modset = parse_arguments()
-    f_in = open(f"data/processed_sets/{data}.csv", "r")
+    data, modset, extracted = parse_arguments()
+    f_in = open(f"features/{data}.csv", "r") if extracted else open(f"data/processed_sets/{data}.csv", "r")
     dataset = [l for l in csv.reader(f_in)]
     f_in.close()
-    res, processed_dataset = [], []
-    print("Starting feature extraction from the target dataset")
-    title = "Processing recods"
-    with tqdm(total=len(dataset), desc=title, file=sys.stdout) as progressbar:
-        with concurrent.futures.ProcessPoolExecutor() as e:
-            for line in dataset:
-                res.append(e.submit(features.extract, line[0], float(line[1])))
-            for f in concurrent.futures.as_completed(res):
-                processed_dataset.append(f.result())
-                progressbar.update()
+    if not extracted:
+        res, processed_dataset = [], []
+        print("Starting feature extraction from the target dataset")
+        title = "Processing recods"
+        with tqdm(total=len(dataset), desc=title, file=sys.stdout) as progressbar:
+            with concurrent.futures.ProcessPoolExecutor() as e:
+                for line in dataset:
+                    res.append(e.submit(features.extract, line[0], float(line[1])))
+                for f in concurrent.futures.as_completed(res):
+                    processed_dataset.append(f.result())
+                    progressbar.update()
 
     models = [
         {"name": "Naive Bayes", "filename": "naive_bayes"},
@@ -134,7 +141,10 @@ def main():
         for model in models:
             f_in = open(f"models/{modset}/{model['filename']}.sav", "rb")
             m = pickle.load(f_in)
-            write_metrics(model["name"], evaluate(m, processed_dataset), f_out)
+            if extracted:
+                write_metrics(model["name"], evaluate(m, dataset), f_out)
+            else:
+                write_metrics(model["name"], evaluate(m, processed_dataset), f_out)
             f_in.close()
             progressbar.update()
         f_out.close()
