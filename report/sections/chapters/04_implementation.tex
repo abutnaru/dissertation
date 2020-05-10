@@ -227,15 +227,39 @@ The first step in improving the performance is removing features with a correlat
 
 The second step is hyperparameter tuning. The process of hyperparameter tuning or optimisation consists of training the subject model with different values for it's parameters. By trying different permutations of values for these parameters the trained model delivers better or worse predictions and can be selected for further optimisation based on this.
 
-Hyperparameter tuning is resource expensive. Because of this, the algorithms selected for optimisations are the ones that already deliver good and consistent results. These are the random forest and the support vector machine classifiers.
+Hyperparameter tuning is resource expensive. Because of this, the algorithms selected for optimisations are the ones that already deliver good and consistent results. These are the random forest, the support vector machine and the multi-layer perceptron classifiers.
+
+%METHODOLOGY?
+The calibration is done using GridSearchCV. GridSearchCV does and exhaustive search over specified parameters and selects the best performing model. 
+
+Starting with the optimisation of the random forest classifier, the number of the n\_estimators is increased to raise the number of decision trees. By doing so the model delivers better predictions at the expense of both training an prediction time. Because of this the number of n\_estimators is set to a reasonable set of values comprised of 1600, 1800 and 2000. Next the max\_depth of each decision tree is set to be either 8,12 or 16. The last calibration is done on the max\_features parameter. This sets the number of maximum features provided to each tree and will be tested with the values of auto and sqrt.
+
+The calibration of the SVM classifier is done by searching for the best performing C parameter. The C parameter influences the missclassification threshold of the model. With a greater C value, the classifier will chose a smaller-margin hyperplane rendering the model less prone to deliver wrong predictions. However, a bigger C value will increase the chance of overfitting. Having said that, the values of the C fed into the GridSearchCV are 10,100 and 1000.
+
+Given the opaque nature of the training process of neural networks, the calibration of the multi-layer perceptron resembles more a hit-or-miss experimentation. Because of this, different models have been trained using most of the optimisation parameters that the MLP classifier takes as input.
+
+\begin{singlespace}
+	\small
+	\begin{center}
+		\label{tab:OPTIMISED_MODELS}
+		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
+			\hline
+			                                & \textbf{F1-score} & \textbf{F1-score (optimised)} & \textbf{Delta}\\ 
+			\hline
+			\textbf{Random Forest}          & 98.86  & 98.91  & 0.05         \\
+			\hline
+			\textbf{Support Vector Machine} & 98.76  &98.87   & 0.11       \\
+			\hline
+			\textbf{Multi-layer Perceptron} & 97.21   & 98.76  & 1.25        \\
+			\hline
+		\end{tabular}
+		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+	\end{center}
+\end{singlespace}
+
+As expected, the results of the optimisation (Table \ref{tab:OPTIMISED_MODELS}) did not deliver a substantial improvement. This is partly because they already achieved impressive results. The optimisation has shown improvements in the confusion matrix and ROC curve as well. Figures (REF) show that the AUC has a maximum value while figures (REF) show that the low rate of false positives is prioritised over 
 
 
-
-
-
-
-
-% SHOW AND DISCUSS RESULTS
 
 
 % ROC curve and Confusion matrixes plus discuss parameters and cross validation (here and in the methodology) 

@@ -32,7 +32,7 @@ phishing attacks have had to organically evolve, we can be confident in saying
 that these instruments gained popularity based on their positive influence on
 the attack's success.
 
-\subsection{Understanding the victim}
+\subsection{Identifying the victim}
 To further the understanding of why phishing attacks are prevalent, we need to
 outline the profile of the victim. A well-established study of the victim is
 done by \cite{WHY_PHISHING_WORKS} which concludes the research by stating that
@@ -435,6 +435,122 @@ thousand records which is incorporated in the proposed solution (1000 legitimate
 URLs and 1000 malicious). The study concludes by reporting an accuracy of 95\%.
 Furthermore, it states that the Hamming distance is the most effective from the
 studied set, improving the overall recognition rate by 21.8\%.
+
+\subsection{Google Safe Browsing}
+As previously stated, Google Safe Browsing is responsible for protecting the top three browsers in terms of popularity: Google Chrome, Apple's Safari and Mozilla Firefox. Because of this, the artefact produced throughout the present dissertation is aiming to surpass it's performance. This subsection introduces Google Safe Browsing in a brief manner, after which presents work conducted to assess it's effectiveness.
+
+\cite{GOOGLE_SAFE_BROWSING_VERSIONS} describes the mechanism behind Google Safe browsing and captures the differences between the different API versions. However, the study dates back to 2015, so the version comparision table includes only the first three versions. Since then, version four has been released, marking the end of support for version two and three.
+\cite{GOOGLE_SAFE_BROWSING_V4} doesn't mention any fundamental changes to the API, but details the update in the focus towards the growing mobile. To adapt to this, the new API is optimized towards the challenges of the mobile environment: the limited power, network badwidth and poor quality of service. Furthermore, the protection per bit is maximized, due to cellular data being a direct expense of the user.
+
+\begin{singlespace}
+	\small
+	\begin{center}
+		\label{tab:OPTIMISED_MODELS}
+		\begin{tabular}{ | m{13em} | m{13em} | m{13em} | }
+			\hline
+			\textbf{Version 1}                     &
+			\textbf{Version 2}                     &
+			\textbf{Version 3}                                                                                                                     \\
+			\hline
+			The hashing algorithm used in this
+			version is MD5.                        & The hashing algorithm used in this
+			version is SHA 256.                    & To improve the efficiency, protocol buffers are
+			used by encoding the chunk data.                                                                                                       \\
+			\hline
+			The efficiency is less and it is not
+			scalable.                              & In the place of a single versioned
+			list, a series of "chunks” is used.    & Host keys are not used.                                                                       \\
+			\hline
+			-The entire phishing list entries are to be
+			downloaded at once because the
+			partial list updates are not supported
+			till the time the user fully downloads
+			the recent version of list.            & A list of URLs is received when the
+			list of chunks is communicated
+			while updating.                        & Optional metadata was included in HTTP
+			Response for Full-Length Hashes .                                                                                                      \\
+			\hline
+			The phishing data is given to the client in
+			an order from old to new. For the
+			phishing sites it is inefficient as they
+			have a short lifetime.                 & The Chunks present are 32-bit
+			truncated hashes                       & To differentiate between the kinds of sites and
+			to allow more warnings, metadata
+			functionality was used by Google-malware-
+			shavar list.                                                                                                                           \\
+			\hline
+			As regular updates are required, so the
+			bandwidth consumption is escalated.    & As soon as a match is discovered,
+			the 32 bit chunk is
+			communicated to Google and in
+			return a list of 256 bit hash is
+			acquired.                              & For the full hash, modifications are carried out
+			in the cashing semantics.                                                                                                              \\
+			\hline
+
+			It is time consuming as the users scarcely
+			find a match with the present pattern. & As compared to version 1, it is
+			faster                                 & An expiration time is included in the HTTP
+			Response for Full-Length Hashes in
+			response                                                                                                                               \\
+			\hline
+
+			It is slow and has high latency.       & It has improved speed and reduced
+			Latency.                               & When an update request is sent, each time the
+			clients are required to wash off cashed full
+			length hashes                                                                                                                          \\
+			\hline
+
+			                                       &                                                  & Message Authentication Code (MAC) support
+			is eliminated.                                                                                                                         \\
+			\hline
+
+			                                       &                                                  & The API key format is modified. The Google
+			Developers Console manages the API keys.                                                                                               \\
+			\hline
+		\end{tabular}
+		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+	\end{center}
+\end{singlespace}
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.9\textwidth]{google_safe_browsing.png}
+	\caption{
+		Categorisation of phishing prevention solutions
+		\citep{ML_BASED_DETECTION_FROM_URL}}
+	\label{fig:PHISHING_SOLUTION_CATEGS}
+\end{figure}
+
+Moving to performance assessment, \cite{SECURITY_BUSTERS} presents a thorough evaluation of anti-phishing detection systems embedded in different browsers and on different platforms. In developing the proposed proof of concept security proxy, \cite{SECURITY_BUSTERS} uncovered the classification accuracy issues of popular browsers. The study compiles information on the substantial difference between phishing URL detection and malicious URL detection (Table REF). It is noticeable that from all the browsers that use GSB, Google Chrome is the better performer.
+
+\begin{singlespace}
+	\small
+	\begin{center}
+		\label{tab:OPTIMISED_MODELS}
+		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
+			\hline
+			                                 & \textbf{True positives} & \textbf{False negatives} \\
+			\hline
+			\textbf{IE (Windows)}            & 48.4\%                  & 9.9\%                    \\
+			\hline
+			\textbf{Opera (Windows)}         & 77.9\%                   & 8.4\%                    \\
+			\hline
+			\textbf{Chrome (Windows)}        & 93.0\%                   & 1.3\%                    \\
+			\hline
+			\textbf{Firefox (Windows)}       & 86.7\%                   & 5.9\%                    \\
+			\hline
+			\textbf{Opera mobile (Android)}  & 75.9\%                   & 7.9\%                    \\
+			\hline
+			\textbf{Firefox mobile(Android)} & 85.4\%                   & 3.4\%                    \\
+			\hline
+			\textbf{Safari mobile (iOS)}     & 38.7\%                   & 26.4\%                    \\
+			\hline
+		\end{tabular}
+		\captionsetup{type=table}\caption{A comparison of existing solutions (The missing percentages mark phishes that went offline during testing) \citep{INTELLIGENT_PHISHING_ANFIS}}
+	\end{center}
+\end{singlespace}
 
 \section{Chapter overview}
 This chapter outlined the status quo of the relevant literature, expanding on
