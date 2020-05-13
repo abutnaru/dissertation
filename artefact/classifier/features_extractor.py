@@ -154,7 +154,7 @@ def extract(raw_url, label=-1):
     # the length of the subdomain is based on its components rather than
     # character count as past experiments proved it more effective
     components = netloc.subdomain.count(".") + netloc.subdomain.count("-") + 1
-    long_subdomain = 1 if components >= 3 else 0
+    _long_subdomain = 1 if components >= 3 else 0
 
     # Features 8,9 and 10: Presence of sensitive vocabulary and of
     # benign domains in URL's subdomain
@@ -226,7 +226,7 @@ def extract(raw_url, label=-1):
                 symbols_count,
                 domain_in_path,
                 dash_count,
-               # long_subdomain,
+                # long_subdomain,
                 subdomain_sw,
                 domain_sw,
                 path_sw,
@@ -243,7 +243,7 @@ def extract(raw_url, label=-1):
             symbols_count,
             domain_in_path,
             dash_count,
-           # long_subdomain,
+            # long_subdomain,
             subdomain_sw,
             domain_sw,
             path_sw,
