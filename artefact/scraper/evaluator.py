@@ -1,15 +1,17 @@
 #!/usr/bin/env -S conda run -n dissertation python
 """
-The evaluator calculates Google Safe Browsing's rate
-of success in correctly classifying phishing websites
+The evaluator calculates Google Safe Browsing's accuracy of phishing
+websites detection using both browser automation and the public API.
 """
-from selenium import webdriver
-import json, csv
-import os, time
-import httplib2, urllib
-import json
 import argparse
+import csv
+import json
+import os
+import time
+import urllib
 
+import httplib2
+from selenium import webdriver
 
 CURRENT_DIR = os.getcwd()
 results = []
@@ -118,10 +120,6 @@ def test_android(url):
             desired_capabilities=webdriver.DesiredCapabilities.ANDROID
         )
         driver.set_page_load_timeout(25)
-        # Testing without this
-        # except Exception as e:
-        #    return e
-        # try:
         driver.get(url)
         title = driver.title
         button = driver.find_element_by_tag_name("button")
@@ -145,18 +143,14 @@ def test_chrome(url):
     try:
         driver = webdriver.Chrome(options=opts)
         driver.set_page_load_timeout(25)
-        # Testing without this
-        # except Exception as e:
-        #    return e
-        # try:
         driver.get(url)
+
         source = driver.page_source
-        # driver.save_screenshot("chrome/" + url.replace("/", "__") + ".png")
         driver.quit()
-        google_stamp = """<!-- Copyright 2015 The Chromium Authors. All rights reserved.
+        c = """<!-- Copyright 2015 The Chromium Authors. All rights reserved.
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->"""
-        if google_stamp in source:
+        if c in source:
             return True
         return False
     except Exception as e:
@@ -199,7 +193,7 @@ def read_in_chunks(f_in, chunk_size=500):
     phishes = json.load(f_in)
     index = 0
     while True:
-        records = phishes[index:index+500]
+        records = phishes[index : index + 500]
         index += 500
         if not records:
             break
@@ -212,9 +206,7 @@ def api_check(phishes_file):
     total_urls = 0
     parsed_phishes = list()
     for phishes in read_in_chunks(phishes_file):
-        #if total_urls == 1500:
-        #   break
-        total_urls+=len(phishes)
+        total_urls += len(phishes)
         parsed_phishes = [{"url": phish["url"]} for phish in phishes]
 
         body = {
@@ -232,17 +224,23 @@ def api_check(phishes_file):
             headers={"Content-type": "application/json"},
             body=json.dumps(body),
         )[1]
-        matches = [obj for obj in json.loads(response.decode())['matches']]
+        matches = [obj for obj in json.loads(response.decode())["matches"]]
         c = 0
         for m in matches:
-            c = sum([1 if m['threat']['url'] == phish['url'] else 0 for phish in phishes])
+            c = sum(
+                [1 if m["threat"]["url"] == p["url"] else 0 for p in phishes]
+            )
             true_positives += c
-    print(f"True positives: {true_positives}\nTotal URLs: {total_urls}\nSuccess rate: {(true_positives/total_urls)*100}%")
+    print(
+        f"""True positives: {true_positives}\n
+        Total URLs: {total_urls}\n
+        Success rate: {(true_positives/total_urls)*100}%"""
+    )
 
 
 def main():
     target_filename, api_flag = parse_arguments()
-    f_in=  open(f"{target_filename}.json", "r")
+    f_in = open(f"{target_filename}.json", "r")
     if api_flag:
         api_check(f_in)
     else:
