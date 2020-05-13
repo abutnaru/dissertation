@@ -1,0 +1,20 @@
+True positives: 6502
+Total URLs: 14666
+Success rate: 44.33383335606164%
+
+
+Ran on 0507:
+True positives: 6521
+Total URLs: 14666
+Success rate: 44.46338469930451%
+  
+Ran again on 10:
+True positives: 6429
+Total URLs: 14666
+Success rate: 43.83608345833901%
+
+Ran again on 13:
+True positives: 6346
+Total URLs: 14666
+Success rate: 43.270148643120145%
+
