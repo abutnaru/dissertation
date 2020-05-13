@@ -1,0 +1,98 @@
+%!TEX root = ../main.tex
+\chapter{Evaluation}
+The evaluation section starts by measuring the achievement of the set objectives. After which, to better place the artefact in the landscape of existent solutions, it's evaluation is presented in direct comparison with both Google Safe Browsing and the solutions presented by the literature.
+
+\section{Google Safe Browsing}
+The aim of the work presented throughout this dissertation is to challenge and improve the current status quo of browser embedded anti-phishing detection systems. The artefact has successfuly almost doubled the classification accuracy, all of this while respecting the priorities of such piece of software. By design, it is geared towards delivering a minimal amount of false-positives, at the expense of a slight growth in the number of false negatives. This way, it's alerts are trustworthy and does not produce noise. Furthermore, it manages to do so using just the URL of the webpage and does not rely on any third-party for information.
+
+\begin{singlespace}
+    \small
+    \begin{center}
+        \label{tab:ARTEFACT_VS_GSB}
+        \begin{tabular}{ | m{14em} | m{5em} | m{5em} |}
+            \hline
+                                          & \textbf{GSB} & \textbf{Artefact} \\
+            \hline
+            \textbf{Phishtank 01.04.2020} & 57.81        & 77.54             \\
+            \hline
+            \textbf{Phishtank 05.04.2020} & 52           & 52                \\
+            \hline\hline
+            \textbf{Phishtank 05.05.2020} & 90           & 147               \\
+            \hline
+            \textbf{Phishtank 06.05.2020} & 107          & 220               \\
+            \hline
+            \textbf{Phishtank 07.05.2020} & 141          & 321               \\
+            \hline
+            \textbf{Phishtank 08.05.2020} & 90           & 147               \\
+            \hline
+            \textbf{Phishtank 09.05.2020} & 107          & 220               \\
+            \hline
+            \textbf{Phishtank 10.05.2020} & 141          & 321               \\
+            \hline
+        \end{tabular}
+        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+    \end{center}
+\end{singlespace}
+
+Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. It is noticeable that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
+
+Besides classification accuracy, the artefact presents a much simpler structure while causing a disproportional number of false-negatives and false-positives. The addition of blacklists, whitelists and other mechanisms is expected to further reduce the number of innacurate predictions.
+
+
+% ARTEFACT VS GOOGLE SAFE BROWSING + OBJECTIVES
+
+\section{Literature}
+Besides fullfiling the aim of surpasing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table (REF) shows that when placing the artefact in the solutions comparison presented by (REF) in the Background study chapter it comes on top of all other solutions. Furthermore, it does so while maintaining independece from third party services or any information other than the URL of the page.
+
+\begin{singlespace}
+    \small
+    \begin{center}
+        \label{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT}
+        \begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
+            \hline
+            \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
+            \hline
+            Presented Work               & Heuristics \& Features-based          & N/A                 & 98.90           & Research               \\
+            \hline
+            GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
+            \hline
+            Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
+            \hline
+            MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
+            \hline
+            Netcraft (Customise)         & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
+            \hline
+            SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
+            \hline
+            Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
+            \hline
+            PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
+            \hline
+            PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
+            \hline
+            PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
+            \hline
+            PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
+            \hline
+            CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
+            \hline
+            PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
+            \hline
+            PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
+            \hline
+            PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
+            \hline
+            PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
+            \hline
+            Google Safe Browsing         & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
+            \hline
+            PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
+            \hline
+            Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
+            \hline
+            IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
+            \hline
+        \end{tabular}
+        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+    \end{center}
+\end{singlespace}
