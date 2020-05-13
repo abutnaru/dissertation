@@ -1,0 +1,60 @@
+Iteration number 1
+F1 score for Naive Bayes: 0.9784519906586733
+F1 score for Decision Tree: 0.9834375210055791
+F1 score for Random Forest: 0.9837443698537365
+F1 score for Support Vector Machine: 0.9818059754683182
+F1 score for Neural Network: 0.9691213076645993
+Iteration number 2
+F1 score for Naive Bayes: 0.9826794542468802
+F1 score for Decision Tree: 0.9875052725624155
+F1 score for Random Forest: 0.9881310294299509
+F1 score for Support Vector Machine: 0.9864813624285615
+F1 score for Neural Network: 0.9706841566656008
+Iteration number 3
+F1 score for Naive Bayes: 0.9815438725864658
+F1 score for Decision Tree: 0.9859476553065432
+F1 score for Random Forest: 0.986255799818657
+F1 score for Support Vector Machine: 0.9844015720329558
+F1 score for Neural Network: 0.9667719591380224
+Iteration number 4
+F1 score for Naive Bayes: 0.980209858889134
+F1 score for Decision Tree: 0.9845009607422228
+F1 score for Random Forest: 0.9846017056586234
+F1 score for Support Vector Machine: 0.9815054477075383
+F1 score for Neural Network: 0.9700510183032749
+Iteration number 5
+F1 score for Naive Bayes: 0.9809981466269662
+F1 score for Decision Tree: 0.9862203655561104
+F1 score for Random Forest: 0.9863234207747265
+F1 score for Support Vector Machine: 0.9850848946208377
+F1 score for Neural Network: 0.9713973612918092
+Iteration number 6
+F1 score for Naive Bayes: 0.985022050202615
+F1 score for Decision Tree: 0.9894802516673884
+F1 score for Random Forest: 0.9895798429335123
+F1 score for Support Vector Machine: 0.9877366116328901
+F1 score for Neural Network: 0.9696821211171349
+Iteration number 7
+F1 score for Naive Bayes: 0.9837915740497138
+F1 score for Decision Tree: 0.988173030238744
+F1 score for Random Forest: 0.9881739999131303
+F1 score for Support Vector Machine: 0.9859067045943564
+F1 score for Neural Network: 0.9705266298684585
+Iteration number 8
+F1 score for Naive Bayes: 0.9849237110726315
+F1 score for Decision Tree: 0.9872250776476303
+F1 score for Random Forest: 0.9883699677609749
+F1 score for Support Vector Machine: 0.9878652722597107
+F1 score for Neural Network: 0.9700158400021124
+Iteration number 9
+F1 score for Naive Bayes: 0.9837416497416712
+F1 score for Decision Tree: 0.9887302075622503
+F1 score for Random Forest: 0.9889378579350958
+F1 score for Support Vector Machine: 0.9868844142762818
+F1 score for Neural Network: 0.9712078698669371
+Iteration number 10
+F1 score for Naive Bayes: 0.9837005657602598
+F1 score for Decision Tree: 0.9874616185092493
+F1 score for Random Forest: 0.9886019314024708
+F1 score for Support Vector Machine: 0.9876797451895578
+F1 score for Neural Network: 0.9721756097480193
