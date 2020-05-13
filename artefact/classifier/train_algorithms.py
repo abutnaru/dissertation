@@ -9,54 +9,63 @@ import pickle
 import sys
 import time
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import scipy as sc
+import seaborn as sns
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    f1_score,
-    roc_auc_score,
-    roc_curve,
-    plot_roc_curve,
-    confusion_matrix,
-)
+from sklearn.metrics import (confusion_matrix, f1_score, plot_roc_curve,
+                             roc_auc_score, roc_curve)
 from sklearn.model_selection import GridSearchCV, KFold, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from tqdm import tqdm
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 ml_algorithms = [
-    #{"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
-    #{
-    #    "name": "Decision Tree",
-    #    "filename": "decision_tree",
-    #    "model": DecisionTreeClassifier(),
-    #},
-    #{
-    #    "name": "Random Forest",
-    #    "filename": "random_forest",
-    #    "model": RandomForestClassifier(n_estimators=125),
-    #},
+    {"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
+    {
+        "name": "Decision Tree",
+        "filename": "decision_tree",
+        "model": DecisionTreeClassifier(random_state=1),
+    },
+    {
+        "name": "Random Forest",
+        "filename": "random_forest",
+        "model": GridSearchCV(
+            RandomForestClassifier(random_state=1),
+            [
+                {
+                    "n_estimators": [295],
+                    "max_features": ["auto"],
+                    "min_samples_split": [8, 12],
+                    "max_depth": [15, 18, 21],
+                }
+            ],
+            cv=5,
+        ),
+    },
     {
         "name": "Support Vector Machine",
         "filename": "support_vector",
         "model": GridSearchCV(
-            SVC(), [{"kernel": ["rbf"], "C": [2500, 3500],}], cv=5
+            SVC(kernel="rbf", random_state=1),
+            [{"C": [1, 10, 100, 1000],}],
+            cv=5,
         ),
     },
-    #{
-    #    "name": "Neural Network",
-    #    "filename": "ml_perceptron",
-    #    "model": GridSearchCV(
-    #        MLPClassifier(max_iter=250), [{"hidden_layer_sizes": [(13, 130)],}]
-    #    ),
-    #},
+    {
+        "name": "Neural Network",
+        "filename": "ml_perceptron",
+        "model": GridSearchCV(
+            MLPClassifier(max_iter=100, random_state=1),
+            [{"hidden_layer_sizes": [(2, 13)],}],
+        ),
+    },
 ]
 
 
@@ -114,7 +123,7 @@ def main():
     else:
         sys.exit(f'A model set with the identifier "{setid}" already exists')
 
-    X = pd.read_csv(f"features/{dataset}.csv", usecols=[*range(1, 14)])
+    X = pd.read_csv(f"features/{dataset}.csv", usecols=[*range(1, 12)])
     Y = pd.read_csv(f"features/{dataset}.csv", usecols=[0])
 
     # 10 fold cross-validation

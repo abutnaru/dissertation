@@ -111,17 +111,25 @@ def parse(file_name):
 
 def main():
     data, modset, extracted = parse_arguments()
-    f_in = open(f"features/{data}.csv", "r") if extracted else open(f"data/processed_sets/{data}.csv", "r")
+    f_in = (
+        open(f"features/{data}.csv", "r")
+        if extracted
+        else open(f"data/processed_sets/{data}.csv", "r")
+    )
     dataset = [l for l in csv.reader(f_in)]
     f_in.close()
     if not extracted:
         res, processed_dataset = [], []
         print("Starting feature extraction from the target dataset")
         title = "Processing recods"
-        with tqdm(total=len(dataset), desc=title, file=sys.stdout) as progressbar:
+        with tqdm(
+            total=len(dataset), desc=title, file=sys.stdout
+        ) as progressbar:
             with concurrent.futures.ProcessPoolExecutor() as e:
                 for line in dataset:
-                    res.append(e.submit(features.extract, line[0], float(line[1])))
+                    res.append(
+                        e.submit(features.extract, line[0], float(line[1]))
+                    )
                 for f in concurrent.futures.as_completed(res):
                     processed_dataset.append(f.result())
                     progressbar.update()
@@ -144,7 +152,9 @@ def main():
             if extracted:
                 write_metrics(model["name"], evaluate(m, dataset), f_out)
             else:
-                write_metrics(model["name"], evaluate(m, processed_dataset), f_out)
+                write_metrics(
+                    model["name"], evaluate(m, processed_dataset), f_out
+                )
             f_in.close()
             progressbar.update()
         f_out.close()
