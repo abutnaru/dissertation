@@ -1,4 +1,0 @@
-True positives: 6609
-Total URLs: 14705
-Success rate: 44.94389663379803%
-
