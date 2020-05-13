@@ -17,8 +17,13 @@ import seaborn as sns
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (confusion_matrix, f1_score, plot_roc_curve,
-                             roc_auc_score, roc_curve)
+from sklearn.metrics import (
+    confusion_matrix,
+    f1_score,
+    plot_roc_curve,
+    roc_auc_score,
+    roc_curve,
+)
 from sklearn.model_selection import GridSearchCV, KFold, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
@@ -62,8 +67,22 @@ ml_algorithms = [
         "name": "Neural Network",
         "filename": "ml_perceptron",
         "model": GridSearchCV(
-            MLPClassifier(max_iter=100, random_state=1),
-            [{"hidden_layer_sizes": [(2, 13)],}],
+            MLPClassifier(max_iter=2500),
+            [
+                {
+                    "hidden_layer_sizes": [
+                        (25, 50, 25),
+                        (50, 50, 50),
+                        (50, 100, 50),
+                        (100,),
+                    ],
+                    "activation": ["tanh", "relu"],
+                    "solver": ["sgd", "adam"],
+                    "alpha": [0.0001, 0.05],
+                    "learning_rate": ["constant", "adaptive"],
+                }
+            ],
+            cv=5,
         ),
     },
 ]
