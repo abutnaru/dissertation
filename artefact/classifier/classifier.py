@@ -7,6 +7,7 @@ model trained throughout the experimentation phase of this project.
 import argparse
 import csv
 import pickle
+import time
 
 import numpy as np
 import tldextract as tld
@@ -32,16 +33,24 @@ def is_whitelisted(url):
 
 
 def deliver_classification(url):
-    model = pickle.load(open("models/final_modelset/random_forest.sav", "rb"))
+    model = pickle.load(
+        open("models/calibrated_random_forest/random_forest.sav", "rb")
+    )
     return model.predict(features.extract(url).reshape(1, -1))[0]
 
-def run():
+
+def main():
     url = get_input()
     if is_whitelisted(url):
-        print("URL is whitelisted")
+        print(f'The URL "{url}" is whitelisted')
     else:
-        print(f"The ML prediction is: {deliver_classification(url)}")
+        prediction = "PHISHING" if deliver_classification(url) else "BENIGN"
+        print(f"The URL is classified as being {prediction}")
 
 
 if __name__ == "__main__":
-    run()
+    print("Classification started...\n")
+    start = time.perf_counter()
+    main()
+    finish = time.perf_counter()
+    print(f"\nFinished in {round(finish-start,2)} seconds")
