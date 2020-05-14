@@ -3,7 +3,3 @@
 
 # Cache
 artefact/classifier/__pycache__
-
-# Archived files
-artefact/classifier/models/archive
-artefact/classifier/results/archive
