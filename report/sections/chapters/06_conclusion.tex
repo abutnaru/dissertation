@@ -22,17 +22,34 @@ The second objective is to research and corroborate different anti-phishing meth
 The third and last objective is to implement and calibrate a phishing detection system that improves the status quo and can be operated with minimal technical literacy. The artefact produced achives a performance far surpasing what Google safe browsing offers. Furthermore, the artefact surpasses most of the solutions presented by the literature.
 
 \section{Reflection}
+Throughout the work carried out to produce the report and artefact presented, the aim and objectives have slightly evolved as the view on the subject matured. This section will expand some of the changes made to the project proposal (REF) offering justifications for the decisions taken.
 
+The proposal starts with presenting an overview of the project. It defines the problem to be addressed and introduces the project idea. While the goal of offering an anti-phishing detection system that requires minimal technical literacy to operate was not altered, some of the features differ from the ones pitched. The artefact to be produced is described as being capable of recognising algorithmically generated domain names, but studying phishing techniques uncovered that these are usually markers of malware command and control servers. The second feature pitched is the inclusion of a blacklist. Although useful as proved by the literature, the machine learning model exceeded the accuracy expectations and the inclusion of phishtank datasets in a blacklist would tamper with the unbiased comparison between it and GSB.
 
-
-
-
+After creating a low resolution image of the artefact's desing, the proposal briefly describes the method of evaluation. Doing the appropriate research proved that the methodology proposed is rudimentary and inacurate. The design of the evaluation has been changed to include metrics used in the performance assessment of models in data science.
 
 \section{Future work}
-For 
+There are a number of ways to improve the classifier. Future work on the artefact could address either the blindspots or performance improvements.
+
+An example of a blindspot is the inability to detect man-in-the-middle attacks. A scenario where the legitimate domain name is resolved to an IP address under the control of a threat actor would go under the radar of the artefact.
+
+Although the artefact manages to deliver predictions in a timely manner, the time of whitelist checking can be reduced by using low-level compiled programming languages (e.g. C/C++, Rust)
 
 % FEATURE TWEAKING + HYPERPARAMETER TUNING? Cannot detect when the legit website is highjacked
 % 
+
+\clearpage
+\vspace*{\fill}
+\begin{center}
+\begin{minipage}{.6\textwidth}
+\centering 
+Report word count:
+
+Artefact word count: (equivalent)
+\end{minipage}
+\end{center}
+\vfill
+\clearpage
 
 
 \iffalse

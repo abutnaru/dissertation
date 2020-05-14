@@ -37,8 +37,11 @@
 \setlength{\headheight}{13.6pt}
 % Recommended linespread is 1.5
 \linespread{1.35}
-\bibliographystyle{buHarvard}
+%\bibliographystyle{buHarvard}
 \bibpunct{(}{)}{,}{a}{}{ }
+\usepackage{packages/multibib}
+\newcites{r}{References}
+\newcites{b}{Bibliography}
 \graphicspath{ {figures/}{appendices/} }
 \footskip = 15mm
 
@@ -86,8 +89,15 @@
 
 \input{sections/chapters/06_conclusion}
 
-\nocite{*} %Take this out if you want to show only the ones you've referenced 
-\bibliography{references}
+
+\bibliographystyler{buHarvard}
+\nociter{*}
+\bibliographyr{references}
+
+\bibliographystyleb{buHarvard}
+\nociteb{*}
+\bibliographyb{references2}
+
 
 \input{sections/appendices/appendices}
 
