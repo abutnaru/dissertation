@@ -27,6 +27,42 @@
 \usetikzlibrary{calc}
 \usepackage[export]{adjustbox}
 \usepackage{amsmath}
+\usepackage{glossaries}
+\usepackage{tabularx}
+\makenoidxglossaries
+\newglossaryentry{APWG}{
+    name={APWG},
+    description={Anti Phishing Working Group}
+}
+
+\newglossaryentry{TLS}{
+    name={TLS},
+    description={Transport Layer Security}
+}
+\newglossaryentry{HTTPS}{
+    name={HTTPS},
+    description={Hypertext Transfer Protocol Secure}
+}
+
+\newglossaryentry{HTTP}{
+    name={HTTP},
+    description={Hypertext Transfer Protocol}
+}
+
+\newglossaryentry{API}{
+    name={API},
+    description={Application Programming Interface}
+}
+
+\newglossaryentry{GSB}{
+    name={GSB},
+    description={Google Safe Browsing}
+}
+
+\newglossaryentry{SSL}{
+    name={SSL},
+    description={Secure Socket Layer}
+}
 \renewcommand{\familydefault}{\sfdefault}
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
 \pagestyle{fancy}
@@ -36,7 +72,7 @@
 \fancyfoot[c]{Bournemouth University, Department of Computing and Informatics, Final Year Project}
 \setlength{\headheight}{13.6pt}
 % Recommended linespread is 1.5
-\linespread{1.35}
+\linespread{1.5}
 %\bibliographystyle{buHarvard}
 \bibpunct{(}{)}{,}{a}{}{ }
 \usepackage{packages/multibib}
@@ -69,6 +105,10 @@
 \input{sections/preamble/04_aknowledgements}
 
 \tableofcontents
+
+\clearpage
+
+\printnoidxglossaries
 
 \listoffigures
 \listoftables

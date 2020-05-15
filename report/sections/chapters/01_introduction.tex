@@ -13,7 +13,7 @@
 \label{chap:intro}
 % Building context
 This chapter will begin by introducing the issue to be addressed throughout
-this dissertation, stating the current situation and looking at it from the
+this dissertation, stating the current situation and analyze it from the
 perspective of existing solutions. The following section outlines the project
 rationale and presents the intended outcomes. The next section states the
 objectives and relationship between them, after which it details the method of
@@ -26,8 +26,7 @@ overview of the remaining chapters of the dissertation.
 	\centering
 	\includegraphics[width=0.49\textwidth]{apwg_attack_hist.png}
 	\includegraphics[width=0.49\textwidth]{apwg_brands_hist.png}
-	\caption{Phishing attacks over the years (Emails, Websites and Brands
-		targeted)}
+	\caption{High-level breakdown of phishing attacks over the years}
 	\label{fig:PHISHING_HISTORY}
 \end{figure}
 
@@ -43,63 +42,56 @@ described as a scam by which an internet user is manipulated into disclosing
 personal or confidential information that the attacker can use illicitly
 \citep{MERRIAM_WEBSTER}.
 
-In its primitive form, a phishing attack requires elementary technical
+In it's primitive form, a phishing attack requires elementary technical
 knowledge. The main skills required are the ones easily transferable from
 manipulation or deceit in face-to-face interaction. This amongst other reasons
-outlined in the following subsections, has contributed to the growth in
+outlined in the following subsections, have contributed to the growth in
 popularity of phishing attacks in the past twenty-five years.
 
 \subsection{Current situation}
-The increase in popularity of phishing is seen in the numbers registered by the
+The increase in the popularity of phishing is seen in the numbers registered by the
 Anti-Phishing Working Group \citep{APWG} across the years. Their archives open
-with the reports from 2004 adding up to 33.5 thousand unique phishing attacks
-with missing data for September. After fifteen years, the APWG registered
+with the reports from across 2004. These add up to 33.5 thousand unique registered phishing attacks with missing data for September. After fifteen years, the \gls{APWG} registered
 479,468 unique phishing attacks in 2019. Besides the growth in numbers, the
 aforementioned reports outline a clear advancement in the technical aspects of
 the registered phishing campaigns over the years. An example of evolution is the
-adoption of Transport Layer Security (TLS) used to serve phishing websites over
-HTTPS. Reported usage has grown from close to zero percent in 2016, to
-sixty-eight percent by the end of the third quarter of 2019 \citep{APWG_Q42019}.
+adoption of Transport Layer Security (\gls{TLS}) used to serve phishing websites over
+Hypertext Transfer Protocol Secure (\gls{HTTPS}). Reported usage has grown from close to zero percent in 2016, to sixty-eight percent by the end of the third quarter of 2019 \citep{APWG_Q42019}.
 
 \subsection{Existing solutions}
-% (how do solutions deal with phishing and why is it not working) 
-% https://gs.statcounter.com/
 In most cases, the only source of protection against accessing phishing websites
-the user has is the browser. The browser usage statistics show that Google
-Chrome, Apple Safari, and Mozilla Firefox comprise 86.01\% of the market share.
-All of these browsers use Google Safe-Browsing as their anti-phishing detection
-system. At the surface level, this is a black-list based service which rovides
+the user has is the browser. Browser usage statistics show that Google
+Chrome, Apple Safari, and Mozilla Firefox comprise 86.59\% \citep{STATCOUNTER} of the market share. All of these browsers use Google Safe Browsing (\gls{GSB}) as their anti-phishing detection
+system. At the surface level, this is a black-list based service which provides
 the aforementioned browsers with a list of malicious URLs through its
-Application Programming Interface (API).
+Application Programming Interface (\gls{API}).
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.90\textwidth]{browser_marketshare.png}
+	\caption{Browser market share \citep{STATCOUNTER}}
+	\label{fig:BROWSER_MARKETSHARE}
+\end{figure}
 % Figure showing browser market share
 % Look at issues with Google Safe-Browsing
 
 Although Google Safe Browsing acts as a black-list, underneath this compilation
 of malicious URLs lies an entire process of scrutinization. Based on it, the
 decision-making mechanism chooses whether the URL of the studied web page should
-be added to the black-list. Because of the time needed for this process to
-finalize and update the list, this solution can be labeled as suboptimal. The
-core issue is that attackers are quick in conducting these phishing attacks and
-often go under Google Safe Browsing's radar. This is reflected in the reported
-average lifespan of a phishing webpage.
+be added to the black-list. Leaving classification accuracy aside, the time needed for this process to finalize and update the list renders the solution suboptimal. The
+core issue is that malicious actors are quick in conducting these phishing attacks and
+often go under Google Safe Browsing's radar. Given that the reported median phishing webpage lifespan is of less than twenty-four hours, speed is a key factor in defending against them.
 
-The maintenance of this type of list is resource-expensive. This could be the
+The maintenance of this type of black-list is resource-expensive. This could be the
 reason why three of the major browsers are using the same anti-phishing solution
-despite its effectiveness. In conclusion, the user's main defense against
-phishing is not versatile or robust enough to keep up with the speed and
-sophistication of these attacks.
+despite its effectiveness.
 
-% ANTONIA NISOTI ET AL SHOWS THAT MOBILE BROWSERS DO NOT DELIVER THE SAME 
-% PROTECTION AS DESKTOP BROWSERS
-% Build an appendix of phishing attacks calendar based on APWG and point to it
-%or further extract and present information
+Another anti-phishing detection system worth mentioning is Microsoft SmartScreen. SmartScreen is embedded in the Windows operating system and delivers protection against a wide range of threats. Phishing protection is offered through Microsoft's Internet Explorer and Edge browsers which represents 4.25\% of the market share. Although SmartScreen is marketed as delivering better protection than Google Safe Browsing, the difference reported by the literature is of 2.6\%. One important mention is that the analysis is done off-site, thus plenty of information has to be sent to Microsoft's servers for processing. Depending on the circumstances, doing so might have an impact on privacy.
+
+In conclusion, the user's main defense against phishing is not versatile or robust enough to keep up with the speed and sophistication of these attacks. 
 
 
 \section{Project rationale and outcomes}
-% Why do this project?
-
-% Proposed solution (What should be the level of detail?)
 The trends and statistics outline the fact that phishing will remain a prevalent
 type of attack for the foreseeable future. However, the protection
 mechanisms of the main medium of interaction with phishing webpages are not
@@ -107,29 +99,20 @@ satisfactory, as shown by the amount of financial damage reported every year
 \citep{APWG_Q42019}. Furthermore, identity theft is difficult to recover from,
 and it takes time and effort.
 
-Given the lack of empirical tests in evaluating browser protection, an
-investigation of the effectiveness and accuracy of existing anti-phishing
-detection systems needs to be carried out. This evaluation and research aimed at
-the inner workings of these solutions serve as a starting point for developing
-an improvement. As a next step, the relevant literature should be corroborated
-and the most appropriate solutions stacked together and implemented. The said
-implementation is meant to either outperform existing systems or complement them
-to achieve an overall greater level of protection.
+Given the lack of empirical tests in evaluating Google Safe Browsing's level of protection, an investigation of the effectiveness and accuracy needs to be carried out. This evaluation and further research serve as a starting point for developing an improvement. As a next step, the relevant literature should be corroborated and the most appropriate elements and features stacked together and implemented. The said implementation is meant to outperform Google Safe Browsing while considering the circumstances and priorities of such protection system.
 
 To the best of my knowledge, there has been no other approach structured as
-described previously, which comprises the motivation of the project. There are
-not many iterations of anti-phishing detection systems targeting users with
-reduced technical literacy.
-% TO BE REVISITED
+previously described, which comprises the motivation of the project. There are
+not many iterations of anti-phishing detection systems either aiming to outperform Google Safe Browsing or target users with reduced technical literacy.
 
 \section{Aim and objectives}
 
 \subsection{Aim}
 The intended functional outcome of the project is a piece of software that
-addresses some of the issues of phishing detection systems described in this
+addresses the issues of phishing detection systems described in this
 chapter. The first step in doing so is to develop the means to evaluate the
 efficiency of Google Safe Browsing, this being the most used anti-phishing
-detection system. The second step will be composed of research, design, and
+detection system by a large margin. The second step will be composed of research, design, and
 development of an improved solution.
 
 \begin{landscape}
@@ -144,11 +127,10 @@ development of an improved solution.
 				\hline
 				\textbf{1}  &
 				To research and develop a mechanism for evaluating the
-				accuracy of phishing detection systems embedded in popular
-				browsers.
+				accuracy of the phishing detection system embedded in popular
+				browsers (Google Safe Browsing).
 				            &
-				1. Research how the browser phishing detection systems and
-				warnings working
+				1. Research how Google Safe Browsing works and ways of evaluation
 				\newline\newline
 				2. Find the appropriate tools and/or libraries to automate the
 				process of evaluation
@@ -163,7 +145,7 @@ development of an improved solution.
 				\hline
 				\textbf{2}  &
 				To  research and corroborate different anti-phishing methods
-				described in the literature into a multi-layered phishing
+				described in the literature into an effective phishing
 				detection design.
 				            &
 				1. Research different approaches towards phishing detection
@@ -186,10 +168,10 @@ development of an improved solution.
 				implement every non-machine learning feature selected in the
 				research phase
 				\newline\newline
-				2. Train the machine learning algorithms and review their
-				efficiency in carrying out the designated tasks
+				2. Train the machine learning model and review it's
+				classification accuracy
 				\newline\newline
-				3. Stack the solutions and evaluate system performance,
+				3. Evaluate the model and calibrate it to improve accuracy,
 				efficiency, and ease of use
 				            &
 				The solution developed either surpasses or complements popular
@@ -296,20 +278,7 @@ help outline the hierarchy of prioritization.
 
 \section{Overview of the dissertation}
 Chapter two explores the relevant literature and introduces previous work done
-on the subject. Chapter three will describe the methodology used in designing
-and implementing the artifact, as well as the process of developing the browser
-evaluation scripts and the artifact evaluation process. Chapter four offers an
-in-depth view of the requirements and requirements analysis. Furthermore, it
-will illustrate the expansion fo the objectives into requirements. The fifth
-chapter will follow the process of design and implementation of the artifact and
-adjacent software. The last chapter will outline the outcomes of the
-dissertation and close the is with a summarization of the work, presented as a
-conclusion.
-
-
-
-
-
+on the subject. Chapter three describes the artefact design and implementation methodology, as well as the evaluation process of both the Google safe Browsing evaluator and artefact. Chapter four offers an in-depth view of the development process. Furthermore, it presents the process of model calibration and performance enhancement. The fifth chapter compares what is achieved in the previous one against Google Safe Browsing and places the artefact's performance in the literature landscape. The last chapter presents an high-level view of what has been achieved in this dissertation. It begins with a summarization of the work conducted and close with ways in which the work can be expanded upon.
 % =========================================================================================================
 % Skipped compiling instructions
 \iffalse

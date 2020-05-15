@@ -1,25 +1,28 @@
 %!TEX root = ../main.tex
-
+\raggedbottom
 \chapter{Background Study}
 \label{chap:bgStudy}
 This chapter presents a review of the research done on different aspects of
-phishing. It starts with a further articulation of the issue at hand, discussing
-phishing from different perspectives. Given that the solution's perspective has
-been covered in the introduction, the next two subsections will outline the
-attacker's viewpoint and the profile of the victim. For the remainder of it, the
-chapter presents the most relevant research done in the area. In doing so, it
-sets the focus on the uniqueness of the approach and the resulted effectiveness.
+phishing. It starts by defining the research methodology used and continues with a further articulation of the issue at hand. To do so it views phishing from the attacker's standpoint and profiles the victim. For the remainder of it, the chapter presents the most relevant research done in the area and offers critical appraisal on the work it describes.
+
+\section{Research methodology}
+The subject and aim of the research and literature review shifted several times throughout carrying out the necessary work. However, the aim has constantly been to develop an in-depth and high-resolution image of the subject matter and base the work presented upon previous studies rather than suppositions. Throughout this dissertation, the systematic process used in doing the literature review is comprised of two procedures.
+
+The first procedure dictates that the research should begin by firstly identifying a reputable and well established study. This paper is thoroughly read and the information relevant is extracted and processed accordingly.
+The second procedure is used to deepen the understating of the subject. Based on the paper identified by procedure one, the points of interest are followed by spidering through the references. When the process of spidering brings in focus papers that are not relevant to the aim, the research should return to procedure one.
+
+Following this method ensures that by the end of the research phase, there will be a clear and in-depth understanding of the status quo in the subject of interest. In addition, the papers included in this chapter have received a greater level of attention to produce a pertinent appraisal of the work they present.
+
 
 \section{Understanding the popularity}
 
 \subsection{Attacker's viewpoint}
 In understanding why phishing attacks are so popular amongst attackers, it is
-useful to view it from their perspective. A successful phishing attack is
-circumventing most of a user's or enterprise's lines of defense. Most security
+useful to view it from their perspective. A successful phishing attack circumvents most of a user's or enterprise's lines of defense. Most security
 solutions are centered around detecting and preventing actions that have not
-been explicitly initiated or allowed by the user. The key takeaway is that a
+been explicitly initiated or allowed by the user. The key issue is that a
 phishing attack, by definition, tricks the user into giving such information or
-carrying out the actions intended by the attacker.
+carrying out the actions intended by the threat actor.
 
 Other appealing factors for the attacker are the inherent vulnerabilities and
 proclivities of people. \cite{PRINCIPLES_OF_PERSUASION} has corroborated the
@@ -32,12 +35,21 @@ phishing attacks have had to organically evolve, we can be confident in saying
 that these instruments gained popularity based on their positive influence on
 the attack's success.
 
+\begin{figure}[!b]
+	\centering
+	\includegraphics[width=1\textwidth]{apwg_https_usage.png}
+	\caption{
+		Reported number of phishing pages served over \gls{HTTPS} \citep{APWG_Q42019}}
+	\label{fig:HTTPS_USAGE}
+\end{figure}
+
+
 \subsection{Identifying the victim}
 To further the understanding of why phishing attacks are prevalent, we need to
 outline the profile of the victim. A well-established study of the victim is
 done by \cite{WHY_PHISHING_WORKS} which concludes the research by stating that
 there is no correlation between sex, age, education, browser, operating system,
-website used or hours of computer usage and the proclivity of being the victim
+website used or hours of computer usage and the predisposition of being the victim
 of a phishing e-mail. One unexpected discovery is that even in the best-case
 scenarios when the subject is expecting a phishing attack, the best phishing
 website deceived 90\% of the participants. The same research also describes the
@@ -45,33 +57,13 @@ elements that users look after before trusting the website, the key takeaways
 being that 59\% of the participants based their decision on the page content,
 with some of them (36\%) paying little attention to the address bar. The rest of
 41\% based their decision on the page content and domain name, but also the
-presence of HTTPS, the padlock icon and SSL certificates.
+presence of \gls{HTTPS}, the padlock icon and Secure Socket Layer (\gls{SSL}) certificates.
 
-Since this research has been done, the awareness of what HTTPS is and it's
-importance has grown substantially, but so did the number of phishing websites
-served using it. The launch date of the Electronic Frontier Foundation's
-\citep{EFF_LETS_ENCRYPT} certificate authority which provides SSL certificates
-at no cost can be correlated to \cite{APWG_Q42019}'s reported growing adoption
-in serving phishing websites over HTTPS (Figure \ref{fig:HTTPS_USAGE}). This is
-especially dangerous and confusing for the victim as HTTPS is described as
-secure HTTP and provides the icon of a green padlock, creating the feeling of a
-safe and secure website.
-
-\begin{figure}[t]
-	\centering
-	\includegraphics[width=0.55\textwidth]{apwg_https_usage.png}
-	\caption{
-		\cite{APWG_Q42019} reported data on phishing pages served over HTTPS}
-	\label{fig:HTTPS_USAGE}
-\end{figure}
-
-\small
 \begin{table}[b]
 	\begin{center}
-		\small
 		\begin{tabular}{ | m{12em} | m{12em} | m{11.5em} | }
 			\hline
-			                                  & \textbf{Highly susceptible} & \textbf{Less susceptible} \\
+			                                  & \textbf{Highly susceptible} & \textbf{Less susceptible} \\ [1.25em]
 			\hline
 			\textbf{Age}                      & 18-24 years old or less     & 25 years old or more      \\
 			\hline
@@ -99,7 +91,16 @@ safe and secure website.
 	\end{center}
 \end{table}
 
-Other studies ventured to find correlations between personality and
+Since this research has been done, the awareness of what \gls{HTTPS} is and it's
+importance has grown substantially, but so did the number of phishing websites
+served using it. The launch date of the Electronic Frontier Foundation's
+\citep{EFF_LETS_ENCRYPT} certificate authority which provides \gls{SSL} certificates
+at no cost can be correlated to \cite{APWG_Q42019}'s reported growing adoption
+in serving phishing websites over HTTPS (Figure \ref{fig:HTTPS_USAGE}). This is
+especially dangerous and confusing for the victim as \gls{HTTPS} is defined as
+secure Hypertext Transport Protocol \gls{HTTP} and provides the icon of a green padlock, creating the feeling of a safe and secure website.
+
+Other studies ventured to find correlations between personality particularities and
 susceptibility of being deceived by a phishing attack, but they often are in
 direct contradiction. \cite{UNDERSTANDING_PHISHING_VICTIM} managed to link the
 susceptibility of being deceived by a phishing attack to a set of arbitrary
@@ -113,22 +114,18 @@ by a phishing attempt. This is in direct opposition to the conclusion of
 indicator of high susceptibility and conscientiousness as the best indicator for
 low susceptibility of being a victim.
 
-%LOOK FOR CONSENSUS IF THERE IS ONE
 
 \section{Literature Review}
 There is a wealth of approaches in phishing detection and prevention presented
-by the literature. To better visualize these, \cite{ML_BASED_DETECTION_FROM_URL}
-compiled these as shown in Figure \ref{fig:PHISHING_SOLUTION_CATEGS}. In the
-following subsections, the discussion will be focused on software-based, as user
-awareness is considered out of scope for this dissertation.
+by the literature. To better visualize them, \cite{ML_BASED_DETECTION_FROM_URL}
+sinthesised the anti-phishing detection systems' literaterature structure as shown in Figure \ref{fig:PHISHING_SOLUTION_CATEGS}. In the following subsections, the discussion will be focused on software-based, as user awareness is considered out of scope for the aim of this dissertation.
 
-The literature review is categorized in rule-based (including black and white
-lists and heuristics), machine learning-based. Some of the research does have
+The literature review is categorized in rule-based (including black-lists, white-lists and heuristics) and machine learning-based. Some of the research does have
 some hybrid aspects but has been assigned to the category deemed as most
 relevant. The reason behind the selected categories lies in the fundamentally
 different type of classification mechanism.
 
-\begin{figure}[b]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.9\textwidth]{phish_detection_class.png}
 	\caption{
@@ -139,6 +136,7 @@ different type of classification mechanism.
 
 \subsection{Rule-based phishing detection}
 \label{RULEBASED}
+
 % (maybe speak about google safe-browsing?)
 
 Rule-based phishing solutions classify websites as malicious or legitimate based
@@ -222,7 +220,7 @@ this efficiency are presented in Table \ref{tab:APRIORI_MINED_RULES}.
 
 
 \begin{singlespace}
-	\begin{table}
+	\begin{table}[!b]
 		\small
 		\begin{center}
 			\begin{tabular}{ m{41.5em} }
@@ -446,7 +444,7 @@ As previously stated, Google Safe Browsing is responsible for protecting the top
 	\small
 	\begin{center}
 		\label{tab:OPTIMISED_MODELS}
-		\begin{tabular}{ | m{13em} | m{13em} | m{13em} | }
+		\begin{tabular}{ | m{13em} | m{12.9em} | m{13em} | }
 			\hline
 			\textbf{Version 1}                     &
 			\textbf{Version 2}                     &
@@ -500,11 +498,9 @@ As previously stated, Google Safe Browsing is responsible for protecting the top
 			clients are required to wash off cashed full
 			length hashes                                                                                                                          \\
 			\hline
-
 			                                       &                                                  & Message Authentication Code (MAC) support
 			is eliminated.                                                                                                                         \\
 			\hline
-
 			                                       &                                                  & The API key format is modified. The Google
 			Developers Console manages the API keys.                                                                                               \\
 			\hline
@@ -516,7 +512,7 @@ As previously stated, Google Safe Browsing is responsible for protecting the top
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.9\textwidth]{google_safe_browsing.png}
+	\includegraphics[width=0.95\textwidth]{google_safe_browsing.png}
 	\caption{
 		Categorisation of phishing prevention solutions
 		\citep{ML_BASED_DETECTION_FROM_URL}}
@@ -526,10 +522,9 @@ As previously stated, Google Safe Browsing is responsible for protecting the top
 Moving to performance assessment, \cite{SECURITY_BUSTERS} presents a thorough evaluation of anti-phishing detection systems embedded in different browsers and on different platforms. In developing the proposed proof of concept security proxy, \cite{SECURITY_BUSTERS} uncovered the classification accuracy issues of popular browsers. The study compiles information on the substantial difference between phishing URL detection and malicious URL detection (Table REF). It is noticeable that from all the browsers that use GSB, Google Chrome is the better performer.
 
 \begin{singlespace}
-	\small
 	\begin{center}
 		\label{tab:OPTIMISED_MODELS}
-		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
+		\begin{tabular}{ | m{12em} | m{12em} | m{11.5em} | }
 			\hline
 			                                 & \textbf{True positives} & \textbf{False negatives} \\
 			\hline
