@@ -29,9 +29,16 @@ The proposal starts with presenting an overview of the project. It defines the p
 After creating a low resolution image of the artefact's desing, the proposal briefly describes the method of evaluation. Doing the appropriate research proved that the methodology proposed is rudimentary and inacurate. The design of the evaluation has been changed to include metrics used in the performance assessment of models in data science.
 
 \section{Future work}
-There are a number of ways to improve the classifier. Future work on the artefact could address either the blindspots or performance improvements.
+There are a number of ways to improve the classifier. Future work on the artefact could address either the blindspots, performance improvements. Another area worth considering is User Experience (UX). This can be significantly improved by wrapping the artefact in a browser extension.
 
-An example of a blindspot is the inability to detect man-in-the-middle attacks. A scenario where the legitimate domain name is resolved to an IP address under the control of a threat actor would go under the radar of the artefact. Furthermore, although the artefact manages to deliver predictions in a timely manner, the time of whitelist checking can be reduced by using low-level compiled programming languages (e.g. C/C++, Rust)
+An example of a blindspot is the inability to detect man-in-the-middle attacks. A scenario where the legitimate domain name is resolved to an IP address under the control of a threat actor would go under the radar of the artefact. This is solved by implementing a key-value store of domain names and IP addresses. To keep the artefact lightweith this store could be managed by an Random Access Memory (RAM) database (e.g. Memcached, Redis). Although the implementation of such feature is trivial, it is considered out of the scope of objectives set in Chapter 1(REF).
+
+Although the artefact manages to deliver predictions in a timely manner, the time of whitelist checking can be significantly reduced by using low-level compiled programming languages (e.g. C/C++, Rust). 
+
+Furthermore, the perofrmance can be improved by applying the same classification on all the URLs found in the HTML source code of the page to improve surface coverage and lower the number of false-negatives.
+
+Another idea is to focus on the inter-feature correlations and mine rulesets from combined features as shown by \cite{INTELLIGENT_RULE_MINING}.
+
 
 % FEATURE TWEAKING + HYPERPARAMETER TUNING? Cannot detect when the legit website is highjacked
 % 

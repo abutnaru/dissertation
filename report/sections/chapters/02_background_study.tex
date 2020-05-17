@@ -63,7 +63,7 @@ presence of \gls{HTTPS}, the padlock icon and Secure Socket Layer (\gls{SSL}) ce
 	\begin{center}
 		\begin{tabular}{ | m{12em} | m{12em} | m{11.5em} | }
 			\hline
-			                                  & \textbf{Highly susceptible} & \textbf{Less susceptible} \\ [1.25em]
+			                                  & \textbf{Highly susceptible} & \textbf{Less susceptible} \\
 			\hline
 			\textbf{Age}                      & 18-24 years old or less     & 25 years old or more      \\
 			\hline
@@ -141,16 +141,14 @@ different type of classification mechanism.
 
 Rule-based phishing solutions classify websites as malicious or legitimate based
 on a pre-defined set of rules. Because the ruleset is the centerpiece of the
-detection system, the resulted performance is tightly linked to the system's
-design. As a consequence, the focus is set on the selection and conditional
-relationship setting.
+detection system, the resulted performance is tightly linked it's design. As a consequence, the focus is set on rule selection and conditional relationship setting.
 
 \cite{ANTIPHISHING_AUTOMATED_WHITELIST} proposed an automated individual
 white-list capable of updating itself with records of the IP addresses of each
 website visited, which features a login page. If the user attempts to submit
-information through such a login user interface (LUI), they get a warning
+information through such a login user interface, they get a warning
 informing them that they are doing so on a webpage outside of the white-list.
-The proposed solution uses the Naive Bayesian classifier to take decisions which
+The proposed solution uses the Naive Bayesian classifier to take decisions, which
 has delivered high effectiveness in previous studies on anti-spam
 \citep{BAESYAN_KEYWORD_COMPARISON} and junk e-mail
 \citep{BAESYAN_JUNK_FILTERING} filters. After the decision has been taken, the
@@ -206,19 +204,6 @@ information about the age of the domain, webpage traffic, and DNS record data.
 Furthermore calibrating the thresholds for each feature requires complex
 statistical work.
 
-\cite{INTELLIGENT_RULE_MINING} approaches phishing detection by firstly focusing
-on the extraction of key indicators that are statistically proven to be found in
-phishing websites. The paper then presents a set of heuristics based on the
-aforementioned statistical investigations and analysis, which are translated
-into fourteen rules responsible for URL classification. Similar to
-\cite{RULE_BASED_CLASSIFICATION}, the identified rules are fed into two data
-mining algorithms (Apriori and Predictive Apriori), to discover effective
-associations between them. The paper concluded by stating the two sets resulted
-from associative rule mining, and the reported experimental accuracy of 93\%
-when using the ruleset mined by the apriori algorithm. The rules used to achieve
-this efficiency are presented in Table \ref{tab:APRIORI_MINED_RULES}.
-
-
 \begin{singlespace}
 	\begin{table}[!b]
 		\small
@@ -248,24 +233,36 @@ this efficiency are presented in Table \ref{tab:APRIORI_MINED_RULES}.
 				\\\\
 				\hline
 			\end{tabular}
-			\caption{\cite{INTELLIGENT_RULE_MINING} rule mining results of the apriori algorithm}
+			\caption{Rule mining results of the apriori algorithm \citep{INTELLIGENT_RULE_MINING}}
 			\label{tab:APRIORI_MINED_RULES}
 		\end{center}
 	\end{table}
 \end{singlespace}
 
+\cite{INTELLIGENT_RULE_MINING} approaches phishing detection by firstly focusing
+on the extraction of key indicators that are statistically proven to be found in
+phishing websites. The paper then presents a set of heuristics based on the
+aforementioned statistical investigations and analysis, which are translated
+into fourteen rules responsible for URL classification. Similar to
+\cite{RULE_BASED_CLASSIFICATION}, the identified rules are fed into two data
+mining algorithms (Apriori and Predictive Apriori), to discover effective
+associations between them. The paper concluded by stating the two sets resulted
+from associative rule mining, and the reported experimental accuracy of 93\%
+when using the ruleset mined by the apriori algorithm. The rules used to achieve
+this efficiency are presented in Table \ref{tab:APRIORI_MINED_RULES}.
+
 \subsection{Machine-learning based phishing detection}
 
 Machine learning-based solutions are centered around the process of feature
 extraction and selection from different parts of the website such as the URL or
-HTML content, and the training of a machine learning model using this
+Hypertext Markup Language (HTML) content, and the training of a machine learning model using this
 information. This subsection will briefly discuss a variety of machine learning
 approaches to anti-phishing detection systems, and the key takeaways from the
 studies covered.
 
 \cite{URL_SAYS_ALL} proposes PhishDef --- a system which does on-the-fly
 classification of phishing URLs based on lexical features and adaptive
-regularization of weights \citep{AROW}. The AROW algorithm offers the capability
+regularization of weights (AROW) \citep{AROW}. The AROW algorithm offers the capability
 of calibrating the classification mechanism upon making a wrong prediction. As a
 result, the predictions will be of high accuracy even when the trained model is
 provided with noisy data. Furthermore, PhishDef is based on an online
@@ -298,7 +295,7 @@ which supervises the malicious-looking newly registered domains. The second
 module does spear phishing detection using a machine learning model trained on
 different variations of popular domains such as bitsquatting, omission, etc.
 Although this research is geared more towards banking bot-nets, the approach
-used in suspicious URL detection and spear-phishing protection is well designed
+used in URL variations detection and spear-phishing protection is well designed
 and highly relevant.
 
 \cite{STACKED_ML_URL_HTML} takes a different approach by using a stacked machine
@@ -313,8 +310,7 @@ models. To measure inter-rater reliability for qualitative (categorical) items
 and elect the best candidates for the stacking model \cite{STACKED_ML_URL_HTML}
 used Cohen's kappa static \citep{DATA_MINING_T&T}. The resulted stack was
 selected based on the aforementioned kappa static and the lower average error.
-This method of selection lowered the false negative, false positive and false
-negative rates of the stacking model when compared to all its components
+This method of selection lowered the false-positive and false-negative rates of the stacking model when compared to all its components
 individually. Finally, the research reports an accuracy rate of the stacked
 model of 97.3\%. with a false positive of 1.61\% and a false negative rate of
 4.46\%.
@@ -336,56 +332,55 @@ execution and detection of new websites. An important tendency emergent from the
 comparisons is that the NLP features seem to improve accuracy across the
 majority of machine learning algorithms covered.
 
-\begin{singlespace}
+\small
+\begin{center}
 	\small
-	\begin{center}
-		\label{tab:EXISTENT_SOLUTIONS}
-		\begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
-			\hline
-			\textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
-			\hline
-			GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
-			\hline
-			Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
-			\hline
-			MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
-			\hline
-			Netcraft (Customise)         & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
-			\hline
-			SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
-			\hline
-			Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
-			\hline
-			PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
-			\hline
-			PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
-			\hline
-			PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
-			\hline
-			PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
-			\hline
-			CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
-			\hline
-			PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
-			\hline
-			PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
-			\hline
-			PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
-			\hline
-			PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
-			\hline
-			Google Safe Browsing         & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
-			\hline
-			PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
-			\hline
-			Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
-			\hline
-			IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
-			\hline
-		\end{tabular}
-		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
-	\end{center}
-\end{singlespace}
+	\label{tab:EXISTENT_SOLUTIONS}
+	\begin{tabular}{ | m{0.9em} | m{7.6em} | m{13em} | m{7.1em} | m{2.3em} | m{4.3em} | }
+		\hline
+		                                  & \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{1}}  & GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{2}}  & Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{3}}  & MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{4}}  & Netcraft                     & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{5}}  & SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{6}}  & Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{7}}  & PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{8}}  & PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{9}}  & PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{10}} & PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{11}} & CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{12}} & PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{13}} & PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{14}} & PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{15}} & PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{16}} & GSB                          & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{17}} & PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{18}} & Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{19}} & IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
+		\hline
+	\end{tabular}
+	\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+\end{center}
 
 \cite{INTELLIGENT_PHISHING_ANFIS} studies the performance of a few machine
 learning models, one of which is an artificial neural network named Adaptive
@@ -434,118 +429,52 @@ URLs and 1000 malicious). The study concludes by reporting an accuracy of 95\%.
 Furthermore, it states that the Hamming distance is the most effective from the
 studied set, improving the overall recognition rate by 21.8\%.
 
+
 \subsection{Google Safe Browsing}
-As previously stated, Google Safe Browsing is responsible for protecting the top three browsers in terms of popularity: Google Chrome, Apple's Safari and Mozilla Firefox. Because of this, the artefact produced throughout the present dissertation is aiming to surpass it's performance. This subsection introduces Google Safe Browsing in a brief manner, after which presents work conducted to assess it's effectiveness.
+Before engaging in the development of a solution meant to chanllenge the status-quo, it is of paramount importance to gain insight into what the artefact competes with. As previously stated, Google Safe Browsing is responsible for protecting the top three browsers in terms of market share: Google Chrome, Apple's Safari and Mozilla Firefox. This subsection presents work conducted to both map it's inner working as well as assess it's classification accuracy.
 
-\cite{GOOGLE_SAFE_BROWSING_VERSIONS} describes the mechanism behind Google Safe browsing and captures the differences between the different API versions. However, the study dates back to 2015, so the version comparision table includes only the first three versions. Since then, version four has been released, marking the end of support for version two and three.
-\cite{GOOGLE_SAFE_BROWSING_V4} doesn't mention any fundamental changes to the API, but details the update in the focus towards the growing mobile. To adapt to this, the new API is optimized towards the challenges of the mobile environment: the limited power, network badwidth and poor quality of service. Furthermore, the protection per bit is maximized, due to cellular data being a direct expense of the user.
-
-\begin{singlespace}
-	\small
-	\begin{center}
-		\label{tab:OPTIMISED_MODELS}
-		\begin{tabular}{ | m{13em} | m{12.9em} | m{13em} | }
-			\hline
-			\textbf{Version 1}                     &
-			\textbf{Version 2}                     &
-			\textbf{Version 3}                                                                                                                     \\
-			\hline
-			The hashing algorithm used in this
-			version is MD5.                        & The hashing algorithm used in this
-			version is SHA 256.                    & To improve the efficiency, protocol buffers are
-			used by encoding the chunk data.                                                                                                       \\
-			\hline
-			The efficiency is less and it is not
-			scalable.                              & In the place of a single versioned
-			list, a series of "chunks” is used.    & Host keys are not used.                                                                       \\
-			\hline
-			-The entire phishing list entries are to be
-			downloaded at once because the
-			partial list updates are not supported
-			till the time the user fully downloads
-			the recent version of list.            & A list of URLs is received when the
-			list of chunks is communicated
-			while updating.                        & Optional metadata was included in HTTP
-			Response for Full-Length Hashes .                                                                                                      \\
-			\hline
-			The phishing data is given to the client in
-			an order from old to new. For the
-			phishing sites it is inefficient as they
-			have a short lifetime.                 & The Chunks present are 32-bit
-			truncated hashes                       & To differentiate between the kinds of sites and
-			to allow more warnings, metadata
-			functionality was used by Google-malware-
-			shavar list.                                                                                                                           \\
-			\hline
-			As regular updates are required, so the
-			bandwidth consumption is escalated.    & As soon as a match is discovered,
-			the 32 bit chunk is
-			communicated to Google and in
-			return a list of 256 bit hash is
-			acquired.                              & For the full hash, modifications are carried out
-			in the cashing semantics.                                                                                                              \\
-			\hline
-
-			It is time consuming as the users scarcely
-			find a match with the present pattern. & As compared to version 1, it is
-			faster                                 & An expiration time is included in the HTTP
-			Response for Full-Length Hashes in
-			response                                                                                                                               \\
-			\hline
-
-			It is slow and has high latency.       & It has improved speed and reduced
-			Latency.                               & When an update request is sent, each time the
-			clients are required to wash off cashed full
-			length hashes                                                                                                                          \\
-			\hline
-			                                       &                                                  & Message Authentication Code (MAC) support
-			is eliminated.                                                                                                                         \\
-			\hline
-			                                       &                                                  & The API key format is modified. The Google
-			Developers Console manages the API keys.                                                                                               \\
-			\hline
-		\end{tabular}
-		\captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
-	\end{center}
-\end{singlespace}
-
-
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.95\textwidth]{google_safe_browsing.png}
 	\caption{
-		Categorisation of phishing prevention solutions
-		\citep{ML_BASED_DETECTION_FROM_URL}}
+		Architecture of Google Safe Browsing
+		\citep{GOOGLE_SAFE_BROWSING_VERSIONS}}
 	\label{fig:PHISHING_SOLUTION_CATEGS}
 \end{figure}
 
+\cite{GOOGLE_SAFE_BROWSING_VERSIONS} describes the mechanism behind Google Safe Browsing and captures the differences between the different API versions. However, the study dates back to 2015, so the version comparision table includes only the first three versions (Table \ref{tab:GSB_VERSIONS}). Since then, version four has been released, marking the end of support for version two and three.
+\cite{GOOGLE_SAFE_BROWSING_V4} does not mention any fundamental changes to the version four API, but details a series of ajustments focusing towards the growth in usage of mobile devies. The new API is optimised around the challenges of the mobile environment: the limited power, network badwidth and poor quality of service. Furthermore, the protection per bit is maximized, due to cellular data being a direct expense of the user.
+
 Moving to performance assessment, \cite{SECURITY_BUSTERS} presents a thorough evaluation of anti-phishing detection systems embedded in different browsers and on different platforms. In developing the proposed proof of concept security proxy, \cite{SECURITY_BUSTERS} uncovered the classification accuracy issues of popular browsers. The study compiles information on the substantial difference between phishing URL detection and malicious URL detection (Table REF). It is noticeable that from all the browsers that use GSB, Google Chrome is the better performer.
 
-\begin{singlespace}
-	\begin{center}
-		\label{tab:OPTIMISED_MODELS}
-		\begin{tabular}{ | m{12em} | m{12em} | m{11.5em} | }
-			\hline
-			                                 & \textbf{True positives} & \textbf{False negatives} \\
-			\hline
-			\textbf{IE (Windows)}            & 48.4\%                  & 9.9\%                    \\
-			\hline
-			\textbf{Opera (Windows)}         & 77.9\%                   & 8.4\%                    \\
-			\hline
-			\textbf{Chrome (Windows)}        & 93.0\%                   & 1.3\%                    \\
-			\hline
-			\textbf{Firefox (Windows)}       & 86.7\%                   & 5.9\%                    \\
-			\hline
-			\textbf{Opera mobile (Android)}  & 75.9\%                   & 7.9\%                    \\
-			\hline
-			\textbf{Firefox mobile(Android)} & 85.4\%                   & 3.4\%                    \\
-			\hline
-			\textbf{Safari mobile (iOS)}     & 38.7\%                   & 26.4\%                    \\
-			\hline
-		\end{tabular}
-		\captionsetup{type=table}\caption{A comparison of existing solutions (The missing percentages mark phishes that went offline during testing) \citep{INTELLIGENT_PHISHING_ANFIS}}
-	\end{center}
-\end{singlespace}
+\subsection{Motivation revision}
+The literaterature shows a great level of creativity in the solutions it proposes. However, the work presented in this chapter focuses on raising the bar as hight as possible regarding accuracy. Although this is a useful target to aim towards, none of them aim to improve upon existing browser protection in a manner that fits the scenario and prioritises based on the circumstances of such system.
+
+\begin{center}
+	\footnotesize
+	\label{tab:OPTIMISED_MODELS}
+	\begin{tabularx}{\textwidth}{ | X | X | X | }
+		\hline
+		                                 & \textbf{True positives} & \textbf{False negatives} \\
+		\hline
+		\textbf{IE (Windows)}            & 48.4\%                  & 9.9\%                    \\
+		\hline
+		\textbf{Opera (Windows)}         & 77.9\%                  & 8.4\%                    \\
+		\hline
+		\textbf{Chrome (Windows)}        & 93.0\%                  & 1.3\%                    \\
+		\hline
+		\textbf{Firefox (Windows)}       & 86.7\%                  & 5.9\%                    \\
+		\hline
+		\textbf{Opera mobile (Android)}  & 75.9\%                  & 7.9\%                    \\
+		\hline
+		\textbf{Firefox mobile(Android)} & 85.4\%                  & 3.4\%                    \\
+		\hline
+		\textbf{Safari mobile (iOS)}     & 38.7\%                  & 26.4\%                   \\
+		\hline
+	\end{tabularx}
+	\captionsetup{type=table}\caption{Comparison of browser anti-phishing detection systems \citep{INTELLIGENT_PHISHING_ANFIS}}
+\end{center}
+
 
 \section{Chapter overview}
 This chapter outlined the status quo of the relevant literature, expanding on
@@ -554,6 +483,78 @@ not only prevalent in the field of security, but in psychology and others as
 well. The features and mechanisms considered as most effective by the studies
 presented in the rule-based and machine learning-based solutions will shape the
 design of the artifact.
+
+\begin{singlespace}
+	\begin{table}[!h]
+		\begin{center}
+			\small
+			\label{tab:GSB_VERSIONS}
+			\begin{tabular}{ | m{13em} | m{12.9em} | m{13em} | }
+				\hline
+				\textbf{Version 1}                     &
+				\textbf{Version 2}                     &
+				\textbf{Version 3}                                                                                                                     \\
+				\hline
+				The hashing algorithm used in this
+				version is MD5.                        & The hashing algorithm used in this
+				version is SHA 256.                    & To improve the efficiency, protocol buffers are
+				used by encoding the chunk data.                                                                                                       \\
+				\hline
+				The efficiency is less and it is not
+				scalable.                              & In the place of a single versioned
+				list, a series of "chunks” is used.    & Message Authentication Code (MAC) support
+				is eliminated.                                                                        \\
+				\hline
+				-The entire phishing list entries are to be
+				downloaded at once because the
+				partial list updates are not supported
+				till the time the user fully downloads
+				the recent version of list.            & A list of URLs is received when the
+				list of chunks is communicated
+				while updating.                        & The API key format is modified. The Google
+				Developers Console manages the API keys..                                                                                                      \\
+				\hline
+				The phishing data is given to the client in
+				an order from old to new. For the
+				phishing sites it is inefficient as they
+				have a short lifetime.                 & The Chunks present are 32-bit
+				truncated hashes                       & To differentiate between the kinds of sites and
+				to allow more warnings, metadata
+				functionality was used by Google-malware-
+				shavar list.                                                                                                                           \\
+				\hline
+				As regular updates are required, so the
+				bandwidth consumption is escalated.    & As soon as a match is discovered,
+				the 32 bit chunk is
+				communicated to Google and in
+				return a list of 256 bit hash is
+				acquired.                              & For the full hash, modifications are carried out
+				in the cashing semantics.                                                                                                              \\
+				\hline
+
+				It is time consuming as the users scarcely
+				find a match with the present pattern. & As compared to version 1, it is
+				faster                                 & An expiration time is included in the HTTP
+				Response for Full-Length Hashes in
+				response                                                                                                                               \\
+				\hline
+
+				It is slow and has high latency.       & It has improved speed and reduced
+				Latency.                               & When an update request is sent, each time the
+				clients are required to wash off cashed full
+				length hashes                                                                                                                          \\
+				\hline
+				                                       &                                                  &   Optional metadata was included in HTTP
+													   Response for Full-Length Hashes                                                                                                                      \\
+				\hline
+				                                       &                                                  & Host keys are not used.                                                                                               \\
+				\hline
+			\end{tabular}
+
+		\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+		\end{center}
+	\end{table}
+\end{singlespace}
 
 % Background study should have between 10 and 30 papers
 
