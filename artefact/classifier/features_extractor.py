@@ -231,8 +231,8 @@ def extract(raw_url, label=-1):
                 domain_sw,
                 path_sw,
                 ip_presence,
-                suspicious_domain,
                 suspicious_subdomain,
+                suspicious_domain,
             ]
         )
     return np.array(
@@ -248,7 +248,7 @@ def extract(raw_url, label=-1):
             domain_sw,
             path_sw,
             ip_presence,
-            suspicious_domain,
             suspicious_subdomain,
+            suspicious_domain,
         ]
     )
