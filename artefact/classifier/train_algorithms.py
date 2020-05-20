@@ -45,7 +45,7 @@ ml_algorithms = [
             RandomForestClassifier(random_state=1),
             [
                 {
-                    "n_estimators": [295],
+                    "n_estimators": [150, 295, 350],
                     "max_features": ["auto"],
                     "min_samples_split": [8, 12],
                     "max_depth": [15, 18, 21],

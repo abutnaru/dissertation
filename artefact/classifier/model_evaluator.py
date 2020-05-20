@@ -135,11 +135,11 @@ def main():
                     progressbar.update()
 
     models = [
-        {"name": "Naive Bayes", "filename": "naive_bayes"},
-        {"name": "Decision Tree", "filename": "decision_tree"},
+        #{"name": "Naive Bayes", "filename": "naive_bayes"},
+        #{"name": "Decision Tree", "filename": "decision_tree"},
         {"name": "Random Forest", "filename": "random_forest"},
-        {"name": "Support Vector Machine", "filename": "support_vector"},
-        {"name": "Neural Network", "filename": "ml_perceptron"},
+        #{"name": "Support Vector Machine", "filename": "support_vector"},
+        #{"name": "Neural Network", "filename": "ml_perceptron"},
     ]
 
     print("Starting model evaluation")
