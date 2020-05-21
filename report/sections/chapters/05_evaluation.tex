@@ -11,38 +11,35 @@ The aim of the work presented throughout this dissertation is to challenge and i
         \label{tab:ARTEFACT_VS_GSB}
         \begin{tabular}{ | m{14em} | m{5em} | m{5em} |}
             \hline
-                                          & \textbf{GSB} & \textbf{Artefact} \\
+                                                & \textbf{GSB} & \textbf{Artefact} \\
             \hline
-            \textbf{Phishtank 01.04.2020} & 57.81        & 77.54             \\
+            \textbf{Phishtank 01.04.2020}       & 50.76\%      & 77.54             \\
             \hline
-            \textbf{Phishtank 05.04.2020} & 52           & 52                \\
-            \hline\hline
-            \textbf{Phishtank 05.05.2020} & 90           & 147               \\
+            \textbf{Phishtank 05.04.2020}       & 48.32\%      & 95.67\%           \\
             \hline
-            \textbf{Phishtank 06.05.2020} & 107          & 220               \\
+            \textbf{Phishtank 05.05.2020 (API)} & 44.47\%      & 94.80\%           \\
             \hline
-            \textbf{Phishtank 07.05.2020} & 141          & 321               \\
+            \textbf{Phishtank 06.05.2020 (API)} & 44.33\%      & 94.78\%           \\
             \hline
-            \textbf{Phishtank 08.05.2020} & 90           & 147               \\
+            \textbf{Phishtank 07.05.2020 (API)} & 44.94\%      & 94.75\%           \\
             \hline
-            \textbf{Phishtank 09.05.2020} & 107          & 220               \\
+            \textbf{Phishtank 08.05.2020 (API)} & 45.34\%      & 94.63\%           \\
             \hline
-            \textbf{Phishtank 10.05.2020} & 141          & 321               \\
+            \textbf{Phishtank 09.05.2020 (API)} & 45.33\%      & 94.64\%           \\
+            \hline
+            \textbf{Phishtank 10.05.2020 (API)} & 43.60\%      & 95.08\%           \\
             \hline
         \end{tabular}
         \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
     \end{center}
 \end{singlespace}
 
-Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. It is noticeable that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
+Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. We can see that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
 
 Besides classification accuracy, the artefact presents a much simpler structure while causing a disproportional number of false-negatives and false-positives. The addition of blacklists, whitelists and other mechanisms is expected to further reduce the number of innacurate predictions.
 
-
-% ARTEFACT VS GOOGLE SAFE BROWSING + OBJECTIVES
-
 \section{Literature}
-Besides fullfiling the aim of surpasing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table (REF) shows that when placing the artefact in the solutions comparison presented by (REF) in the Background study chapter it comes on top of all other solutions. 
+Besides fullfiling the aim of surpasing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table \ref{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT} shows that placing the artefact in the solutions comparison presented by \cite{INTELLIGENT_PHISHING_ANFIS}, it comes on top of all other solutions.
 
 \begin{singlespace}
     \small
@@ -51,8 +48,6 @@ Besides fullfiling the aim of surpasing GSB's performance, the artefact presents
         \begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
             \hline
             \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
-            \hline
-            Presented Work               & Heuristics \& Features-based          & N/A                 & 99.29           & Research               \\
             \hline
             GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
             \hline
@@ -91,6 +86,8 @@ Besides fullfiling the aim of surpasing GSB's performance, the artefact presents
             Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
             \hline
             IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
+            \hline
+            \textbf{Presented Work}      & \textbf{Heuristics \& Features-based} & \textbf{N/A}        & \textbf{99.29}  & \textbf{Research}      \\
             \hline
         \end{tabular}
         \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
