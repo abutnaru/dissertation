@@ -1,9 +1,9 @@
 %!TEX root = ../main.tex
 \chapter{Evaluation}
-The evaluation chapter measures the achievement of the aim set in the introduction. In addition, to better place the artefact in the landscape of existent solutions, it's evaluation is presented in direct comparison with both Google Safe Browsing and the solutions presented by the literature.
+The evaluation chapter measures the achievement of the aim set in the introduction. Also, to better place the artefact in the landscape of existing solutions, the evaluation is presented in direct comparison with GSB and the solutions presented by the literature.
 
 \section{Google Safe Browsing}
-The aim of the work presented throughout this dissertation is to challenge and improve the current status quo of browser embedded anti-phishing detection systems. The artefact has successfuly almost doubled the classification accuracy, all of this while respecting the priorities of such piece of software. By design, it is geared towards delivering a minimal amount of false-positives, at the expense of a slight growth in the number of false negatives. This way, it's alerts are trustworthy and does not produce noise. Furthermore, it manages to do so using just the URL of the webpage and does not rely on third-party services for any other information.
+The work presented throughout this dissertation aims to challenge and improve the current status quo of browser embedded anti-phishing detection systems. The artefact has successfully almost doubled the classification accuracy while respecting the priorities of such software. By design, it is geared towards delivering a minimal amount of false-positives, at the expense of a slight growth in the number of false negatives. This way, its alerts are trustworthy and do not produce noise. Furthermore, it manages to do so using just the URL of the webpage and does not rely on third-party services for any other information.
 
 \begin{singlespace}
     \small
@@ -30,66 +30,65 @@ The aim of the work presented throughout this dissertation is to challenge and i
             \textbf{Phishtank 10.05.2020 (API)} & 43.60\%      & 95.08\%           \\
             \hline
         \end{tabular}
-        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
+        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{Adebowale}}
     \end{center}
 \end{singlespace}
 
-Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. We can see that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
+Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. We can observe that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
 
-Besides classification accuracy, the artefact presents a much simpler structure while causing a disproportional number of false-negatives and false-positives. The addition of blacklists, whitelists and other mechanisms is expected to further reduce the number of innacurate predictions.
+Besides classification accuracy, the artefact presents a much simpler structure while causing a disproportionally low number of false-negatives and false-positives. The addition of blacklists, whitelists and other mechanisms is expected to reduce the number of inaccurate predictions further.
 
 \section{Literature}
-Besides fullfiling the aim of surpasing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table \ref{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT} shows that placing the artefact in the solutions comparison presented by \cite{INTELLIGENT_PHISHING_ANFIS}, it comes on top of all other solutions.
+Besides accomplishing the aim of surpassing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table \ref{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT} shows that when placing the artefact in the comparison of solutions presented by \cite{Adebowale}, its accuracy comes above all others. Moreover, it is trained on a wide range of international phishing URLs, which gives the model language independence.
 
-\begin{singlespace}
-    \small
-    \begin{center}
-        \label{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT}
-        \begin{tabular}{ | m{8em} | m{13em} | m{8.5em} | m{2.3em} | m{5em} | }
-            \hline
-            \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
-            \hline
-            GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
-            \hline
-            Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
-            \hline
-            MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
-            \hline
-            Netcraft (Customise)         & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
-            \hline
-            SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
-            \hline
-            Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
-            \hline
-            PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
-            \hline
-            PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
-            \hline
-            PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
-            \hline
-            PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
-            \hline
-            CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
-            \hline
-            PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
-            \hline
-            PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
-            \hline
-            PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
-            \hline
-            PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
-            \hline
-            Google Safe Browsing         & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
-            \hline
-            PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
-            \hline
-            Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
-            \hline
-            IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
-            \hline
-            \textbf{Presented Work}      & \textbf{Heuristics \& Features-based} & \textbf{N/A}        & \textbf{99.29}  & \textbf{Research}      \\
-            \hline
-        \end{tabular}
-        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{INTELLIGENT_PHISHING_ANFIS}}
-    \end{center}
-\end{singlespace}
+\begin{center}
+	\small
+	\begin{tabular}{ | m{0.9em} | m{7.6em} | m{13em} | m{7.1em} | m{2.3em} | m{4.3em} | }
+		\hline
+		                                  & \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{1}}  & GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{2}}  & Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{3}}  & MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{4}}  & Netcraft                     & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{5}}  & SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{6}}  & Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{7}}  & PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{8}}  & PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{9}}  & PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{10}} & PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{11}} & CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{12}} & PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{13}} & PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{14}} & PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{15}} & PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{16}} & GSB                          & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{17}} & PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{18}} & Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{19}} & IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
+        \hline
+        \multicolumn{1}{|c|}{\textbf{20}}      & \textbf{Presented Work} & \textbf{Heuristics \& Feature-based} & \textbf{N/A}        & \textbf{99.29}  & \textbf{Research}      \\
+		\hline
+	\end{tabular}
+    \captionsetup{type=table}\caption{Comparison between the artefact and \cite{Adebowale}'s solution compilation}
+	\label{tab:EXISTENT_SOLUTIONS}
+\end{center}
+

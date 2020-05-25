@@ -1,26 +1,15 @@
 %!TEX root = ../main.tex
-
-% Judgement and analysis in planning: Mature analysis and judgement in planning showing flexibility and high awareness of contingencies, efficiency and monitoring. Fully comprehensive risk analysis and contingency planning
-
-% Analysis of the problem: Full consideration has been given to analysis alternatives and an entirely appropriate and effective analysis of the problem results. Depth in judgement and final choices, and effective reativity in analysis
-
-% Selection and justification of processes, methods and tools: Real depth of insight is shown, with discerning judgement in final choices, demonstrating unusual insight and very effective, creative approach to the project. Methods/technology are totally appropriate to the objectives, with a thorough, considered justification for their selection, and are used with flair.
-
-% Appropriateness of solution design: Full consideration has been given to design alternatives and an entirely appropriate and effective solution results. Real depth of insight is shown, with discerning judgement in final choices, demonstrating unusual insight and very effective creativity in designing a solution to the problem that is as close to an optimum solution as can be expected.
-
-% Appropriateness of evaluation design: Full consideration has been given to evaluation alternatives and an entirely appropriate and effective evaluation approach results. Real depth of insight is shown into the factors affecting the quality of the solution, with discerning judgement in final choices, demonstrating unusual insight and very effective creativity in designing effective evaluation at all stages of development.
 \chapter{Methodology}
 \label{chap:methodology}
-
-To ensure transparency and reproducibility of the outcomes, this chapter articulates the methodology used in all the relevant aspects of the dissertation. 
-Firstly, it introduces the process of initial analysis and planning that sets the base for the present work. After this, it describes the methodology used in carrying out the research and literature review. The following subsection shows insight into the process of translating objectives into requirements and the design decisions taken. The penultimate subsection will discuss the technical details of the artifact. It will increase the resolution at which the design has been presented. Finally, the last subsection will expand over the methodology of evaluation used throughout this dissertation.
+To ensure transparency and reproducibility of the outcomes, this chapter articulates the methodology used in all the relevant aspects of the dissertation.
+Firstly, it introduces the process of initial analysis and planning that serves as the foundation for the present work. The following subsection describes the software development framework and the version-control system used. The penultimate subsection will discuss the technical details of the artefact and increase the resolution at which the design has been previously presented. Finally, the last subsection will expand over the methodology of evaluation used to measure the accomplishment of the project's success criteria.
 
 \section{Planning and initial analysis}
-A compulsory prerequisite of the planning and initial analysis phase is problem definition. The low-resolution problem definition developed at this stage serves as the cornerstone for further design and analysis. After the problem definition is produced, research is carried out to confirm its existence and discover it's particularities. This is done to reduce the discrepancy between the subjective view on the problem and its objective state defined by the literature.
+A prerequisite of the planning and initial analysis phase is the definition of the problem. The low-resolution problem definition developed at this stage serves as the cornerstone for further design and analysis. After the problem definition is produced, research is carried out to confirm its existence and discover its particularities. This reduces the discrepancy between the subjective view regarding the issue and its objective state defined by the literature.
 
-From research on the problem of phishing and how it's impact maps on different areas, a formal compilation of objectives has been extracted as shown in Table \ref{tab:OBJECTIVES}. The next stage is designing a bare but viable solution specification around the aforementioned objectives. Based on this specification, the necessary research and procedures identified and mapped over a Gantt chart with an educated time estimate attributed to each. The final step of the initial analysis and planning is to perform a risk analysis. This reduces the probability of confronting an obstacle that has not been identified, thus having no planned mitigation.
+A formal compilation of objectives has been extracted, as shown in Table \ref{tab:OBJECTIVES} from research on the problem of phishing and how its impact maps on different domains. The next stage is designing a bare but viable solution specification around the objectives mentioned earlier. Based on this specification, the necessary research and procedures are identified and mapped over a Gantt chart with a reasonable time estimate attributed to each. The final step of the initial analysis and planning is to perform a risk analysis. It reduces the probability of facing an obstacle that has not been identified, thus has no planned mitigation.
 
-To better visualize the planning and initial analysis phase, an illustration of the sequence of procedures is presented in Figure \ref{fig:INITIAL_ANALYSIS}.
+As an aid to better visualise the planning and initial analysis phase, an illustration of the sequence of procedures is presented in Figure \ref{fig:INITIAL_ANALYSIS}.
 
 \begin{figure}
 	\centering
@@ -30,9 +19,9 @@ To better visualize the planning and initial analysis phase, an illustration of 
 \end{figure}
 
 \section{Development methodology}
-To ensure the development of the artefact is well-structured and improve time management, the artefact is built inline with the agile software development framework. Because agile has been designed around production software, it includes a step of releasing the code or code changes once per cycle. To adapt this to the use case of the artefact, the release step will be replaced with an evaluation of the test results from previous steps, and the outcome is considered to be the feedback.
+The artefact is built inline with the agile software development framework to ensure the development of the artefact is well-structured and to improve time management. Because agile has been designed around production software, it includes a step of releasing the code or code changes once per cycle. As an adaptation to the use case of this artefact, the release step is replaced with an evaluation of test results from previous steps. The difference between the outcome of testing and the aims of the artefact constitutes the feedback.
 
-After coding and testing step, the code is pushed to the GitHub version control management framework. This is done to ensure the code can be cloned on multiple testing machines. Furthermore this allows for changes to be tracked and issues uncovered in the later development stages to be rolled back.
+After development and testing, the code is pushed to the GitHub version control management framework. The reason is to ensure the code can be cloned on multiple testing machines. Moreover, it allows for changes to be tracked and allows for the rollback of issues uncovered in the later development stages.
 
 \begin{figure}[b]
 	\centering
@@ -43,12 +32,13 @@ After coding and testing step, the code is pushed to the GitHub version control 
 \end{figure}
 
 \section{Artefact design}
-The functional outcome of this dissertation is composed of two pieces of software. The first is the Google Safe Browsing evaluation tool used to measure it's classification accuracy. This tool will perform evaluation using both the browser in a realistic scenarion and the Google Safe Browsing API. The second is the classifier used to predict whether an URL points to a phishing page or not.
+The functional outcome of this dissertation is composed of two pieces of software. The first is the GSB evaluation tool used to measure its classification accuracy. This tool will perform an evaluation using both the browser in a realistic scenario and the GSB API. The second is the classifier used to predict whether an URL points to a phishing page or not.
 
 \subsection{Evaluation tool}
-The evaluation tool is written in Python 3 and uses the Selenium framework for browser automation. Python is used due to it's extensive support and ease of use. The selenium framework is chosen because of it's well established reputation in browser automation testing and expansive documentation. The target of the evaluation tool is to mimic a user clicking on a phishing link. This is done in order to capture effectiveness in a real-world scenario. The Google Safe Browsing API tester is implemented is implemented in Python 3 as well to avoid unnecesary segmentation between the functions of the same software.
+The evaluation tool is written in Python 3 and uses the Selenium framework for browser automation. The decision of using Python 3 is justified by its extensive support, readability and ease of use. The selenium framework is chosen because of its well-established reputation in browser automation testing and comprehensive documentation.
+The target of the evaluation tool is to mimic a user clicking on a phishing link. This scenario captures effectiveness in a real-world setting. The Google Safe Browsing API tester is implemented in Python 3 as well to avoid unnecessary segmentation between the functions of the same software.
 
-The URLs used in the evaluation process are the latest provided by Phishtank at the moment of evaluation. These are confirmed to be online and malicious by the PhishTank community. The test executed for each of the malicious URLs starts with loading the default profile of the Google Chrome user. Experimentation with the browser has shown that not loading a user's profile delivers unreliable results. After doing so the URL is opened and the page shown by the browser is studied. When a page is classified as malicious, the browser displays a custom page with a warning as shown in Figure \ref{fig:PHISHING_PREVENTED}. To verify whether the browser correctly classifies the URL, the tool searches the page's source code for Google's license details present in the warning page. If the browser shows the warning page overlay, the classification is marked as a true-positive, otherwise it is recorded as a false-negative.
+The URLs used in the evaluation process are the latest provided by Phishtank at the moment of testing. These are confirmed to be online and malicious by the PhishTank community. The test executed for each of the malicious URLs starts with loading the default profile of the Google Chrome user. After doing so, the URL is opened, and the page shown by the browser is studied. When a page is classified as malicious, the browser displays a custom page with a warning, as shown in Figure \ref{fig:PHISHING_PREVENTED}. As verification of whether the browser correctly classifies the URL, the tool searches the page's source code for Google's license details. If the browser shows the warning page overlay, the classification is marked as a true-positive. Otherwise, it is recorded as a false-negative.
 
 \begin{figure}
 	\centering
@@ -58,74 +48,45 @@ The URLs used in the evaluation process are the latest provided by Phishtank at 
 \end{figure}
 
 \subsection{The classifier}
-The classifier is the main artefact, set to accomplish the dissertation's aim of delivering better protection against phishing than the most popular browsers do. The selected approach in designing a competitive anti-phishing detection system is through the identification of key performance indicators that are efficient in phishing URL classification. Naturally, the first step in designing the artifact is corroborating information from a wide range of studies on the indices that achieve high classifications accuracy. Following this, the algorithms are compared and the best performing ones are selected for both hyperparameter tuning and further experimentation with features.
-Because the artifact is a hybrid anti-phishing detection system, each module has it's own implementation specification and is discussed separately.
+The classifier is the centrepiece of the artefact. It sets to accomplish the dissertation's aim of delivering better protection against phishing than GSB does. The selected approach in designing a competitive anti-phishing detection system is through the identification of key performance indicators that are proven efficient in phishing URL classification. Naturally, the first step in designing the artefact is bringing together information from a wide range of studies on the indices that achieve high classifications accuracy. Following this, the algorithms are trained and compared. The best-performing ones are selected for both hyperparameter tuning and further experimentation with features.
 
-The machine learning models compared in this dissertation are trained using Python 3 and SciKitLearn \citep{scikit-learn} library. Python is chosen over other programming languages both for the expansive amount of resources on the subject and it's readability. The SciKit library is used as an abstraction of the actual machine learning algorithms. By alleviating the complexity of implementating the machine learning algorithms used, the saved time is allocated towards experimentation and calibration.
+The machine learning models compared in this dissertation are trained using Python 3 and SciKitLearn \citep{Pedregosa} library. Python is chosen over other programming languages both for the abundance of resources on the subject, and its readability. The actual machine learning algorithms implementations are abstracted by using the SciKit library. Alleviating the complexity of implementing machine learning algorithms saves a significant amount of time. The saved time is allocated toward experimentation and calibration.
 
-The set of models used in the experimentation phase is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}). These are Naive Bayes, Decision Tree, Random Forest and Support Vector Machine. In addition to these, the Multilayered Perceptron is added to test the performance of a neural network trained with the selected set of features.
+The dataset used for feature extraction and training is composed of 100,000 records. It is a compilation made from the first 40,000 benign URLs from \cite{Kumar_Siddharth} and 60,315 phishing URLs from both the same source and PhishTank. The PhishTank URLs used for training are collected with a reasonable time gap between them and the GSB evaluation phase. This way, the model is prevented from having an advantage over GSB.
 
-The dataset used for feature extraction and training is composed of 100,000 records. It is a compilation made from the first 40,000 benign URLs from \cite{DATASET} and 60,315 phishing URLs from both the same source and phishtank. The Phishtank URLs used for training are collected with a reasonable time gap between them and the Google Safe Browsing evaluation URLs.
+The set of models used in the experimentation phase is based on the emergent pattern of algorithms used in the Background Study (\ref{chap:bgStudy}). These are Naive Bayes, Decision Tree, Random Forest and Support Vector Machine. In addition to these, the Multilayered Perceptron is added to test the performance of a neural network.
 
-The final wrapper around the white-list and clasifier is implemented in using the same programming languange. Although better performance can be achieved using a different languange, this is done to preserve continuity throughout the artefact.
+Model optimisation is done using GridSearchCV. GridSearchCV does an exhaustive search over specified parameters and selects the best performing model.
 
-The dataset 
+The final wrapper around the whitelist and classifier is implemented using the same programming language. Although better performance can be achieved using a different language, this is done to preserve continuity throughout the artefact.
 
 \section{Evaluation methodology}
-The evaluation of browser's anti-phishing detection mechanism is done in two phases. Firstly the browser will be assessed using newly discovered phishing URLs. After a week of the aforementioned evaluation, the browser will be assessed again using same data. The rationale behind this lies in the study of how browsers evolve their defenses regarding old phishing data.
+The evaluation of GSB's detection mechanism is done in two phases. Firstly the browser will be assessed using newly discovered phishing URLs. After a week of the aforementioned evaluation, the browser will be assessed again using the same data. The rationale behind this lies in the study of how browsers evolve their defences regarding old phishing data.
 
-The evaluation of the machine learning models is based on a set of metrics that cover all the performance areas. In addition to covering performance areas, the proposed set makes the process of identifying flaws in callibration easier. Besides these, the evaluation methodology will coincide with the one presented by some of the studies discussed in the backgroud study. This is done with the aim of achieving consistency and offering a fair comparison with existent work.\newline
+The evaluation of the machine learning models is based on a set of metrics that cover all the performance areas. In addition, the proposed set makes the process of identifying flaws in calibration easier. The evaluation methodology will coincide with the one presented by some of the studies discussed in the literature review. This is intentional and serves the aim of achieving consistency and offering a fair comparison with the work presented.\newline
 
 
 \begin{equation}
-	\label{eq:PRECISION}
+	\label{eq:precision}
 	Precision = \frac{TP}{TP+FP}
 \end{equation}
 \begin{equation}
-	\label{eq:SENSITIVITY}
+	\label{eq:sensitivity}
 	Sensitivity = \frac{TP}{TP+FN}
 \end{equation}
 \begin{equation}
-	\label{eq:FMEASURE}
+	\label{eq:fmeasure}
 	F-Measure = 2*\frac{Precision * Sensitivity}{Precision + Sensitivity}
 \end{equation}
 \begin{equation}
-	\label{eq:ACCURACY}
+	\label{eq:accuracy}
 	Accuracy = \frac{TP+TN}{TP+TN+FN+FP}
 \end{equation}
 \newline
 
-The metrics presented in \ref{eq:PRECISION},\ref{eq:SENSITIVITY},\ref{eq:FMEASURE} and \ref{eq:ACCURACY} represent key statistical concepts. A system is said to be precise (\ref{eq:PRECISION}) when it delivers a high level of correct prediction values. . Sensitivity \ref{eq:SENSITIVITY}, also known as recall, outlines system's predisposition in classifying an legitimate URL as being malicious. As the system grows in sensitivity, it reduces the number of false-negatives it produces. To put things in perspective, precision is the ratio between all adequate classification errors and all classification errors, whereas recall is the ratio of all classification errors and all existing errors.
-The F-Measure (\ref{eq:FMEASURE}) is the harmonic mean of precision (the number of correct predictions) and robustness (works well with URLs difficult to classify). It is a composed metric which penalizes the extreme values and is meant to provide a single measurement for a system which illustrates the level of optimization. Finally, the accuracy (\ref{eq:ACCURACY}) measures the ratio of true-positives and true-negatives.
+The metrics presented in \ref{eq:precision},\ref{eq:sensitivity},\ref{eq:fmeasure} and \ref{eq:accuracy} represent key statistical concepts. A system is said to be precise (\ref{eq:precision}) when it delivers a high level of correct prediction values. Sensitivity \ref{eq:sensitivity}, also known as recall, outlines the system's predisposition in classifying a legitimate URL as being malicious. As the system increases in sensitivity, it reduces the number of false-negatives it produces. For clarification, precision is the ratio between all adequate classification errors and all classification errors. In contrast, recall is the ratio of all classification errors and all existing errors.
+The F-Measure (\ref{eq:fmeasure}) is the harmonic mean of precision (the number of correct predictions) and robustness (works well with URLs challenging to classify). It is a composed metric which penalises the extreme values and is meant to provide a single measurement for a system which illustrates the level of optimisation. Finally, the accuracy (\ref{eq:accuracy}) measures the ratio of true-positives and true-negatives.
 
-% TODO: Fill in with explanation
-In addition to these, two other metrics used for transparency in model performance are the Receiver Operating Characteristic (ROC) curve and Confusion matrix. The former illustrates how well a model is capable to distinguish between a phishing URL and a benign one while the latter offers a view into the classification performance details of the model.
+In addition to these, two other metrics used to provide transparency in model performance are the Receiver Operating Characteristic (ROC) curve and Confusion matrix. The former illustrates how well a model is capable of distinguishing between a phishing URL and a benign one. At the same time, the latter offers a view of the classification performance details of the model.
 
-The final evaluation of the produced classifier is done in comparison to the evaluation tool's results. It is based on the same data set and metrics to eliminate any variables that may appear between evaluation methods.
-
-% =========================================================================================================
-% Skipped compiling instructions
-\iffalse
-	1st module Whitelist/Blacklist
-	Hash urls and do lookups as cheap as possible
-	2nd module Heuristics
-	Compile a set of heuristics from the papers based on performance
-	3rd module Visual similarity/Content evaluation
-	Think about studying the visual similarity or some content evaluation if feasible
-	4th module Machine learning
-	use Cohen's kappa static to measure agreement between stacked machine learning algos
-	URL classifier (supervised learning)
-	Domain classifier (trained with https://github.com/elceef/dnstwist)
-	DGA classifier (optional)
-
-	Figures must be correctly numbered with captions and paragraph text should not be wrapped around figures - same rules apply to tables. An example of figures can be found below.
-	\begin{figure}[t]
-		\centering
-		\includegraphics[width=0.45\textwidth]{unilogo.jpg}
-		\caption{Bournemouth University}
-		\label{fig:BULogo3}
-	\end{figure}
-	You should always start with an overview (Heading 2 style) to tell what this chapter is about and finkish with a summary (Heading 2 style) to tell what has been covered in this chapter.
-
-	This chapter is about discussing your project planning and methodology. Note that your chosen methodology should be based on the constraints and complexity of your project instead of some common senses with no link to your own project.]
-\fi
+The final evaluation of the produced classifier is done in comparison to the GSB evaluation results. It is based on the same dataset and metrics to eliminate any variables that may appear between evaluation methods.
