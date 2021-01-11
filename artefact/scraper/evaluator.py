@@ -1,7 +1,7 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-The evaluator calculates Google Safe Browsing's accuracy of phishing
-websites detection using both browser automation and the public API.
+The evaluator calculates Google Safe Browsing's accuracy of phishing websites
+detection using both browser automation and the public API.
 """
 import argparse
 import csv
@@ -12,6 +12,7 @@ import urllib
 
 import httplib2
 from selenium import webdriver
+
 
 CURRENT_DIR = os.getcwd()
 results = []
@@ -43,7 +44,6 @@ def parse_arguments():
         help="Toggle mixed urls in target dataset",
         action="store_true",
     )
-
     args = parser.parse_args()
     return args.phishes_file, "api" if args.api_testing else "browser"
 
@@ -110,7 +110,6 @@ def update_summary(updateItem):
     summary["totalTested"] = (
         summary["malicious"] + summary["benign"] + summary["exceptions"]
     )
-
     update_summary_file(summary)
 
 
@@ -174,7 +173,7 @@ def browser_check(url, browsers):
             record_result("firefox", url, None, result)
 
 
-# Not really working
+# Improvements can be made
 def is_online(url):
     try:
         h = httplib2.Http(timeout=10, disable_ssl_certificate_validation=True)
@@ -208,7 +207,6 @@ def api_check(phishes_file):
     for phishes in read_in_chunks(phishes_file):
         total_urls += len(phishes)
         parsed_phishes = [{"url": phish["url"]} for phish in phishes]
-
         body = {
             "client": {"clientId": "dissertation", "clientVersion": "1.5.2"},
             "threatInfo": {

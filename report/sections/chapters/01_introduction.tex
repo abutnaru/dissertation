@@ -1,5 +1,4 @@
 %!TEX root = ../main.tex
-
 \chapter{Introduction}
 \label{chap:introduction}
 This chapter begins by introducing the issue to be addressed throughout the present dissertation, stating the current situation and analyse it from the perspective of existing solutions. The following section outlines the project rationale and presents the intended outcomes. The next section states the objectives and relationship between them, after which it details the method of critically evaluating the project's success criteria. The penultimate section describes the risk analysis performed and the proactive actions designed to mitigate the identified risks. Finally, the last section presents an overview of the remaining chapters of the dissertation.
@@ -8,7 +7,7 @@ This chapter begins by introducing the issue to be addressed throughout the pres
 	\centering
 	\includegraphics[width=0.49\textwidth]{apwg_attack_hist.png}
 	\includegraphics[width=0.49\textwidth]{apwg_brands_hist.png}
-	\caption{A high-level illustration of phishing attacks over the years}
+	\caption{A high-level illustration of phishing attacks over the years \citep{APWG}}
 	\label{fig:PHISHING_HISTORY}
 \end{figure}
 
@@ -20,13 +19,13 @@ In its primitive form, a phishing attack requires elementary technical knowledge
 
 \subsection{Current situation}
 \label{subsec:current_situation}
-The gain in popularity is reflected in the numbers registered by the Anti-Phishing Working Group \citep{APWG}. Their archives open with the reports from across 2004. These add up to 33.5 thousand unique registered phishing attacks with missing data for September. After fifteen years, the APWG registered 479,468 unique phishing attacks in 2019. Besides the growth in numbers, these reports outline a clear advancement in the technical aspects of registered phishing campaigns as well. One example of this is the adoption of Transport Layer Security (TLS) used to serve phishing websites over Hypertext Transfer Protocol Secure (HTTPS). Reported usage has grown from close to 0\% in 2016, to 68\% by the end of the third quarter of 2019 \citep{APWG_Q42019}.
+The gain in popularity is reflected in the numbers registered by the Anti-Phishing Working Group \citep{APWG}. Their archives open with the reports from across 2004. These add up to 33.5 thousand unique registered phishing attacks with missing data for September. After fifteen years, the APWG registered 479,468 unique phishing attacks in 2019. Besides the growth in numbers, these reports outline a clear advancement in the technical aspects of registered phishing campaigns as well. One example of this is the adoption of Transport Layer Security (TLS) used to serve phishing websites over Hypertext Transfer Protocol Secure (HTTPS). Reported usage had grown from close to 0\% in 2016, to 68\% by the end of the third quarter of 2019 \citep{APWG_Q42019}.
 
 \subsection{Existing solutions}
 \label{subsec:existing_solutions}
 In most cases, the only source of protection against accessing phishing websites
 the user has is the browser. Browser usage statistics show that Google
-Chrome, Apple Safari, and Mozilla Firefox comprise 86.59\% \citep{Statcounter} of the market share. All of these browsers use Google Safe Browsing (GSB) as their anti-phishing detection system. At the surface level, this is a black-list based service which provides the aforementioned browsers with a list of malicious Uniform Resource Locators (URL) through its
+Chrome, Apple Safari, and Mozilla Firefox comprise 86.59\% \citep{Statcounter} of the market share. All of these browsers use Google Safe Browsing (GSB) as their anti-phishing detection system. At the surface level, this is a blacklist based service which provides the aforementioned browsers with a list of malicious Uniform Resource Locators (URL) through its
 Application Programming Interface (API).
 
 \begin{figure}[t]
@@ -38,7 +37,7 @@ Application Programming Interface (API).
 
 Although GSB acts as a blacklist, underneath this compilation of malicious URLs lies an entire process of scrutinisation. Based on it, the decision-making mechanism chooses whether the URL of the studied web page should be added to the blacklist. Classification efficiency aside, the time needed for this process to finalise and update the list renders the solution suboptimal. The core issue is that malicious actors are quick in conducting these attacks, which makes them go under GSB's radar. Given that the reported median phishing webpage lifespan is of less than twenty-four hours \citep{Kelly_Sheridan}, speed is a crucial factor in defending against them.
 
-Another anti-phishing detection system worth mentioning is Microsoft SmartScreen. SmartScreen is embedded in the Windows operating system and delivers protection against a wide range of threats. Phishing protection is offered through Microsoft's Internet Explorer and Edge browsers which represent 4.25\% of the market share. Although SmartScreen advertises better protection than GSB, the improvement reported by the literature is of 2.6\%. One significant mention is that all analysis is done off-site, thus plenty of information has to be sent to Microsoft's servers for processing. Depending on the circumstances, doing so might have an impact on privacy.
+Another anti-phishing detection system worth mentioning is Microsoft SmartScreen. SmartScreen is embedded in the Windows operating system and delivers protection against a wide range of threats. Phishing protection is offered through Microsoft's Internet Explorer and Edge browsers which represent 4.25\% of the market share. Although SmartScreen advertises better protection than GSB, the improvement reported by the literature is of 2.6\% \citep{Adebowale}. One significant mention is that all analysis is done off-site, thus plenty of information has to be sent to Microsoft's servers for processing. Depending on the circumstances, doing so might have an impact on privacy.
 
 In conclusion, the user's central defence against phishing is not versatile or agile enough to keep up with the speed and sophistication of these attacks.
 
@@ -196,4 +195,4 @@ Table \ref{tab:RISK_ANALYSIS} presents the main identified risks related to this
 
 \section{Overview of the dissertation}
 \label{sec:overview_of_the_dissertation}
-Chapter two explores the relevant literature and introduces previous work done on the subject. Chapter three describes the artefact design and implementation methodology, as well as the evaluation process of both the GSB evaluator and artefact. Chapter four offers an in-depth view of the development process. Furthermore, it defines the process of model calibration and performance enhancement. The fifth chapter compares the solution against GSB and ranks its performance vis-a-vis the literature. The last chapter presents a high-level view of the achievements of this dissertation. It summarises the work conducted and closes with possible ways of further improvement or expansion.
+Chapter two explores the relevant literature and introduces previous work done on the subject. Chapter three describes the artefact design and implementation methodology, as well as the evaluation process of both the GSB evaluator and artefact. Chapter four offers an in-depth view of the development process. Furthermore, it follows the process of model calibration and performance enhancement. The fifth chapter compares the solution against GSB and ranks its performance vis-a-vis the literature. The last chapter presents a high-level view of the achievements of this dissertation. It summarises the work conducted and closes with possible ways of further improvement or expansion.

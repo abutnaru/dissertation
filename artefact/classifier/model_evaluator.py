@@ -1,7 +1,7 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-The model evaluator measures the performance of the target trained 
-models based on precision, recall, f-measure and accuracy.
+The model evaluator measures the performance of the target trained models based
+on precision, recall, f-measure and accuracy.
 """
 import argparse
 import concurrent.futures
@@ -135,11 +135,11 @@ def main():
                     progressbar.update()
 
     models = [
-        #{"name": "Naive Bayes", "filename": "naive_bayes"},
-        #{"name": "Decision Tree", "filename": "decision_tree"},
+        {"name": "Naive Bayes", "filename": "naive_bayes"},
+        {"name": "Decision Tree", "filename": "decision_tree"},
         {"name": "Random Forest", "filename": "random_forest"},
-        #{"name": "Support Vector Machine", "filename": "support_vector"},
-        #{"name": "Neural Network", "filename": "ml_perceptron"},
+        {"name": "Support Vector Machine", "filename": "support_vector"},
+        {"name": "Neural Network", "filename": "ml_perceptron"},
     ]
 
     print("Starting model evaluation")

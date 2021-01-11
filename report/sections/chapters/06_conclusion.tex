@@ -21,31 +21,35 @@ The second objective is to research and bring together different anti-phishing m
 The third and last objective is to implement and optimise a solution that improves the status quo and can be operated with minimal technical literacy. The implementation should also consider the intended operational environment and its particularities. The artefact produced achieves a performance far surpassing what GSB offers. Moreover, the artefact surpasses all of the similar solutions included in the background study.
 
 \section{Reflection}
-Throughout the work carried out to produce the report and artefact, the aim and objectives have slightly evolved as the view on the subject matured. This section will expand some of the changes made to the project proposal (WILL ADD APPENDIX REF) offering justifications for the decisions taken.
+Throughout the work carried out to produce the report and artefact, the aim and objectives have slightly evolved as the view on the subject matured. This section will expand some of the changes made to the project proposal (Appendix \ref{appendix:project_proposal}) offering justifications for the decisions taken.
 
 The proposal starts by presenting an overview of the project. It defines the problem to be addressed and introduces the project idea. While the goal of offering an anti-phishing detection system that requires minimal technical literacy to operate was not altered, some of the features differ from the ones pitched. The artefact to be produced is described as being capable of recognising algorithmically generated domain names but studying phishing techniques uncovered that these are usually markers of malware command and control servers. The second feature pitched is the inclusion of a blacklist. Although useful as proved by the literature, the machine learning model exceeded the accuracy expectations and the inclusion of PhishTank datasets in a blacklist would tamper with the results of the comparison between it and GSB.
 
 After creating a low-resolution image of the artefact's design, the proposal briefly describes the method of evaluation. Doing the appropriate research proved that the methodology suggested in the proposal is rudimentary and fallacious. The design of the evaluation has evolved to include industry-standard metrics used in the performance assessment of models in data science.
 
+In retrospect, undertaking the task of improving the status quo of anti-phishing detection systems and using machine learning to do so has expanded my capabilities as a researcher. I have started with no knowledge of data science and managed to accomplish results surpassing most of the work done on the subject. Moreover, I have crafted an original feature (13), which has the highest score on the correlation heatmap.
+
 \section{Future work}
 There are several ways to improve the classifier. Future work on the artefact could address either the blind spots or performance improvements. Another area worth considering is User Experience (UX). UX can be significantly improved by wrapping the artefact in a browser extension.
 
 An example of a blindspot is the inability to detect man-in-the-middle attacks. A scenario where the legitimate domain name is resolved to an IP address under the control of a threat actor would go under the radar of the artefact. The solution is to implement a key-value store of domain names and IP addresses. To improve access times, this store could be managed by an in-memory data structure store (e.g. Memcached, Redis). Although the implementation of such a feature is simple, it is considered out of the scope.
-Another path of improvement could be reducing the time of whitelist checking by using low-level compiled programming languages (e.g. C/C++, Rust) and an appropriate data structure (e.g. Hashmap, Radix Tree). 
+Another path of improvement could be reducing the time of whitelist checking by using low-level compiled programming languages (e.g. C/C++, Rust) and an appropriate data structure (e.g. Hashmap, Radix Tree).
 
-To further improve the accuracy of predictions, the same classification can be applied on all the URLs found in the HTML source code of the page, thus both expanding surface coverage and lowering the number of false-negatives.
+To further improve the accuracy of predictions, the Levenshtein distance can be replaced by the Damerau–Levenshtein distance, which in addition to deletion, insertion and substitution supports the transposition operation. This addition theoretically improves the measurements and detection of the mutations presented in Table \ref{tab:VARIATIONS}.
 
-Finally, another area of possible improvement is inter-feature correlations and rule mining. \cite{Jeeva} offers a detailed description of how such rule sets can be extracted and how they improve model efficiency.
+Also, the same classification can be applied on all the URLs found in the HTML source code of the page, thus both expanding surface coverage and lowering the number of false-negatives.
+
+Finally, another area of possible improvement is inter-feature correlations and rule mining. \cite{Jeeva} offers a detailed description of how such rule sets can be extracted and how they improve model efficiency. This is expected to find new relationships between the features presented in Chapter \ref{chap:design_and_implementation} and improve classification accuracy.
 
 \clearpage
 \vspace*{\fill}
 \begin{center}
-\begin{minipage}{.6\textwidth}
-\centering 
-Word count (main body):
+	\begin{minipage}{.6\textwidth}
+		\centering
+		Word count (main body): 10,322
 
-Word count (artefact): (equivalent)
-\end{minipage}
+		Word count (artefact): 4,678 (equivalent)
+	\end{minipage}
 \end{center}
 \vfill
 \clearpage

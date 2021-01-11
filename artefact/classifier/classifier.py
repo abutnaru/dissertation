@@ -1,8 +1,8 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-The classifier delivers predictions on whether an URL is malicious or
-benign. The prediction is based on the best performing machine learning
-model trained throughout the experimentation phase of this project.
+The classifier delivers predictions on whether an URL is malicious or benign.
+The prediction is based on the best performing machine learning model trained
+throughout the experimentation phase of this project.
 """
 import argparse
 import csv

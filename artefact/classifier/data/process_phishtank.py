@@ -1,7 +1,7 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-Processes the target phishtank JSON dataset eliminating every attribute
-except the url and its classification.
+Processes the target phishtank JSON dataset eliminating every attribute except
+the url and its classification.
 """
 import argparse
 import csv

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 Produces figures based on training dataset exploration.
 """

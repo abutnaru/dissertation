@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 The algorithm trainer produces the machine learning models.
 """
@@ -17,19 +17,15 @@ import seaborn as sns
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    confusion_matrix,
-    f1_score,
-    plot_roc_curve,
-    roc_auc_score,
-    roc_curve,
-)
+from sklearn.metrics import (confusion_matrix, f1_score, plot_roc_curve,
+                             roc_auc_score, roc_curve)
 from sklearn.model_selection import GridSearchCV, KFold, train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from tqdm import tqdm
+
 
 ml_algorithms = [
     {"name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()},
@@ -59,7 +55,11 @@ ml_algorithms = [
         "filename": "support_vector",
         "model": GridSearchCV(
             SVC(kernel="rbf", random_state=1),
-            [{"C": [1, 10, 100, 1000],}],
+            [
+                {
+                    "C": [1, 10, 100, 1000],
+                }
+            ],
             cv=5,
         ),
     },
@@ -112,23 +112,21 @@ def parse_arguments():
 
 def plot_metrics(algo, i, X_test, y_test, y_pred):
     plot_roc_curve(algo["model"], X_test, y_test)
-    plt.savefig(
-        f"figurator/plots/{algo['name']}_iter{i-1}_roc.png"
-    )  # doctest: +SKIP
+    plt.savefig(f"plotter/training_plots/{algo['name']}_iter{i-1}_roc.png")
     cm = confusion_matrix(y_test, y_pred)
     ax = plt.subplot()
 
-    sns.heatmap(
-        cm, annot=True, ax=ax, cmap="Greens"
-    )  # annot=True to annotate cells
+    sns.heatmap(cm, annot=True, ax=ax, cmap="Greens")
 
-    # labels, title and ticks
+    # Labels, title and ticks
     ax.set_xlabel("Predicted labels")
     ax.set_ylabel("True labels")
     ax.set_title("Confusion Matrix")
     ax.xaxis.set_ticklabels(["Phishing", "Benign"])
     ax.yaxis.set_ticklabels(["Phishing", "Benign"])
-    ax.figure.savefig(f"figurator/plots/{algo['name']}_iter{i-1}_cm.png")
+    ax.figure.savefig(
+        f"plotter/training_plots/{algo['name']}_iter{i-1}_cm.png"
+    )
     plt.close("all")
 
 
@@ -152,7 +150,7 @@ def main():
     )
     X = X.values
     Y = Y.values
-    title = "K-fold iteration"
+    title = "Training progress"
     i = 1
     for train, test in tqdm(kf.split(X), total=kf.get_n_splits(), desc=title):
         f_out.write(f"Iteration number {i}\n")
@@ -165,7 +163,6 @@ def main():
         scaler.transform(X_test)
 
         for algo in ml_algorithms:
-            print(f"Training the {algo['name']} model")
             algo["model"].fit(X_train, y_train.ravel())
             y_pred = algo["model"].predict(X_test)
             f1 = f1_score(y_test, y_pred, average="macro")
@@ -176,7 +173,6 @@ def main():
         f_model = open(f"models/{setid}/{algo['filename']}.sav", "wb")
         pickle.dump(algo["model"], f_model)
         f_model.close()
-
     f_out.close()
 
 

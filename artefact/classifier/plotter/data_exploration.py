@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 Produces figures based on the data gathered from APWG reports.
 """
@@ -11,7 +11,6 @@ import numpy as np
 import math
 
 
-# APWG reports based figures
 # APWG reports based figures
 def plot_feature_correlation():
     df = pd.read_csv(
@@ -56,7 +55,7 @@ def percentile(N, P):
 def calc_stats_f(n):
     b_size, p_size = 0, 0
     b_series, p_series = [], []
-    for row in csv.reader(open("source/final_train_dataset.csv")):
+    for row in csv.reader(open("source/1_final_train_dataset.csv")):
         if int(row[0]) == 0:
             b_series.append(int(row[n]))
             b_size += int(row[n])
@@ -91,4 +90,7 @@ def calc_stats_f(n):
     )
 
 
-plot_feature_correlation()
+for i in range(1, 14):
+    print(f"======FOR {i}======")
+    calc_stats_f(i)
+    print("===================")

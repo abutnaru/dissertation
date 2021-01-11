@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 Pruces figures from model evaluation resulted metrics.
 """
@@ -254,12 +254,12 @@ def plot_levenshtein112k_on_mixed():
 
 def main():
     # TODO: Update the charts for the final model
-    # plot_hamming5k_on_phishtank_0401()
-    # plot_hamming5k_on_phishtank_0405()
-    # plot_hamming5k_on_mixed()
-    # plot_hamming25k_on_phishtank_0401()
-    # plot_hamming25k_on_phishtank_0405()
-    # plot_hamming25k_on_mixed()
+    plot_hamming5k_on_phishtank_0401()
+    plot_hamming5k_on_phishtank_0405()
+    plot_hamming5k_on_mixed()
+    plot_hamming25k_on_phishtank_0401()
+    plot_hamming25k_on_phishtank_0405()
+    plot_hamming25k_on_mixed()
     plot_levenshtein5k_on_phishtank_0401()
     plot_levenshtein5k_on_phishtank_0405()
     plot_levenshtein5k_on_mixed()

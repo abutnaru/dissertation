@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 Separates the benign and malicious URLs from the mixed source set.
 """

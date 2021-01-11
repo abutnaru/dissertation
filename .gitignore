@@ -3,3 +3,4 @@
 
 # Cache
 artefact/classifier/__pycache__
+**/node_modules

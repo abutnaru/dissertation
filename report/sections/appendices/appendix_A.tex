@@ -1,2 +1,82 @@
 %!TEX root = ../main.tex
-\chapter{Ethics Checklist}
+\chapter{Project proposal}
+\label{appendix:project_proposal}
+
+\begin{center}
+	\centerline{Department of Computing and Informatics}
+	\centerline{2019-2020 Undergraduate Final Year Project Proposal Form}
+\end{center}
+
+\textbf{Degree Title:} Forensic Computing and Security
+
+\textbf{Student's Name:} Andrei Butnaru
+
+\textbf{Supervisor's Name:} Alexios Mylonas
+
+\textbf{Project Title/Area:} A machine learning based solution for preventig access to malicious web resources
+
+\tocless\section{Section 1: Project overview}
+\begin{mdframed}
+	\tocless\subsection{Problem definition - use one sentence to summarise the problem}
+	Computer security solutions evolve every day, and this tends to leave behind the use case of the average user who wants to know they’re safe, without having to go through training, maintain software or protection solutions.
+
+	\tocless\subsection{Project description - briefly explain your project:}
+	The project’s goal is to serve as a filter against malicious domain names/URLs. The filter will be composed of several subcomponents. These include a blacklist and two machine learning models. The first module predicts maliciousness and the second, whether the domain name is algorithmically generated.
+
+	\tocless\subsection{Project description - briefly explain your project:}
+	The project comes as an answer to the main attacks executed across industries today. The way threat actors can circumvent almost any network, or end-point protection solutions are through social engineering. The target of a social engineering attack may be information extraction from a human or pushing the subject to access \end{mdframed} \begin{mdframed} malicious external resources. Given the nature of such attack, there are not many existing solutions other than staff training which is expensive and tedious in some cases.
+
+	\tocless\subsection{Aims and objectives – what are the aims and objectives of your project?}
+	The project aims to provide an efficient mechanism for protection against phishing and control of installed malware for non-technical and technical individuals alike. The project goals are to (1) prevent the user from accessing external malicious resources and (2) in the case of infection, prevent unacknowledged connections to external machines or resources (e.g. command and control servers).
+	On the way of achieving the aim, the following objectives are used as a way of quantifying achievement:
+	\begin{itemize}
+		\item The project features an updated blacklist of phishing and malicious domains names/URLs.
+		\item If the domain name/URL passes the blacklist test, the product of the project is able to determine if it is malicious using a trained machine learning model.
+		\item The project is able to categorise a domain name as algorithmically generated or not.\newline
+	\end{itemize}
+\end{mdframed}
+
+
+\tocless\section{Section2: Artefact}
+\begin{mdframed}
+	\tocless\subsection{What is the artefact that you intend to produce?}
+	The artefact produced will be able to take a domain name/URL as an input, and output a prediction on the maliciousness of it (under the form of a percentage or malicious/non-malicious). It will feature blacklists and two machine learning models. The first model will study the similarities between known malicious domain name/URL, and the second will study the format of algorithmically generated domain names and will categorise the input domain name accordingly.\end{mdframed}
+
+\begin{mdframed}
+	\tocless\subsection{How is your artefact actionable (i.e., routes to exploitation in the technology domain)?}
+	The artefact is expected to be used as a browser extension, which will supervise the domains and URLs accessed by the user, or as a filter mechanism deployed on central resources such as routers or domain name servers.
+\end{mdframed}
+
+\tocless\section{Evaluation}
+\begin{mdframed}
+	\tocless\subsection{How are you going to evaluate your work?}
+	The evaluation will be done by first deploying the artefact on a machine after which:
+
+	• The blacklist will be evaluated by feeding them back to the artefact
+	• The test data (malicious URLs) will be fed into the first trained model and see the rate of success and false positives
+	• The test data (generated and benign domain names) will be fed into the second trained model and see the rate of success and false positives
+
+	\tocless\subsection{Why is this project honours worthy?}
+	In my opinion, this project is honours worthy because it is built on everything I learned throughout my course, plus further research into other domains such as automated testing and machine learning. Another reason is that all this effort goes into a piece of software that is meant to be used by anyone, independent of their understanding of computer security, for a safer internet.
+
+
+	\tocless\subsection{How does this project relate to your degree title outcomes?}
+	The project I’ve chosen fits perfectly in my course title. It requires the knowledge I acquired from almost all the subjects I’ve studied. It will be heavily dependent on what I learned throughout Ethical Hacking and Countermeasures, Digital Forensics, Computers and Networks and Programming. Moreover, it pushes me to develop skills in data science to accomplish the aim.
+\end{mdframed}
+\begin{mdframed}
+	\tocless\subsection{How does your project meet the BCS Undergraduate Project Requirements?}
+	I would say the project is a perfect fit for what the BCS presents as their purpose: “To promote and advance the education and practice of computing for the benefit of the public”. I am working towards delivering the best solution I am capable of, with the end goal of serving public safety.
+
+
+	\tocless\subsection{What are the risks in this project and how are you going to manage them?}
+	The biggest risk of the project would be to end up with an implementation that has an undesirable rate of success. By the rate of success, it is to be understood a high rate of false positives, a high rate of false negatives or both. I am planning on managing this risk by tweaking the detection algorithm and calibrate it in a way that improves the success rate, and I have allocated 30 days for this process.
+\end{mdframed}
+
+\tocless\section{Ethics}
+\begin{mdframed}
+	\tocless\subsection{Have you submitted online ethics checklist to your supervisor? \textbf{Yes}/No}
+	\tocless\subsection{Has the checklist been approved by your supervisor? \textbf{Yes}/No}
+\end{mdframed}
+
+\tocless\section{Proposed plan}
+See Appendice \ref{appendix:gantt_chart}

@@ -1,11 +1,9 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-The data preparer takes as input a CSV file with rows specification of
-<url>,<label> where label is 1 for phishing and 0 for benign. It
-processes each url concurrently and outputs a CSV file with the features
-extracted.
+The data preparer takes as input a CSV file with rows specification of <url>,
+<label> where label is 1 for phishing and 0 for benign. It processes each url
+concurrently and outputs a CSV file with the features extracted.
 """
-
 import argparse
 import concurrent.futures
 import csv

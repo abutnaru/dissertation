@@ -1,7 +1,7 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-Calculates the frequencies of words used in the target URL set. The
-search is performed on all the areas of the URL using the URL format of
+Calculates the frequencies of words used in the target URL set. The search is
+performed on all the areas of the URL using the URL format of
 <subdomain>.<domain>/<path>?<query>.
 """
 import argparse
@@ -34,8 +34,8 @@ def get_argument():
 def extract_words(string):
     """
     Takes as input a string and returns all the words found in it by
-    probabilistically splitting concatenated words using NLP based on
-    English Wikipedia unigram frequencies. 
+    probabilistically splitting concatenated words using NLP based on English
+    Wikipedia unigram frequencies. 
     """
     x = re.compile(r"[A-Za-z]\w+")
     finds = x.findall(string)

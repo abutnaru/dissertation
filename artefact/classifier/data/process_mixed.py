@@ -1,7 +1,7 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
-Processes the source dataset eliminating every row item except the url
-and its classification.
+Processes the source dataset eliminating every row item except the url and its
+classification.
 """
 import csv
 import sys
@@ -22,8 +22,8 @@ writer = csv.writer(fout)
 with tqdm(total=len(lines), file=sys.stdout) as progressbar:
     for row in lines:
         label = 0
-        # Iterating through row items to check if item is malicious or
-        # benign due to the bad formatting of the source file
+        # Iterating through row items to check if item is malicious or benign
+        # due to the bad formatting of the source file
         for item in row:
             if item == "malicious":
                 label = 1

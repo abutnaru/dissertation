@@ -1,0 +1,70 @@
+%!TEX root = ../main.tex
+
+\chapter{Model configurations}
+\label{appendix:model_configurations}
+
+\section{Naive bayes}
+\begin{verbatim}
+    "name": "Naive Bayes", "filename": "naive_bayes", "model": GaussianNB()
+\end{verbatim}
+
+\section{Decision tree}
+\begin{verbatim}
+        "name": "Decision Tree",
+        "filename": "decision_tree",
+        "model": DecisionTreeClassifier(random_state=1)
+
+\end{verbatim}
+
+\section{Random forest}
+\begin{verbatim}
+        "name": "Random Forest",
+        "filename": "random_forest",
+        "model": GridSearchCV(
+            RandomForestClassifier(random_state=1),
+            [
+                {
+                    "n_estimators": [150, 295, 350],
+                    "max_features": ["auto"],
+                    "min_samples_split": [8, 12],
+                    "max_depth": [15, 18, 21],
+                }
+            ],
+            cv=5,
+        )
+\end{verbatim}
+
+\section{Support vector machine}
+\begin{verbatim}
+        "name": "Support Vector Machine",
+        "filename": "support_vector",
+        "model": GridSearchCV(
+            SVC(kernel="rbf", random_state=1),
+            [{"C": [1, 10, 100, 1000],}],
+            cv=5,
+        )
+\end{verbatim}
+
+\section{Multilayered perceptron}
+\begin{verbatim}
+        "name": "Neural Network",
+        "filename": "ml_perceptron",
+        "model": GridSearchCV(
+            MLPClassifier(max_iter=2500),
+            [
+                {
+                    "hidden_layer_sizes": [
+                        (25, 50, 25),
+                        (50, 50, 50),
+                        (50, 100, 50),
+                        (100,),
+                    ],
+                    "activation": ["tanh", "relu"],
+                    "solver": ["sgd", "adam"],
+                    "alpha": [0.0001, 0.05],
+                    "learning_rate": ["constant", "adaptive"],
+                }
+            ],
+            cv=5,
+        )
+\end{verbatim}

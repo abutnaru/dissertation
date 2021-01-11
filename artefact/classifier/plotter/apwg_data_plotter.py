@@ -1,4 +1,4 @@
-#!/usr/bin/env -S conda run -n dissertation python
+#!/usr/bin/env python
 """
 Produces figures based on the data gathered from APWG reports.
 """
@@ -11,7 +11,7 @@ from numpy import median
 
 sns.set()
 # APWG reports based figures
-plt.figure(figsize=(6.8,4.5))
+plt.figure(figsize=(6.8, 4.5))
 apwg_data = pd.read_csv(
     "source/apwg.csv",
     names=["Year", "Month", "Websites", "Emails", "Target Brands"],
@@ -50,6 +50,15 @@ plot = sns.barplot(
 locs, labels = plt.xticks()
 plot.set_xticklabels(labels=labels, rotation=-30)
 for p in plot.patches:
-    plot.annotate("%.0f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),ha='center', va='center', fontsize=11, color='gray', xytext=(0, 15),textcoords='offset points')
-_ = plot.set_ylim(0,100) #To make space for the annotations
+    plot.annotate(
+        "%.0f" % p.get_height(),
+        (p.get_x() + p.get_width() / 2.0, p.get_height()),
+        ha="center",
+        va="center",
+        fontsize=11,
+        color="gray",
+        xytext=(0, 15),
+        textcoords="offset points",
+    )
+_ = plot.set_ylim(0, 100)  # To make space for the annotations
 plot.figure.savefig("images/apwg_https_usage.png")

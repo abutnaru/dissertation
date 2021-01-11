@@ -5,90 +5,89 @@ The evaluation chapter measures the achievement of the aim set in the introducti
 \section{Google Safe Browsing}
 The work presented throughout this dissertation aims to challenge and improve the current status quo of browser embedded anti-phishing detection systems. The artefact has successfully almost doubled the classification accuracy while respecting the priorities of such software. By design, it is geared towards delivering a minimal amount of false-positives, at the expense of a slight growth in the number of false negatives. This way, its alerts are trustworthy and do not produce noise. Furthermore, it manages to do so using just the URL of the webpage and does not rely on third-party services for any other information.
 
-\begin{singlespace}
-    \small
-    \begin{center}
-        \label{tab:ARTEFACT_VS_GSB}
-        \begin{tabular}{ | m{14em} | m{5em} | m{5em} |}
-            \hline
-                                                & \textbf{GSB} & \textbf{Artefact} \\
-            \hline
-            \textbf{Phishtank 01.04.2020}       & 50.76\%      & 77.54             \\
-            \hline
-            \textbf{Phishtank 05.04.2020}       & 48.32\%      & 95.67\%           \\
-            \hline
-            \textbf{Phishtank 05.05.2020 (API)} & 44.47\%      & 94.80\%           \\
-            \hline
-            \textbf{Phishtank 06.05.2020 (API)} & 44.33\%      & 94.78\%           \\
-            \hline
-            \textbf{Phishtank 07.05.2020 (API)} & 44.94\%      & 94.75\%           \\
-            \hline
-            \textbf{Phishtank 08.05.2020 (API)} & 45.34\%      & 94.63\%           \\
-            \hline
-            \textbf{Phishtank 09.05.2020 (API)} & 45.33\%      & 94.64\%           \\
-            \hline
-            \textbf{Phishtank 10.05.2020 (API)} & 43.60\%      & 95.08\%           \\
-            \hline
-        \end{tabular}
-        \captionsetup{type=table}\caption{A comparison of existing solutions \citep{Adebowale}}
-    \end{center}
-\end{singlespace}
-
 Table \ref{tab:ARTEFACT_VS_GSB} shows a comparison between the classification accuracy of both GSB and the artefact. We can observe that the artefact managed to surpass GSB's effectiveness in every instance of the testing process.
 
 Besides classification accuracy, the artefact presents a much simpler structure while causing a disproportionally low number of false-negatives and false-positives. The addition of blacklists, whitelists and other mechanisms is expected to reduce the number of inaccurate predictions further.
 
+\begin{singlespace}
+	\begin{center}
+		\label{tab:ARTEFACT_VS_GSB}
+		\begin{tabular}{  m{16em}  m{12em}  m{7em} } \toprule
+
+			                                    & \textbf{Google Safe Browsing} & \textbf{Artefact} \\ \midrule
+
+			\textbf{Phishtank 01.04.2020}       & 50.76\%                       & 95.61\%           \\
+
+			\textbf{Phishtank 05.04.2020}       & 48.32\%                       & 95.67\%           \\
+
+			\textbf{Phishtank 05.05.2020 (API)} & 44.47\%                       & 94.80\%           \\
+
+			\textbf{Phishtank 06.05.2020 (API)} & 44.33\%                       & 94.78\%           \\
+
+			\textbf{Phishtank 07.05.2020 (API)} & 44.94\%                       & 94.75\%           \\
+
+			\textbf{Phishtank 08.05.2020 (API)} & 45.34\%                       & 94.63\%           \\
+
+			\textbf{Phishtank 09.05.2020 (API)} & 45.33\%                       & 94.64\%           \\
+
+			\textbf{Phishtank 10.05.2020 (API)} & 43.60\%                       & 95.08\%           \\ \bottomrule
+		\end{tabular}
+		\captionsetup{type=table}\caption{Classification accuracy comparison between GSB and the artefact}
+	\end{center}
+\end{singlespace}
+
 \section{Literature}
-Besides accomplishing the aim of surpassing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table \ref{tab:EXISTENT_SOLUTIONS_VS_ARTEFACT} shows that when placing the artefact in the comparison of solutions presented by \cite{Adebowale}, its accuracy comes above all others. Moreover, it is trained on a wide range of international phishing URLs, which gives the model language independence.
+Besides accomplishing the aim of surpassing GSB's performance, the artefact presents competitive results even when compared to what the literature presents. Table \ref{tab:EXISTENT_SOLUTIONS_COMPARISON} shows that when placing the artefact in the comparison of solutions presented by \cite{Adebowale}, its accuracy comes above all others. Moreover, it is trained on a wide range of international phishing URLs, which gives the model language independence.
 
 \begin{center}
-	\small
-	\begin{tabular}{ | m{0.9em} | m{7.6em} | m{13em} | m{7.1em} | m{2.3em} | m{4.3em} | }
-		\hline
-		                                  & \textbf{Plugin for Phishing} & \textbf{Features \& Techniques}       & \textbf{Browser}    & \textbf{Acc \%} & \textbf{Service  type} \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{1}}  & GoldPhish                    & Heuristics \& Features-based          & IE                  & 98              & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{2}}  & Cloudmark                    & Heuristics                            & IE                  & 94              & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{3}}  & MS SmartScreen               & Blacklist and whitelist               & IE                  & 95.9            & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{4}}  & Netcraft                     & Blacklist and whitelist               & Chrome, Firefox     & 90              & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{5}}  & SpoofGuard                   & Heuristics \& Features-based          & IE                  & 91              & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{6}}  & Phishdentity                 & Google search-by-image API            & IE                  & 97.2            & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{7}}  & PhishTackle                  & Heuristics \& Features-based          & IE                  & 91.3            & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{8}}  & PhishGuard                   & Heuristics                            & Firefox             & 94              & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{9}}  & PhishIdentifier              & Heuristics                            & Firefox             & 92              & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{10}} & PhishTester                  & Heuristics \& Features-based          & IE                  & 97.1            & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{11}} & CANTINA+                     & Heuristics \& Features-based          & IE                  & 98.06           & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{12}} & PhishAri                     & Features-based                        & Chrome              & 92.52           & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{13}} & PhishShield                  & Heuristics \& Feature-based           & Chrome              & 96.57           & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{14}} & PhishNet                     & Blacklist                             & Chrome              & 95              & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{15}} & PhishDef                     & Heuristics \& Feature-based           & Chrome              & 97              & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{16}} & GSB                          & Blacklist                             & Chrome, Firefox     & 93.3            & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{17}} & PhishZoo                     & Heuristics                            & Chrome              & 96.10           & Research               \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{18}} & Seclayer                     & Heuristics                            & IE, Chrome          & 91              & Free                   \\
-		\hline
-		\multicolumn{1}{|c|}{\textbf{19}} & IPDPS                        & Heuristics \& Feature and image based & IE, Chrome, Firefox & 98.55           & Research               \\
-        \hline
-        \multicolumn{1}{|c|}{\textbf{20}}      & \textbf{Presented Work} & \textbf{Heuristics \& Feature-based} & \textbf{N/A}        & \textbf{99.29}  & \textbf{Research}      \\
-		\hline
+	\begin{tabular}{  m{0.5em}  m{6em}  m{13.3em}  m{8.5em}  m{2.3em}  m{4.3em}  } \toprule
+
+		                                & \textbf{Plugin }      & \textbf{Features \& Techniques}      & \textbf{Browser}    & \textbf{Acc}   & \textbf{Type}     \\ \midrule
+
+		\multicolumn{1}{r}{\textbf{1}}  & GoldPhish             & Heuristics \& Features-based         & IE                  & 98             & Free              \\
+
+		\multicolumn{1}{r}{\textbf{2}}  & Cloudmark             & Heuristics                           & IE                  & 94             & Free              \\
+
+		\multicolumn{1}{r}{\textbf{3}}  & SmartScreen           & Blacklist and whitelist              & IE                  & 95.9           & Free              \\
+
+		\multicolumn{1}{r}{\textbf{4}}  & Netcraft              & Blacklist and whitelist              & Chrome, Firefox     & 90             & Free              \\
+
+		\multicolumn{1}{r}{\textbf{5}}  & SpoofGuard            & Heuristics \& Features-based         & IE                  & 91             & Free              \\
+
+		\multicolumn{1}{r}{\textbf{6}}  & Phishdentity          & Google search-by-image API           & IE                  & 97.2           & Research          \\
+
+		\multicolumn{1}{r}{\textbf{7}}  & PhishTackle           & Heuristics \& Features-based         & IE                  & 91.3           & Research          \\
+
+		\multicolumn{1}{r}{\textbf{8}}  & PhishGuard            & Heuristics                           & Firefox             & 94             & Research          \\
+
+		\multicolumn{1}{r}{\textbf{9}}  & PhishIdentifier       & Heuristics                           & Firefox             & 92             & Research          \\
+
+		\multicolumn{1}{r}{\textbf{10}} & PhishTester           & Heuristics \& Features-based         & IE                  & 97.1           & Research          \\
+
+		\multicolumn{1}{r}{\textbf{11}} & CANTINA+              & Heuristics \& Features-based         & IE                  & 98.06          & Research          \\
+
+		\multicolumn{1}{r}{\textbf{12}} & PhishAri              & Features-based                       & Chrome              & 92.52          & Research          \\
+
+		\multicolumn{1}{r}{\textbf{13}} & PhishShield           & Heuristics \& Feature-based          & Chrome              & 96.57          & Research          \\
+
+		\multicolumn{1}{r}{\textbf{14}} & PhishNet              & Blacklist                            & Chrome              & 95             & Research          \\
+
+		\multicolumn{1}{r}{\textbf{15}} & PhishDef              & Heuristics \& Feature-based          & Chrome              & 97             & Research          \\
+
+		\multicolumn{1}{r}{\textbf{16}} & GSB                   & Blacklist                            & Chrome, Firefox     & 93.3           & Free              \\
+
+		\multicolumn{1}{r}{\textbf{17}} & PhishZoo              & Heuristics                           & Chrome              & 96.10          & Research          \\
+
+		\multicolumn{1}{r}{\textbf{18}} & Seclayer              & Heuristics                           & IE, Chrome          & 91             & Free              \\
+
+		\multicolumn{1}{r}{\textbf{19}} & IPDPS                 & Heuristics, Feature and image        & IE, Chrome, Firefox & 98.55          & Research          \\ \midrule
+
+		\multicolumn{1}{r}{\textbf{20}} & \textbf{The artefact} & \textbf{Heuristics \& Feature-based} & \textbf{N/A}        & \textbf{99.29} & \textbf{Research} \\ \bottomrule
 	\end{tabular}
-    \captionsetup{type=table}\caption{Comparison between the artefact and \cite{Adebowale}'s solution compilation}
-	\label{tab:EXISTENT_SOLUTIONS}
+	\captionsetup{type=table}\caption{A comparison of existing solutions \citep{Adebowale}}
+	\label{tab:EXISTENT_SOLUTIONS_COMPARISON}
 \end{center}
+
+\section{Chapter overview}
+This chapter assessed classifier's performance and aim accomplishment by comparing the results presented in the previous chapter against both GSB and the relevant solutions proposed by the literature. This comparison shows that the artefact outperforms GSB by a large margin, and manages to rank first when placed between literature solutions.
 

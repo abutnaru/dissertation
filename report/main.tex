@@ -27,42 +27,11 @@
 \usetikzlibrary{calc}
 \usepackage[export]{adjustbox}
 \usepackage{amsmath}
-\usepackage{glossaries}
 \usepackage{tabularx}
-\makenoidxglossaries
-\newglossaryentry{APWG}{
-    name={APWG},
-    description={Anti Phishing Working Group}
-}
-
-\newglossaryentry{TLS}{
-    name={TLS},
-    description={Transport Layer Security}
-}
-\newglossaryentry{HTTPS}{
-    name={HTTPS},
-    description={Hypertext Transfer Protocol Secure}
-}
-
-\newglossaryentry{HTTP}{
-    name={HTTP},
-    description={Hypertext Transfer Protocol}
-}
-
-\newglossaryentry{API}{
-    name={API},
-    description={Application Programming Interface}
-}
-
-\newglossaryentry{GSB}{
-    name={GSB},
-    description={Google Safe Browsing}
-}
-
-\newglossaryentry{SSL}{
-    name={SSL},
-    description={Secure Socket Layer}
-}
+\usepackage{mdframed}
+\usepackage{packages/booktabs}
+\usepackage{multirow}
+\usepackage{makecell}
 \renewcommand{\familydefault}{\sfdefault}
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
 \pagestyle{fancy}
@@ -89,8 +58,11 @@
 \titlespacing*{\chapter}{0pt}{0pt}{20pt}
 
 
-\begin{document}
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
 
+\begin{document}
+\pagenumbering{gobble}
 \input{sections/titles/01_main}
 
 \pagenumbering{Roman}
@@ -105,15 +77,14 @@
 \input{sections/preamble/04_aknowledgements}
 
 \tableofcontents
-
-\clearpage
-
-\printnoidxglossaries
+\input{sections/preamble/05_abbreviations}
 
 \listoffigures
 \listoftables
 
 \cleardoublepage
+\thispagestyle{empty}
+\hbox{}\newpage
 
 \pagenumbering{arabic}
 
@@ -129,11 +100,11 @@
 
 \input{sections/chapters/06_conclusion}
 
-
-\bibliographystyler{packages/buHarvard}
-\nociter{*}
-\bibliographyr{01_references}
-
+\begin{spacing}{1.47}
+	\bibliographystyler{packages/buHarvard}
+	\nociter{*}
+	\bibliographyr{01_references}
+\end{spacing}
 \bibliographystyleb{packages/buHarvard}
 \nociteb{*}
 \bibliographyb{02_bibliography}

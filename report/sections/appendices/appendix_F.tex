@@ -1,0 +1,38 @@
+%!TEX root = ../main.tex
+\chapter{Train dataset analysis}
+\begin{singlespace}
+	\begin{table}[h!]
+		\begin{center}
+			\begin{tabular}{ m{7.9em} m{3.8em} m{3.4em} m{3.3em} m{7em} m{7em}} \toprule
+				\textbf{Feature}                                       & \textbf{Label} & \textbf{Average} & \textbf{Median} & \textbf{90th percentile} & \textbf{99th percentile} \\ \midrule  \addlinespace
+
+				\multirow{2}{*}{\textbf{URL length}}                   & Benign         & 57               & 52              & 90                       & 141                      \\ & Phishing & 77 &  58 & 143 & 321     \\  \addlinespace \addlinespace
+
+				\multirow{2}{*}{\textbf{Protocol}}                     & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing & 0.77 &  1 & 1 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Numerical                                                                                                                     \\ characters}}}    & Benign         & 0.06             & 0               & 0                        & 3                        \\ & Phishing &0.79 &  0&2 & 12     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Symbols  count}}} & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing &0.05 &  0&0 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Other network                                                                                                                 \\ location}}}        & Benign         & 0.01             & 0               & 0                        & 1                        \\ & Phishing &0.17 &  0&1 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Hyphen                                                                                                                        \\ count}}}     & Benign         & 0.06             & 0               & 0                        & 1                        \\ & Phishing &0.39 &  0&1 & 4     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Subdomain                                                                                                                     \\ components}}}    & Benign         & 0.06             & 0               & 0                        & 1                        \\ & Phishing &0.05 &  0&0 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Sensitive                                                                                                                     \\ subdomain}}}       & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing &0.03 &  0&0 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Sensitive                                                                                                                     \\ domain}}}       & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing & 0.03 &  0&0 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Sensitive                                                                                                                     \\ path}}}      & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing &0.22 &  0&1 & 1     \\  \addlinespace  \addlinespace
+				\multirow{2}{*}{\textbf{\makecell[l]{Network location                                                                                                              \\ in path}}} & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing &0.01 &  0&0 & 1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Domain                                                                                                                        \\ distance}}}       & Benign         & 0.21             & 0               & 1                        & 1                        \\ & Phishing &9.48 &  0&1 &1     \\  \addlinespace  \addlinespace
+
+				\multirow{2}{*}{\textbf{\makecell[l]{Subdomain                                                                                                                     \\ distance}}}    & Benign         & 0                & 0               & 0                        & 0                        \\ & Phishing &0.86 &  1&1 & 1     \\\bottomrule
+			\end{tabular}
+			\captionsetup{type=table}\caption{ Optimised random forest results on the 380,000 mixed records dataset}
+			\label{tab:FINAL_MODEL}
+		\end{center}
+	\end{table}
+\end{singlespace}
