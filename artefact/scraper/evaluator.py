@@ -200,7 +200,7 @@ def read_in_chunks(f_in, chunk_size=500):
 
 
 def api_check(phishes_file):
-    APIKEY = "AIzaSyDeefzwH7Fspz2D4AazFEZVYPQ07U1zt5w"
+    APIKEY = "<insert-api-key-here>"
     true_positives = 0
     total_urls = 0
     parsed_phishes = list()
